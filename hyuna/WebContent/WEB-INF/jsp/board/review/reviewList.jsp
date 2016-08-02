@@ -20,38 +20,37 @@
 		      </tr>
 		    </thead>
 		    <tbody>
-		     	<%-- <c:choose>
-						<c:when test="${not empty faqList }">
-							<c:forEach var = "faq" items="${faqList}" varStatus="status">
-							<tr data-num="${faq.b_num }">
-								<td>${faq.faq_no }</td> <!-- 번호 -->
+		     	<c:choose>
+						<c:when test="${not empty reviewList }">
+							<c:forEach var = "review" items="${reviewList}" varStatus="status">
+							<tr data-num="${review.review_no }">
+								<td>${review.review_no }</td> <!-- 번호 -->
+								<td>${review.review_prd_d_no }</td>
 								<td>
-									<span>${faq.faq_title }</span>
+									<span>${review.review_title }</span>
 								</td>
-								<td>${faq.faq_content}</td>
-								<td>${faq.faq_writedate }</td>
-								<td>${faq.faq_hit }</td>
+								<td>${review.review_mem_no}</td>
+								<td>${review.review_score }
+								<td>${review.review_writedate}</td>
+								<td>${review.review_hit }</td>
 							</tr>
 							</c:forEach>
 						</c:when>
-						<c:otherwise> --%>
+						<c:otherwise>
 							<tr>
 								<td colspan="7">등록된 게시물이 존재하지 않습니다</td>
 							</tr>
-					<%-- 	</c:otherwise>
-					</c:choose> --%>
+					</c:otherwise>
+					</c:choose>
 		    </tbody>
 		  </table>
 		</form>
-		<div class="col-md-1 col-md-offset-5" id='page'>
-		<a href="#">&lt;&lt;</a><a href="#">&nbsp;1&nbsp;</a><a href="#">&nbsp;2&nbsp;</a><a href="#">&nbsp;3&nbsp;</a>
-		<a href="#">4&nbsp;</a><a href="#">&nbsp;5&nbsp;</a><a href="#">&nbsp;6&nbsp;</a><a href="#">&nbsp;7&nbsp;</a>
-		<a href="#">8&nbsp;</a><a href="#">&nbsp;9&nbsp;</a><a href="#">10&nbsp;</a>
-		<a href="#">&gt;&gt;</a>
+		<div class="col-md-1 col-md-offset-5" id='boardPage'>
+			<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}"/>
 		</div>
 		<form>
-			<div class="col-md-1 col-md-offset-3">
-			<input type="button" class="btn btn-info" id="write" value="글쓰기">
+			<div class="col-md-1 col-md-offset-5">
+			<input type="button" class="btn btn-info" id="review_write_btn" value="글쓰기">
 			</div>
 		</form>
 		<div class="bottom">
@@ -67,13 +66,10 @@
 		</form>
 		</div>
 		</div>
-		<%-- <div id = "boardPage">
-			<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}"/>
-		</div> --%>
 		</div>
 <script>
 	$(function(){
-		$("#write").click(function(){
+		$("#review_write_btn").click(function(){
 			location.href = "/board/review/reviewWrite.do";
 		})
 	})

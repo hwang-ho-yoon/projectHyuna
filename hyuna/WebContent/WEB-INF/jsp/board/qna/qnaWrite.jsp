@@ -6,14 +6,14 @@
 <div id="wrapper">
 	<div class="bottom">
 		<form id="faq_write">
-			<table class="table table table-bordered">
+			<table class="table table table-bordered" enctype="multipart/form-data">
 				<tr>
 					<td width="10%"><label class="control-label">제목</label></td>
 					<td width="10%">
 						<select class="form-control">
-						<option>상품문의</option>
-						<option>배송문의</option>
-						<option>기타문의</option>
+						<option value="qq">상품문의</option>
+						<option value="dd">배송문의</option>
+						<option value="etc">기타문의</option>
 						</select>
 					</td>
 					<td width="70%">
