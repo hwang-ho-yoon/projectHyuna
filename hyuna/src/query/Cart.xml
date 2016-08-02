@@ -23,7 +23,7 @@
 		<selectKey keyProperty="cart_no" resultType="int" order="BEFORE">
 			select cart_seq.nextval from dual
 		</selectKey>
-			INSERT INTO CART
+			<!-- INSERT INTO CART
 			  (
 			    CART_NO,
 			    CART_QUANTITY,
@@ -35,7 +35,22 @@
 			    #{cart_no},
 			    #{cart_quantity},
 			    #{mem_no},
-			    1<!-- #{prd_d_no} -->
+			    #{prd_d_no}
+			  ) -->
+			  
+			  INSERT INTO CART
+			  (
+			    CART_NO,
+			    CART_QUANTITY,
+			    MEM_NO,
+			    prd_d_no
+			  )
+			  VALUES
+			  (
+			    #{cart_no},
+			    #{cart_quantity},
+			    #{mem_no},
+			    (select prd_d_no from prd_detail where color_no = #{color_no} and model_no = #{model_no})
 			  )
 	</insert>
 	

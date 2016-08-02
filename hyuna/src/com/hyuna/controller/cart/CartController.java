@@ -68,6 +68,9 @@ public class CartController {
 		
 		int result = 0;
 		String url = "";
+		
+		int detailNo=cartService.optDetailNo(cvo);
+		cvo.setPrd_d_no(detailNo);
 		cvo.setMem_no((Integer)session.getAttribute("hyunaMember"));
 		result = cartService.cartInsert(cvo);
 		if(result == 1) {

@@ -1,6 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script type="text/javascript" src="/hyuna/include/js/board.js"></script>
+<script type="text/javascript" src="/hyuna/include/js/jquery-1.12.2.min.js"></script>
+<script type="text/javascript" src="/hyuna/include/js/search.js"></script>
+<script type="text/javascript">
+	$(function() {
+		
+		// 담기버튼 클릭 시 이벤트 처리 */
+		/* $("#addCart").click(function() {
+			$("#cart_quantity").val($("#quantity").val());
+			$("#color_no").val($("#color").val());
+			$("#model_no").val($("#model").val());
+			console.log($("#quantity").val());
+			$("#addCartVal").attr({
+				"method" : "post",
+				"action" : "/cart/cartInsert.do"
+			});
+			
+			$("#addCartVal").submit();
+			
+		});	 */	
+	
+	$("#addCart").click(function() {
+		//alert("1");
+		alert($("#model_no").val($("#model").val()));
+		$("#addCart").submit();
+		addCartCheck();
+		});
+	});
+	function addCartCheck() {		
+		if(hyunaname == '') {
+			$("#color_no").val($("#color").val());
+			$("#model_no").val($("#model").val());
+			$("#cart_quantity").val($("#quantity").val());
+			console.log($("#quantity").val());
+			$("#addCartVal").attr({
+				"method":"post",
+				"action":"/cart/cartInsert.do"
+			});			
+		}
+		else {
+			location.href="/member/loginform.do";
+		}
+	} 
+</script>
 <div id="wrapper">
 	<div class="single-product-area">
 		<div class="container">

@@ -9,4 +9,5 @@ public interface CartDao {
 	public int cartInsert(CartVO cvo);
 	public int cartAllDelete(CartVO cvo);
 	public int chkDelete(Integer cart_no);
+	public int optDetailNo(CartVO cvo);
 }

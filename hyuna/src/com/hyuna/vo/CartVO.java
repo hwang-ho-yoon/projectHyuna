@@ -14,7 +14,25 @@ public class CartVO  {
 	private String model_machine;
 	private String color_detail;
 	
-	
+	//추가--pjs
+		private int model_no;
+		private int color_no;
+		public int getModel_no() {
+			return model_no;
+		}
+
+		public void setModel_no(int model_no) {
+			this.model_no = model_no;
+		}
+
+		public int getColor_no() {
+			return color_no;
+		}
+
+		public void setColor_no(int color_no) {
+			this.color_no = color_no;
+		}
+		//추가--pjs
 	
 	public String getModel_machine() {
 		return model_machine;

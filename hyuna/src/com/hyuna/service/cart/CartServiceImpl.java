@@ -50,5 +50,11 @@ public class CartServiceImpl implements CartService {
 		return result;
 		
 	}
+
+	@Override
+	public int optDetailNo(CartVO cvo) {
+		// TODO Auto-generated method stub
+		return cartDao.optDetailNo(cvo);
+	}
 	
 }
