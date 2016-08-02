@@ -48,7 +48,7 @@ import com.hyuna.vo.board.ReviewVO;
 			rvo.setMem_no((int) session.getAttribute("hyunaMember"));
 			result = reviewservice.reviewInsert(rvo);
 			if (result == 1) {
-				url = "/board/faq/faqList.do";
+				url = "/board/review/reviewList.do";
 			}
 			return "redirect:"+url;
 		}
