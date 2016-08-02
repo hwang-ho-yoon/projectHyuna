@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyuna.dao.qna.QnaDao">
+	<!-- Qna 등록 -->
+	<insert id="qnaInsert" parameterType="qnaInsert">
+		/* qnaInsert */
+		insert into qna (qna_no,QNA_WRITEDATE,QNA_TITLE,QNA_CONTENT,QNA_HIT,QNA_CATEGORY,QNA_FILE1,QNA_MODIFYDATE,MEM_NO,PRD_D_NO)
+	</insert>
+</mapper>
