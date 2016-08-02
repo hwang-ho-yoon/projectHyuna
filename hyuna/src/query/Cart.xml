@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyuna.dao.cart.CartDao">
+	
+	<!-- 장바구니 리스트 조회 -->
+	<select id="cartList" parameterType="cart" resultType="cart">
+		select img_1, prd_name, prd_saleprice, model_machine, color_detail, cart_quantity from cart c 
+			inner join prd_detail pd on c.prd_d_no=pd.prd_d_no
+			inner join model m on pd.model_no = m.model_no 
+			inner join color c on pd.color_no=c.color_no
+			inner join prd_master pm on pd.prd_no=pm.prd_no
+			inner join prd_img pi on pd.prd_no= pi.prd_no
+			inner join member m on m.mem_no=c.mem_no
+			where c.mem_no= #{mem_no}
+			<!-- where c.mem_no= '2222' -->
+	</select>
+	
+	
+	
+	<!-- 장바구니 등록 -->
+	<insert id="cartInsert" parameterType="cart">
+		/* Cart - insertCart */
+		<selectKey keyProperty="cart_no" resultType="int" order="BEFORE">
+			select cart_seq.nextval from dual
+		</selectKey>
+			INSERT INTO CART
+			  (
+			    CART_NO,
+			    CART_QUANTITY,
+			    MEM_NO,
+			    PRD_D_NO
+			  )
+			  VALUES
+			  (
+			    #{cart_no},
+			    #{cart_quantity},
+			    #{mem_no},
+			    1<!-- #{prd_d_no} -->
+			  )
+	</insert>
+	
+	<!-- 장바구니 전체 삭제 -->
+	<delete id="cartAllDelete" parameterType="cart">
+		/* Cart - AllDeleteCart */
+		delete cart where mem_no=#{mem_no}
+	</delete>
+	
+	<!-- 장바구니 선택 삭제 -->
+	<!-- <delete id="chkDelete" parameterType="cart">
+		/* Cart - chkDelete */
+		delete 
+	</delete> -->
+</mapper>

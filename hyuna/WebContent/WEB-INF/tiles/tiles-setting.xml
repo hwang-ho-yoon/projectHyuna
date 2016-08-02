@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="main" template="/WEB-INF/jsp/template/mainLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/template/header.jsp"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/jsp/template/main.jsp"></put-attribute>		
+		<put-attribute name="footer" value="/WEB-INF/jsp/template/footer.jsp"></put-attribute>
+	</definition>
+	
+ 	<definition name="order/*" extends="main">
+		<put-attribute name="body" value="/WEB-INF/jsp/order/{1}.jsp"></put-attribute>
+	</definition>
+		<definition name="board/**" extends="main">
+		<put-attribute name="body" value="/WEB-INF/jsp/board/{1}.jsp"></put-attribute>
+	</definition>
+	 <definition name="cart/*" extends="main">
+		<put-attribute name="body" value="/WEB-INF/jsp/cart/{1}.jsp"></put-attribute>
+	</definition>
+	<definition name="product/*" extends="main">
+		<put-attribute name="body" value="/WEB-INF/jsp/product/{1}.jsp"></put-attribute>
+	</definition>
+<!-- 	<definition name="replies/*" extends="board/*">
+		<put-attribute name="body" value="/board/{1}.jsp"></put-attribute>
+	</definition> -->
+	
+		<!-- 맴버 -->
+	<definition name="member/*" extends="main">
+		<put-attribute name="body" value="/WEB-INF/jsp/member/{1}.jsp"></put-attribute>
+	</definition>
+	
+	
+	<!-- 관리자 페이지 -->
+	<definition name="admin" template="/WEB-INF/adminJsp/template/mainLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/adminJsp/template/header.jsp"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/adminJsp/template/main.jsp"></put-attribute>		
+		<put-attribute name="footer" value="/WEB-INF/adminJsp/template/footer.jsp"></put-attribute>
+	</definition>
+	
+	 <definition name="admin/*" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/adminJsp/admin/{1}.jsp"></put-attribute>
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.hyuna.vo.OrderGroupVO" alias="orderGroup"/>
+		<typeAlias type="com.hyuna.vo.OrderVO" alias="order"/>
+		<typeAlias type="com.hyuna.vo.MemberVO" alias="member"/>
+		<typeAlias type="com.hyuna.vo.CartVO" alias="cart"/>
+		<typeAlias type="com.hyuna.vo.OrderProductVO" alias="orderProduct"/>		
+		<typeAlias type="com.hyuna.vo.ProductVO" alias="prd" />
+		<typeAlias type="com.hyuna.vo.OrderRecallCancelVO" alias="orderRecallCancel" /> 	
+	</typeAliases>
+	<!-- <mappers>
+		<mapper resource="query/Board.xml"/>
+		</mappers> -->
+
+</configuration>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyuna.dao.product.ProductDao">
+<!-- 상품입력 -->
+	<select id="get_prd_seq" resultType="int" >
+			select prd_master_seq.nextval from dual
+	</select>
+		
+	<insert id="productInsert" parameterType="prd">
+		/* productInsert */		
+		insert into prd_master 
+		(PRD_NO, PRD_NAME, PRD_MANUFACTURER, PRD_ORIGINE, PRD_DISPLAY,
+		 PRD_PRCPRICE, PRD_ORGPRICE, PRD_SALEPRICE, PRD_INPUTDATE, PRD_INPUTID,
+		 PRD_DESC)
+		 values 
+		(#{prd_no}, #{prd_name}, #{prd_manufacturer}, #{prd_origine}, #{prd_display},
+		 #{prd_prcprice}, #{prd_orgprice}, #{prd_saleprice}, sysdate, 'hyuna',
+		 #{prd_desc})		
+	</insert>	
+	
+	<insert id="productImageInsert" parameterType="prd">
+		/* ImageInsert */
+		<selectKey keyProperty="img_no" resultType="int" order="BEFORE">
+			select prd_img_seq.nextval from dual
+		</selectKey>
+		insert into prd_img 
+		(IMG_NO, IMG_1, IMG_2, IMG_3, PRD_NO)
+		 values 
+		(#{img_no}, #{img_1}, #{img_2}, #{img_3}, #{prd_no})		
+	</insert>	
+	
+	<insert id="optionInsert" parameterType="prd">
+		/* optionInsert */
+		<selectKey keyProperty="prd_d_no" resultType="int" order="BEFORE">
+			select prd_detail_seq.nextval from dual
+		</selectKey>
+		insert into prd_detail
+		(PRD_D_NO, PRD_NO, PRD_D_DISPLAY, PRD_D_STOCK, COLOR_NO, MODEL_NO)
+		 values 
+		(#{prd_d_no}, #{prd_no}, #{prd_d_display}, #{prd_d_stock}, #{color_no}, #{model_no})		
+	</insert>	
+	
+	<select id="prdRgtList" resultType="prd" parameterType="prd">
+		select prd_no, prd_name, prd_desc, prd_display, prd_saleprice, to_char(prd_inputdate,'YYYY-MM-DD')prd_inputdate from prd_master 
+		where prd_display ='on' or prd_display ='Y' order by prd_no desc
+	</select>
+	
+	<select id="prdMainList" resultType="prd" parameterType="prd">
+		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		  left join prd_img img on m.prd_no = img.prd_no
+         where prd_display ='on' or prd_display ='Y' order by prd_no desc
+	</select>
+	<select id="prdSingleDetail" resultType="prd" parameterType="prd">
+		select m.prd_no, prd_name, prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1, nvl(img.img_3,'') as img_3 from prd_master m
+		  left join prd_img img on m.prd_no = img.prd_no
+		 where (m.prd_display ='on' or m.prd_display ='Y') and  m.prd_no = #{prd_no}
+	</select>
+	
+	<select id="prdMgrDetail" resultType="prd" parameterType="prd">
+	/* prdMgrDetail */
+		select m.prd_no as prd_no, prd_name, prd_manufacturer, prd_origine, prd_display,
+			   prd_prcprice, prd_orgprice, prd_saleprice, prd_desc, 
+		 	   nvl(img.img_1,'') as img_1,   nvl(img.img_2,'') as img_2, nvl(img.img_3,'') as img_3
+		  from prd_master m
+		  left join prd_img img on m.prd_no = img.prd_no
+		 where m.prd_no = #{prd_no}
+	</select>
+	
+	<select id="optList" resultType="prd" parameterType="prd">
+		 select prd_d_no, prd_d_display, color_detail, model_brand, model_machine from prd_detail pd
+		   left join color c on pd.color_no = c.color_no
+		   left join model m on pd.model_no = m.model_no
+		  where pd.prd_no= #{prd_no}
+	</select>
+	
+	<update id="prdUpdate" parameterType="prd">
+		/* prdUpdate */
+		update prd_master 
+		   set prd_name=#{prd_name} 
+			 , prd_manufacturer=#{prd_manufacturer}
+			 , prd_origine=#{prd_origine}
+			 , prd_display=#{prd_display}
+			 , prd_prcprice=#{prd_prcprice}
+			 , prd_orgprice=#{prd_orgprice}
+			 , prd_saleprice=#{prd_saleprice}
+			 , prd_desc=#{prd_desc}
+			 , prd_updatedate=sysdate
+			 , prd_updateid='hyuna'				 					
+		 where prd_no=#{prd_no}					
+	</update>
+	<update id="prdImageUpdate" parameterType="prd">
+		/* prdImageUpdate */
+		update prd_img 
+		   <set> 
+			 <if test ="img_1 != ''">
+			 img_1=#{img_1},
+			 </if>
+			 <if test ="img_2 != ''">
+			 img_2=#{img_2},
+			 </if>
+			 <if test ="img_3 != ''">
+			 img_3=#{img_3}
+			 </if>
+			 </set>			 					
+		 where prd_no=#{prd_no}					
+	</update>
+	
+	</mapper>

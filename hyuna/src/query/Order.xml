@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyuna.dao.order.OrderDao">
+	<insert id="orderGroupInsert" parameterType="orderGroup" useGeneratedKeys="true" keyProperty="ogr_no" keyColumn="ogr_no">
+		insert into orderGroup(ogr_no, ogr_reciName, ogr_reciTel, ogr_reciZipCode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no) values(orderGroupSeq.nextval, #{ogr_reciName}, #{ogr_reciTel}, #{ogr_reciZipCode}, #{ogr_reciAddr1}, #{ogr_reciAddr2}, #{ogr_payPlan}, #{ogr_accHold}, #{ogr_accHoldNo}, #{ogr_approvalNo}, #{ogr_message}, #{ogr_state}, #{mem_no})         
+	</insert>
+	
+	<insert id="orderProductInsert" parameterType="orderProduct">
+		insert into orderProduct(ord_no, ord_amount, ogr_no, prd_d_no) values(orderProductSeq.nextval, #{ord_amount}, #{ogr_no}, #{prd_d_no})
+	</insert>
+	
+	<select id="orderGroupDetail" parameterType="int" resultType="orderGroup">
+		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where ogr_no = #{ogr_no}
+	</select>
+	
+	<select id="selectOrderGroups" parameterType="order" resultType="orderGroup">
+		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where mem_no = #{mem_no} and (ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3})
+	</select>
+	
+	<select id="selectOrderProducts" parameterType="int" resultType="orderProduct">
+		select ord_no, ord_amount, ogr_no, prd_d_no from orderProduct where ogr_no = #{ogr_no} 
+	</select>
+	
+	<insert id="orderCancelRecallInsert" parameterType="orderRecallCancel">
+		insert into recallcancel(rnc_no, rnc_desc, rnc_gbn, ogr_no) values(recallcancelSeq.nextval, #{rnc_desc}, #{rnc_gbn}, #{ogr_no})
+	</insert>
+	
+	<update id="orderGroupUpdate" parameterType="orderRecallCancel">
+		update orderGroup set ogr_state = #{rnc_gbn} where ogr_no = #{ogr_no}
+	</update>
+	
+	<select id="selectOrderRecallCancel" parameterType="int" resultType="orderRecallCancel">
+		select rnc_no, rnc_date, rnc_desc, rnc_gbn, ogr_no from recallcancel where ogr_no = #{ogr_no}
+	</select>
+</mapper>

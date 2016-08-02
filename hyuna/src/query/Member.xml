@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyuna.dao.member.MemberDao">
+	<!-- 회원 입력 -->
+	<insert id="memberInsert" parameterType="member">
+		/* memberInsert */
+		insert into member (mem_no, mem_id, mem_pwd, mem_name, mem_ask, mem_answer, mem_post, mem_address1, mem_address2, mem_mailCheck,
+		mem_tel, mem_mail) values (member_seq.nextval, #{mem_id}, #{mem_pwd}, #{mem_name}, #{mem_ask}, #{mem_answer},
+		#{mem_post}, #{mem_address1}, #{mem_address2}, #{mem_mailCheck}, #{mem_tel}, #{mem_mail}) 
+	</insert>
+	
+	<!-- 아이디 중복확인 -->
+	<select id="idCheck" parameterType="member" resultType="int">
+		/* idCheck */
+		select nvl((select 1 from member where mem_id = #{mem_id}),0) as state from dual
+	</select>
+	
+	<!-- 약관내용 보여주기 -->
+	<select id="termsList" resultType="com.hyuna.vo.TermsVO">
+		/* termsList */
+		select ter_no, ter_title, ter_content from terms where ter_useCheck = 'y'
+	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findidOk" resultType="member" parameterType="member">
+		/* findidOk */		
+		select mem_id from member where mem_name = #{mem_name} and mem_mail = #{mem_mail} and mem_tel = #{mem_tel} 
+	</select>
+	
+	<!-- 약관동의를위해 회원조회 -->
+	<select id="memberSelect" resultType="member" parameterType="member">
+		/* memberSelect */
+		select mem_no from member where mem_id = #{mem_id}
+	</select>
+	
+	<!-- 약관 동의등록 -->
+	<insert id="agreeInsert" parameterType="com.hyuna.vo.Terms_agreeVO">
+		/* agreeInsert */
+		insert into Terms_agree (agr_no, ter_no, mem_no, agr_agreeCheck) values (agree_seq.nextval, #{ter_no}, #{mem_no}, #{agr_agreeCheck})
+	</insert>
+	
+	<!-- 로그인 아이디비밀번호 체크 -->
+	<select id="loginCheck" parameterType="member" resultType="member">
+		/* loginCheck */
+		select mem_no, mem_id, mem_pwd from member where  mem_id = #{mem_id} and mem_pwd = #{mem_pwd} and mem_outcheck is null
+	</select>
+	
+	<!-- 비밀번호 찾기  -->
+	<update id="memberPw" parameterType="member">
+		/* findpwOk */
+		update member set mem_pwd = #{mem_pwd} where mem_id = #{mem_id} and mem_name = #{mem_name} and mem_mail = #{mem_mail} 
+		and mem_ask = #{mem_ask} and mem_answer = #{mem_answer}		
+	</update>
+	
+	<!-- 비밀번호찾기위해 메일조회 -->
+	<select id="selectEmail" parameterType="member" resultType="member">
+		/* selectEmail */
+		select mem_mail from member where mem_id = #{mem_id}
+	</select>
+	
+	<!-- 쓰로잉조회 -->
+	<select id="throwMember" resultType="member" parameterType="int">
+		/* throwMember */
+		select * from member where mem_no = #{mem_no}
+	</select>
+	
+	<!-- 비밀번호체크 -->
+	<select id="pwdCheck" resultType="int" parameterType="member">
+		/* pwdCheck */
+		select nvl((select 1 from member where mem_pwd = #{mem_pwd} and mem_no = #{mem_no}),0) as state from dual
+	</select>
+	
+	<!-- 회원정보수정 -->
+	<update id="memberUpdate" parameterType="member">
+		/* memberUpdate */
+		update member set mem_ask = #{mem_ask}, mem_answer = #{mem_answer}, mem_post = #{mem_post}, mem_address1 = #{mem_address1}, 
+		mem_address2 = #{mem_address2}, mem_tel = #{mem_tel}, mem_mail = #{mem_mail}, mem_mailCheck = #{mem_mailCheck} ,mem_updatedate = sysdate 
+		<if test="mem_pwd !=null and mem_pwd !=''">,mem_pwd = #{mem_pwd} </if> 
+		where mem_no = #{mem_no}		
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<update id="memberOut" parameterType="member">
+		/* memberOut */
+		update member set mem_outcheck = '탈퇴', mem_outdate = sysdate where mem_no = #{mem_no}
+	</update>
+</mapper>
