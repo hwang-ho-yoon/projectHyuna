@@ -2,9 +2,11 @@ package com.hyuna.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class QnaVO {
+import com.hyuna.common.vo.CommonVO;
+
+public class QnaVO extends CommonVO{
 	private int qna_no;
-	private String qna_writeday;
+	private String qna_writedate;
 	private String qna_title;
 	private String qna_content;
 	private int qna_hit;
@@ -14,18 +16,26 @@ public class QnaVO {
 	private int mem_no;
 	private int prd_d_no;
 	private MultipartFile file;
+
+	private String mem_name;
 	
+	public String getMem_name() {
+		return mem_name;
+	}
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
 	public int getQna_no() {
 		return qna_no;
 	}
 	public void setQna_no(int qna_no) {
 		this.qna_no = qna_no;
 	}
-	public String getQna_writeday() {
-		return qna_writeday;
+	public String getQna_writedate() {
+		return qna_writedate;
 	}
-	public void setQna_writeday(String qna_writeday) {
-		this.qna_writeday = qna_writeday;
+	public void setQna_writedate(String qna_writedate) {
+		this.qna_writedate = qna_writedate;
 	}
 	public String getQna_title() {
 		return qna_title;
