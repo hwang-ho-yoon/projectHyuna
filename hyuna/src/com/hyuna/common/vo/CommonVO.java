@@ -9,18 +9,24 @@ public class CommonVO {
 
 	private String search = "";
 	private String keyword = "";
+	private String keyword1 = "";
+	
+	private int rownum;
 
 	private String order_by;
-	private String order_sc;
+	private String order_sc;	
 	
-	//월별검색
-	private String month;
-	
-	public String getMonth() {
-		return month;
+	public int getRownum() {
+		return rownum;
 	}
-	public void setMonth(String month) {
-		this.month = month;
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+	public String getKeyword1() {
+		return keyword1;
+	}
+	public void setKeyword1(String keyword1) {
+		this.keyword1 = keyword1;
 	}
 	public String getPage() {
 		return page;

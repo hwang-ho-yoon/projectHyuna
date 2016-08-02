@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hyuna.dao.admin.AdminDao;
 import com.hyuna.vo.AdminVO;
 import com.hyuna.vo.MemberVO;
-import com.hyuna.vo.TermsVO;
 import com.hyuna.vo.Terms_agreeVO;
 @Service
 @Transactional

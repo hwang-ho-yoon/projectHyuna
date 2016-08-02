@@ -19,8 +19,7 @@ public class MemberVO extends CommonVO{
 	private String mem_registdate;
 	private String mem_outcheck;
 	private String mem_outdate;
-	
-	
+
 	public String getMem_updatedate() {
 		return mem_updatedate;
 	}

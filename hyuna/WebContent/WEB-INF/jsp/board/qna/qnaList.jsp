@@ -20,38 +20,32 @@
 		      </tr>
 		    </thead>
 		    <tbody>
-		     	<%-- <c:choose>
-						<c:when test="${not empty faqList }">
-							<c:forEach var = "faq" items="${faqList}" varStatus="status">
-							<tr data-num="${faq.b_num }">
-								<td>${faq.faq_no }</td> <!-- 번호 -->
+		     	<c:choose>
+						<c:when test="${not empty qnaList }">
+							<c:forEach var = "faq" items="${qnaList}" varStatus="status">
+							<tr data-num="${qna.qna_no }">
+								<td>${qna.qna_no }</td> <!-- 번호 -->
 								<td>
-									<span>${faq.faq_title }</span>
+									<span>${qna.qna_title }</span>
 								</td>
-								<td>${faq.faq_content}</td>
-								<td>${faq.faq_writedate }</td>
-								<td>${faq.faq_hit }</td>
+								<td>${qna.qna_content}</td>
+								<td>${qna.qna_writedate }</td>
+								<td>${qna.qna_hit }</td>
 							</tr>
 							</c:forEach>
 						</c:when>
-						<c:otherwise> --%>
+						<c:otherwise>
 							<tr>
 								<td colspan="7">등록된 게시물이 존재하지 않습니다</td>
 							</tr>
-					<%-- 	</c:otherwise>
-					</c:choose> --%>
+				 	</c:otherwise>
+					</c:choose>
 		    </tbody>
 		  </table>
 		</form>
-		<div class="col-md-1 col-md-offset-5" id='page'>
-		<a href="#">&lt;&lt;</a><a href="#">&nbsp;1&nbsp;</a><a href="#">&nbsp;2&nbsp;</a><a href="#">&nbsp;3&nbsp;</a>
-		<a href="#">4&nbsp;</a><a href="#">&nbsp;5&nbsp;</a><a href="#">&nbsp;6&nbsp;</a><a href="#">&nbsp;7&nbsp;</a>
-		<a href="#">8&nbsp;</a><a href="#">&nbsp;9&nbsp;</a><a href="#">10&nbsp;</a>
-		<a href="#">&gt;&gt;</a>
-		</div>
 		<form>
-			<div class="col-md-1 col-md-offset-3">
-			<input type="button" class="btn btn-info" id="write" value="글쓰기">
+			<div class="col-md-1 col-md-offset-11">
+			<input type="button" class="btn btn-info" id="qna_write" value="글쓰기">
 			</div>
 		</form>
 		<div class="bottom">
@@ -67,13 +61,13 @@
 		</form>
 		</div>
 		</div>
-		<%-- <div id = "boardPage">
+		<div id = "boardPage">
 			<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}"/>
-		</div> --%>
+		</div>
 		</div>
 <script>
 	$(function(){
-		$("#write").click(function(){
+		$("#qna_write").click(function(){
 			location.href = "/board/qna/qnaWrite.do";
 		})
 	})

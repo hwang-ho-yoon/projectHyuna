@@ -37,7 +37,8 @@ public class AdminController {
 	//회원목록 테이블
 	@RequestMapping("/memberList")
 	public String memberList(@ModelAttribute MemberVO mvo, Model model){
-		logger.info("멤버리스트 호출");		
+		logger.info("멤버리스트 호출");
+		System.out.println("로우넘"+mvo.getRownum());
 		if(mvo.getOrder_by()==null)mvo.setOrder_by("mem_no");
 		if(mvo.getOrder_sc()==null)mvo.setOrder_sc("DESC");
 

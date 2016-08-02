@@ -5,8 +5,16 @@
 
 <script type="text/javascript">		
 	$(function(){
+
 		$("#my").click(function(){
-			$("#myModal").modal('show');			
+			var a = "${not empty sessionScope.hyunaMember }";
+			if(a == "false"){
+				alert("로그인이 필요합니다 로그인을 해주세요.");
+				location.href = "/member/loginform.do";			
+			}else{
+				$("#myModal").modal('show');			
+			}
+			
 		});
 		$("#pwdchkBtn").click(function(){
 			$.ajax({
@@ -107,7 +115,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="/include/image/logo.png"></a></h1>
+                        <h1><a href="/index.jsp"><img src="/include/image/logo.png"></a></h1>
                     </div>
                 </div>
             </div>

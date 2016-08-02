@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/board/qna")
 public class Qnacontroller {
 
-	@RequestMapping("/qnaList.do")
+	/*@RequestMapping("/qnaList.do")
 	public String listDepartment() {
 		System.out.println("TESST");
 		return "board/qna/qnaList";
@@ -21,5 +21,5 @@ public class Qnacontroller {
 	public String qnadetail(){
 		System.out.println("detailtest");
 		return "board/qna/qnaDetail";
-	}
+	}*/
 }

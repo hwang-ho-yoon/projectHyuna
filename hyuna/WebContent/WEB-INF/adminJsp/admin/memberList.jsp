@@ -32,14 +32,27 @@
 			});
 			$("#detailForm").submit();			
 		});
-		/* 검색 후 검색 대상과 검색 단어 출력 */
-		if("<c:out value='${data.keyword}'/>"!=""){
-			$("#keyword").val("<c:out value='${data.keyword}'/>");
-			$("#search").val("<c:out value='${data.search}'/>");
-		}
 		
-		$("#month").val("<c:out value='${data.month}'/>");
-				
+		$("#mem_registdate").hide();
+		$("#mem_registdate1").hide();
+		
+		/* 검색 후 검색 대상과 검색 단어 출력 */
+		if("<c:out value='${data.keyword}'/>"!="" && "<c:out value='${data.keyword}'/>".indexOf('-')==-1){			
+			$("#keyword").val("<c:out value='${data.keyword}'/>");
+			$("#search").val("<c:out value='${data.search}'/>");			
+		}
+		if("<c:out value='${data.keyword}'/>".indexOf('-')!=-1){			
+			//$("#keyword").val("<c:out value='${data.keyword}'/>");
+			$("#keyword").hide();
+			$("#keyword").val("<c:out value='${data.keyword}'/>");
+			$("#keyword1").val("<c:out value='${data.keyword1}'/>");
+			$("#search").val("<c:out value='${data.search}'/>");
+			$("#mem_registdate").show();						
+			$("#mem_registdate1").show();
+			$("#mem_registdate").val("<c:out value='${data.keyword}'/>");						
+			$("#mem_registdate1").val("<c:out value='${data.keyword1}'/>");
+		} 
+			
 		/* 한 페이지에 보여줄 레코드 수 조회 후 선택한 값 그대로 출력 */
 		if("<c:out value='${data.pageSize}'/>"!=""){
 			$("#pageSize").val("<c:out value='${data.pageSize}'/>");			
@@ -49,18 +62,37 @@
 		$("#search").change(function(){			
 			if($("#search").val()=="all"){
 				$("#keyword").val("전체 데이터 조회합니다");
-			}else if($("#search").val()!="all"){
+				$("#mem_registdate").hide();
+				$("#mem_registdate1").hide();
+				$("#keyword").show();
+			}else if($("#search").val()=="mem_name" || $("#search").val()=="mem_id" ){
 				$("#keyword").val("");
-				$("#keyword").focus();				
+				$("#keyword").focus();
+				$("#mem_registdate").hide();
+				$("#mem_registdate1").hide();
+				$("#keyword").show();
+			}else if($("#search").val()=="mem_registdate"){
+				$("#keyword").hide();	
+				$("#mem_registdate").show();				
+				$("#mem_registdate").focus();
+				$("#mem_registdate1").show();
 			}
 		});
 		
 		/* 검색 버튼 클릭시 처리 이벤트 */
-		$("#searchData").click(function(){
+		$("#searchData").click(function(){			
 			if($("#search").val()!="all"){
 				
 			}
 			goPage(1);
+		});
+		
+		$("#mem_registdate").change(function(){			
+			$("#keyword").val($("#mem_registdate").val());						
+		});
+		
+		$("#mem_registdate1").change(function(){			
+			$("#keyword1").val($("#mem_registdate1").val());			
 		});
 		
 		/* 엑셀다운로드 버튼 클릭시 처리 이벤트 */
@@ -77,9 +109,6 @@
 			goPage(1);
 		});
 		
-		$("#month").change(function(){			
-			goPage(1);
-		});
 		
 		//월별검색
 		/* $("#monthSearch").click(function(){			
@@ -108,6 +137,12 @@
 		if($("#search").val()=="all"){
 			$("#keyword").val("");
 		}
+  		if($("#search").val()=="mem_registdate"){  			
+			$("#keyword").hide();			
+			$("#mem_registdate").show();				
+			$("#mem_registdate").focus();
+			$("#mem_registdate1").show();
+		}	 		
 		$("#page").val(page);
 		$("#f_search").attr({
 			"method":"get",
@@ -123,8 +158,7 @@
 	<div class="contentTit" class="col-md-12"><h3>회원 리스트</h3></div>
 		<div>
 		<form id="m_form">		
-			총 회원수:${memTotal } 오늘 가입:${today } 어제 가입:${yesterday } 일주일간:${week } 한달간:${month }
-
+			<pre>총 회원수:${memTotal }	오늘 가입수:${today }	어제 가입수:${yesterday }	일주일간:${week }	한달간:${month }			검색된 회원수: ${total }</pre>
 		</form>			
 		</div>
 		
@@ -132,8 +166,7 @@
 		<form id="detailForm" name="detailForm">
 			<input type="hidden"  name="mem_no" id="mem_no">
 		 	<input type="hidden"  name="page" value="${data.page }">
-			<input type="hidden"  name="pageSize" value="${data.pageSize }">
-			<input type="hidden" name="month" value="${data.month }">
+			<input type="hidden"  name="pageSize" value="${data.pageSize }">			
 		</form> 
 		
 		<!-- 검색기능 시작 -->
@@ -150,16 +183,19 @@
 								<option value="all">전체</option> 
 								<option value="mem_name">이름</option> 
 								<option value="mem_id">아이디</option>								
-								<option value="mem_registdate">아이디</option>								
+								<option value="mem_registdate">날짜</option>								
 							</select>
 						</td>
 						<td>	
-							<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요" class="input-sm form-control">&nbsp;
+							<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요" class="input-sm form-control" >&nbsp;
+							<input type="hidden" name="keyword1" id="keyword1" >
 							<button type="button" id="searchData" class="btn btn-default btn-sm" style="margin: 0">검색</button>
-						</td>	
-						
-						<td id="btd2" style="width: 40%">
-						<button type="button" id="excelDown" class="btn btn-default btn-sm" style="margin: 0">엑셀 다운로드</button>
+							<input type="date" id="mem_registdate" name="mem_registdate" class="input-sm form-control" style="margin: 0">							
+							<input type="date" id="mem_registdate1" name="mem_registdate1" class="input-sm form-control" style="margin: 0">
+																					
+						</td>						
+						<td id="btd2" style="width: 40%; padding-left: 50px">
+						<!-- <button type="button" id="excelDown" class="btn btn-default btn-sm" style="margin: 0">엑셀 다운로드</button> -->
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한페이지에						
 							<select id="pageSize" name="pageSize" class="form-control input-sm" style="height: 30px; width: 80px">
 								<option value="5">5줄</option>
@@ -168,22 +204,7 @@
 								<option value="20">20줄</option>
 								<option value="30">30줄</option>
 								<option value="50">50줄</option>
-							</select>
-							<select id="month" name="month" style="height: 25px">
-								<option value="" selected="selected">-전체-</option>
-								<option value="/01/">1월</option>
-								<option value="/02/">2월</option>
-								<option value="/03/">3월</option>
-								<option value="/04/">4월</option>
-								<option value="/05/">5월</option>
-								<option value="/06/">6월</option>
-								<option value="/07/">7월</option>
-								<option value="/08/">8월</option>
-								<option value="/09/">9월</option>
-								<option value="/10/">10월</option>
-								<option value="/11/">11월</option>
-								<option value="/12/">12월</option>
-							</select>														
+							</select>																				
 						</td>
 					</tr>					
 				</table>
@@ -216,10 +237,10 @@
 							<c:otherwise>▲</c:otherwise>
 						</c:choose>
 					</a></th>
-					<th><a href="javascript:setOrder('mem_registdate');">아이디
+					<th><a href="javascript:setOrder('mem_id');">아이디
 						<c:choose>
-							<c:when test="${data.order_by=='mem_registdate' and data.order_sc=='ASC' }">▲</c:when>
-							<c:when test="${data.order_by=='mem_registdate' and data.order_sc=='DESC' }">▼</c:when>
+							<c:when test="${data.order_by=='mem_id' and data.order_sc=='ASC' }">▲</c:when>
+							<c:when test="${data.order_by=='mem_id' and data.order_sc=='DESC' }">▼</c:when>
 							<c:otherwise>▲</c:otherwise>
 						</c:choose>
 					</a></th>

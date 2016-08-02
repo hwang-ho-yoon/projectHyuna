@@ -89,7 +89,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="/include/image/logo.png"></a></h1>
+                        <h1><a href="/adminIndex.jsp"><img src="/include/image/hyun.png"></a></h1>
                     </div>
                 </div>
             </div>
