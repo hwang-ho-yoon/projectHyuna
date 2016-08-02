@@ -32,8 +32,8 @@
 </script>	 
 <div id="wrapper">
 	<div class="bottom">
-		<form id="qna_write">
-			<table class="table table table-bordered" enctype="multipart/form-data">			
+		<form id="qna_write" enctype="multipart/form-data">
+			<table class="table table table-bordered" >			
 				<tr>
 					<td width="10%"><label class="control-label">제목</label></td>
 					<td width="15%">
@@ -45,13 +45,13 @@
 						</select>
 					</td>
 					<td width="75%">
-						<input type="text"  name="faq_title" class="form-control" id="qna_title" name="qna_title">
+						<input type="text"  class="form-control" id="qna_title" name="qna_title">
 					</td>
 				</tr>
 				<tr>
 					<td width="10%"><label class="control-label">내용</label></td>
 					<td colspan="2">
-						<textarea  name="text_area" class="form-control"  rows="10" style='resize: none; ' id="qna_content" name="qna_content"></textarea>		               
+						<textarea class="form-control"  rows="10" style='resize: none; ' id="qna_content" name="qna_content"></textarea>		               
 		            </td>
 	            </tr>
 	            <tr>
