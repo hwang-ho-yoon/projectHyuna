@@ -34,5 +34,11 @@ public class CartDaoImpl implements CartDao {
 	public int chkDelete(Integer cart_no) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int optDetailNo(CartVO cvo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("optDetailNo");
 	}	
 }
