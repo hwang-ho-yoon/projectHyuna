@@ -1,13 +1,15 @@
 package com.hyuna.vo.board;
 
-public class FaqVO {
+import com.hyuna.controller.board.common.CommonVO;
+
+public class FaqVO extends CommonVO{
 	private int faq_no = 0;
 	private String faq_writedate = ""; 
 	private String faq_content = "";
 	private String faq_title = "";
-	private String faq_hit = "";
+	private int faq_hit = 0;
 	private String faq_modifydate = "";
-	private String amd_id = "";
+	private String adm_id = "";
 	
 	
 	public int getFaq_no() {
@@ -34,11 +36,11 @@ public class FaqVO {
 	public void setFaq_title(String faq_title) {
 		this.faq_title = faq_title;
 	}
-	public String getFaq_hit() {
+	public int getFaq_hit() {
 		return faq_hit;
 	}
-	public void setFaq_hit(String faq_hit) {
-		this.faq_hit = faq_hit;
+	public int setFaq_hit(int faq_hit) {
+		return this.faq_hit = faq_hit;
 	}
 	public String getFaq_modifydate() {
 		return faq_modifydate;
@@ -46,12 +48,13 @@ public class FaqVO {
 	public void setFaq_modifydate(String faq_modifydate) {
 		this.faq_modifydate = faq_modifydate;
 	}
-	public String getAmd_id() {
-		return amd_id;
+	public String getAdm_id() {
+		return adm_id;
 	}
-	public void setAmd_id(String amd_id) {
-		this.amd_id = amd_id;
+	public void setAdm_id(String adm_id) {
+		this.adm_id = adm_id;
 	}
+	
 	
 	
 }

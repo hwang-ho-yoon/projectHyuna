@@ -38,9 +38,7 @@
     <link rel="stylesheet" href="/include/css/elements/bootstrap-switch.min.css">
 
 	
-	<!-- 게시판 css-->
-    
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<!-- 게시판 css-->
 	<style>
 	#list{
 		 width:100%;
@@ -75,21 +73,34 @@
 		}
  	</style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
-  <!-- Include Editor style. -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.3.4/css/froala_editor.min.css" rel="stylesheet" type="text/css" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.3.4/css/froala_style.min.css" rel="stylesheet" type="text/css" />
-<!-- Include JS file. -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.3.4/js/froala_editor.min.js"></script>
+
 
 
 <script>
-		$(function() {
-	 	$('#edit').froalaEditor()
-	     });
-</script>
-  <!-- 게시판 css -->
+		$(function(){
+			$("#btn_faq_write").click(function(){
+				$("#faq_writeform").attr({
+					"method" : "post",
+					"action" : "/board/faq/faqInsert.do"
+				});
+				$("#faq_writeform").submit();
+				
+				
+			})
+		
+			
+			$("#btn_faq_list").click(function(){
+				location.href = "/board/faq/faqList.do";
+			});
+		
+			$("#btn_faq_reset").click(function(){
+				$("#faq_content").html("");
+			});	
+		})
+</script>		
+
+
+
 	
     
 	<!-- jQuery와 Postcodify를 로딩한다 -->

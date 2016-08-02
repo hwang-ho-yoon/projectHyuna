@@ -5,7 +5,7 @@
 	 <%@ page trimDirectiveWhitespaces="true" %>
 <div id="wrapper">
 	<div class="bottom">
-		<form id="faq_write">
+		<form id="faq_writeform">
 			<table class="table table table-bordered">
 				<tr>
 					<td width="10%">제목</td>
@@ -29,20 +29,6 @@
 		</form>
 	</div>
 </div>
-<script>
-	$(function(){
-		$("#btn_faq_list").click(function(){
-			location.href = "/board/faq/faqList.do";
-		});
-		$("#btn_faq_write").click(function(){
-			location.href = "/board/faq/faqList.do";
-		});
-		$("#btn_faq_reset").click(function(){
-			$("#faq_content").html("");
-		});
-		
-	})
-</script>
 
 
 

@@ -6,6 +6,9 @@
 	<%@ taglib prefix="tag" uri="/WEB-INF/tld/custom_tag.tld" %>
 	<div id="wrapper">
 		<div class="board">
+		<form id="detailForm">
+		<input type="hidden" id="faq_no" name="faq_no">
+		</form>
 		<form>
 			<table class="table table-bordered">
 		    <thead>
@@ -18,17 +21,17 @@
 		      </tr>
 		    </thead>
 		    <tbody>
-		     	<%-- <c:choose>
+		     	<c:choose>
 						<c:when test="${not empty faqList }">
 							<c:forEach var = "faq" items="${faqList}" varStatus="status">
-							<tr data-num="${faq.b_num }">
+							<tr data-num="${faq.faq_no }">
 								<td>${faq.faq_no }</td> <!-- 번호 -->
 								<td>
-									<span>${faq.faq_title }</span>
+									<span class="goDetail">${faq.faq_title }</span>
 								</td>
-								<td>${faq.faq_content}</td>
+								<td>${faq.adm_id}</td>
 								<td>${faq.faq_writedate }</td>
-								<td>${faq.faq_hit }</td>
+								<td>${faq.faq_hit}</td>
 							</tr>
 							</c:forEach>
 						</c:when>
@@ -36,19 +39,17 @@
 							<tr>
 								<td colspan="7">등록된 게시물이 존재하지 않습니다</td>
 							</tr>
-					<%-- 	</c:otherwise>
-					</c:choose> --%>
+					</c:otherwise>
+					</c:choose>
 		    </tbody>
 		  </table>
 		</form>
-		<div class="col-md-1 col-md-offset-5" id='page'>
-		<a href="#">&lt;&lt;</a><a href="#">&nbsp;1&nbsp;</a><a href="#">&nbsp;2&nbsp;</a><a href="#">&nbsp;3&nbsp;</a>
-		<a href="#">4&nbsp;</a><a href="#">&nbsp;5&nbsp;</a><a href="#">&nbsp;6&nbsp;</a><a href="#">&nbsp;7&nbsp;</a>
-		<a href="#">8&nbsp;</a><a href="#">&nbsp;9&nbsp;</a><a href="#">10&nbsp;</a>
-		<a href="#">&gt;&gt;</a>
+	<%-- 	<div class="col-md-1 col-md-offset-5" id='boardPage'>
+			<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}"/>
+		</div> --%>
 		</div>
 		<form>
-			<div class="col-md-1 col-md-offset-3">
+			<div class="col-md-1 col-md-offset-11">
 			<input type="button" class="btn btn-info" id="write" value="글쓰기">
 			</div>
 		</form>
@@ -65,20 +66,22 @@
 		</form>
 		</div>
 		</div>
-		<%-- <div id = "boardPage">
-			<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}"/>
-		</div> --%>
-		</div>
+		
 <script>
 	$(function(){
-		
-		
-		
-		
-		
-		
 		$("#write").click(function(){
 			location.href = "/board/faq/faqWrite.do";
 		})
+		$(".goDetail").click(function() {
+			var faq_no = $(this).parents("tr").attr("data-num");
+			$("#faq_no").val(faq_no);
+			console.log("글번호 : " + faq_no);
+			// 상세 페이지로 이동하기 위해 form 추가 (id : detailform)
+			$("#detailForm").attr({
+				"method" : "get",
+				"action" : "/board/faq/faqDetail.do" 
+			});
+			$("#detailForm").submit();
+		});
 	})
 </script>
