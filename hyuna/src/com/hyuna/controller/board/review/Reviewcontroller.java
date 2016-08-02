@@ -2,7 +2,6 @@ package com.hyuna.controller.board.review;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +38,13 @@ import com.hyuna.vo.board.ReviewVO;
 		}
 		
 		@RequestMapping(value="/reviewInsert", method=RequestMethod.POST)
-		public String faqInsert(@ModelAttribute ReviewVO rvo, HttpSession session) throws IOException {
+		public String faqInsert(@ModelAttribute ReviewVO rvo) throws IOException {
 			logger.info("reviewInsert 호출성공");
 			
 			int result = 0;
 			String url = "";
-			System.out.println((String)session.getAttribute("hyunaMember"));
-			rvo.setMem_no((int) session.getAttribute("hyunaMember"));
+			/*System.out.println((int)session.getAttribute("hyunaMember"));
+			rvo.setMem_no((int) session.getAttribute("hyunaMember"));*/
 			result = reviewservice.reviewInsert(rvo);
 			if (result == 1) {
 				url = "/board/review/reviewList.do";
