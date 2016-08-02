@@ -8,7 +8,9 @@
 		<typeAlias type="com.hyuna.vo.CartVO" alias="cart"/>
 		<typeAlias type="com.hyuna.vo.OrderProductVO" alias="orderProduct"/>		
 		<typeAlias type="com.hyuna.vo.ProductVO" alias="prd" />
-		<typeAlias type="com.hyuna.vo.OrderRecallCancelVO" alias="orderRecallCancel" /> 	
+		<typeAlias type="com.hyuna.vo.OrderRecallCancelVO" alias="orderRecallCancel" />
+		<typeAlias type="com.hyuna.vo.board.FaqVO" alias="Faq" /> 	
+		<typeAlias type="com.hyuna.vo.board.ReviewVO" alias="review" /> 	 	
 	</typeAliases>
 	<!-- <mappers>
 		<mapper resource="query/Board.xml"/>
