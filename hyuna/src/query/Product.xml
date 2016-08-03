@@ -106,13 +106,13 @@
 	</update>
 	
 	<!-- product전체정보 Xml -->
-	<select id="prdAllList" resultType="prd" parameterType="prd">
+	<select id="prdAllList" resultType="prdAll" parameterType="prdAll">
 		 select d.*, m.*, img.*, mo.*, co.* from prd_detail d
 	   	   left join prd_master m on d.prd_no = m.prd_no
 	    	   left join prd_img img on img.prd_no = m.prd_no
 	           left join model mo on d.model_no=mo.model_no 
 	           left join color co on d.color_no=co.color_no 
-	   		  where d.prd_d_no = #{prd_d_no};
+	   		  where d.prd_d_no = #{prd_d_no}
 	</select>
 	
 	</mapper>
