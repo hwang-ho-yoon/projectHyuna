@@ -153,7 +153,7 @@
 	                            <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">5S</a></li>
+                                <li><a href="/product/prdMainList.do">5S</a></li>
                                 <li><a href="#">6S</a></li>
                                 <li><a href="#">7S</a></li>
                             </ul>
