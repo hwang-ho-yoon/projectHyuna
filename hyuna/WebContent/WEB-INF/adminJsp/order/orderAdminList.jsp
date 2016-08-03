@@ -77,8 +77,9 @@
 				<th>주문번호</th>
 				<th>주문 상품 정보</th>
 				<th>상품 금액(수량)</th>
+				<th>신청자</th>
 				<th>주문상태</th>
-				<th>반품/취소</th>
+				<th>승인/배송</th>
 			</tr>
 				<!-- 데이터 출력 -->
 				<c:choose>
@@ -101,6 +102,7 @@
 										</c:if>
 									</c:forEach>
 								</td>
+								<td style="padding-top: 14px">${orderGroup.mem_id}</td>
 								<td style="padding-top: 14px">
 									<c:choose>
 										<c:when test="${orderGroup.ogr_state == 'standby_deposit'}">

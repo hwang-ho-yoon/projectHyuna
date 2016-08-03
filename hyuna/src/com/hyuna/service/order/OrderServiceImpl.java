@@ -69,4 +69,9 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.selectOrderRecallCancel(group_no);
 	}
 
+	@Override
+	public int orderListCnt(OrderVO orderVO) {
+		return orderDao.orderListCnt(orderVO);
+	}
+
 }

@@ -1,6 +1,8 @@
 package com.hyuna.vo;
 
-public class OrderVO {
+import com.hyuna.common.vo.CommonVO;
+
+public class OrderVO extends CommonVO{
 	private int mem_no;
 	private String ogr_state1;
 	private String ogr_state2;

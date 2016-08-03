@@ -51,4 +51,9 @@ public class OrderAdminDaoImpl implements OrderAdminDao{
 	public int orderGroupUpdate(OrderRecallCancelVO recallCancel) {
 		return session.update("orderGroupUpdate", recallCancel);
 	}
+
+	@Override
+	public int updateProduct(OrderProductVO orderProductVO) {
+		return session.update("updateProduct", orderProductVO);
+	}
 }

@@ -54,4 +54,9 @@ public class OrderAdminServiceImpl implements OrderAdminService{
 		return orderAdminDao.orderGroupUpdate(recallCancel);
 	}
 
+	@Override
+	public int updateProduct(OrderProductVO orderProductVO) {
+		return orderAdminDao.updateProduct(orderProductVO);
+	}
+
 }

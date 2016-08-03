@@ -25,4 +25,6 @@ public interface OrderDao {
 
 	public OrderRecallCancelVO selectOrderRecallCancel(int group_no);
 
+	public int orderListCnt(OrderVO orderVO);
+
 }
