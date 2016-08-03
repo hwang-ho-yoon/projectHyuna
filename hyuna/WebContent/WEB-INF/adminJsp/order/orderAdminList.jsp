@@ -36,9 +36,31 @@
 			});
 			$("#recallFrm").submit();
 		});
+		$(".ogr_approval").click(function() {
+			var ogr_no = $(this).parents("tr").children().eq(0).attr("data-num");
+			$("#ogr_no").val(ogr_no);
+			$("#ogrListFrm").attr({
+				"method" : "post",
+				"action" : "/orderAdmin/orderAdminListApproval.do"
+			});
+			$("#ogrListFrm").submit();
+			
+		});
+		$(".ogr_delivery").click(function() {
+			var ogr_no = $(this).parents("tr").children().eq(0).attr("data-num");
+			$("#ogr_no").val(ogr_no);
+			$("#ogrListFrm").attr({
+				"method" : "post",
+				"action" : "/orderAdmin/orderAdminListDelivery.do"
+			});
+			$("#ogrListFrm").submit();
+		});
 	});
 </script> 
 	<div id="wrapper">
+		<form id="ogrListFrm">
+			<input type="hidden" id="ogr_no" name="ogr_no" value="">
+		</form>
 		<div class="col-md-12" style="padding: 0"> 
 			<h3>주문 조회</h3> 
 			<hr></hr>
@@ -121,10 +143,10 @@
 								<td>
 									<c:choose>
 										<c:when test="${orderGroup.ogr_state eq 'standby_deposit'}">
-											<button class="btn btn-default btn-sm ogr_approval" style="margin: 0">입금</button>
+											<button class="btn btn-default btn-sm ogr_approval" style="margin: 0">승인</button>
 										</c:when>
 										<c:when test="${orderGroup.ogr_state eq 'complete_deposit'}">
-											<button class="btn btn-default btn-sm ogr_cancel" style="margin: 0">입금</button>
+											<button class="btn btn-default btn-sm ogr_delivery" style="margin: 0">배송</button>
 										</c:when>
 									</c:choose>
 								</td>

@@ -17,6 +17,7 @@ public class OrderGroupVO {
    private String ogr_approvalNo;
    private String ogr_cardNo;
    private String ogr_state;
+   private String ogr_delNo;
    private int mem_no;
 	
    private List<OrderProductVO> orderProductVO;
@@ -118,5 +119,11 @@ public class OrderGroupVO {
 	}
 	public void setMem_no(int mem_no) {
 		this.mem_no = mem_no;
+	}
+	public String getOgr_delNo() {
+		return ogr_delNo;
+	}
+	public void setOgr_delNo(String ogr_delNo) {
+		this.ogr_delNo = ogr_delNo;
 	}
 }
