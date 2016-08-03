@@ -5,22 +5,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/hyuna/include/fonts/fontawesome-webfont.eot">
-<link rel="stylesheet" href="/hyuna/include/fonts/fontawesome-webfont.woff">
-<link rel="stylesheet" href="/hyuna/include/fonts/fontawesome-webfont.ttf">
-<link rel="stylesheet" href="/hyuna/include/fonts/fontawesome-webfont.svg">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>My Cart</title>
 </head>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<script type="text/javascript" src="/hyuna/include/js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		/* 쇼핑계속하기 버튼 클릭 시 이벤트 처리 */
 		$("#shopping").click(function() {
 			location.href="../index.jsp";
-		});		
+		});
+		
+		// 담기버튼 클릭 시 이벤트 처리 */
+		/* $("#addCart").click(function() {
+			location.href="/cart/cartInsert.do";
+		}); */		
 		
 		/* 전체 체크박스 클릭 시 이벤트 처리 */
 		$("#allCheck").click(function() {
@@ -30,12 +28,25 @@
 					$("input[name=check]").prop("checked", false);
 			}
 		});
-		
-		// 담기버튼 클릭 시 이벤트 처리 */
-		$("#addCart").click(function() {
-			location.href="/cart/cartInsert.do";
-		});		
-		
+
+		/* 선택삭제 버튼 클릭 시 이벤트 */
+		$("#checkDelete").click(function() {
+			
+			//var arr = $('input[name=check]:checked').serializeArray().map(function(item) { return item.value });
+			var arr = $('input[name=check]:checked').parents("tr").attr("data-num");
+			console.log(arr);
+			var table = document.getElementById("cartTable");
+			var tableRow = table.rows.length;
+			document.getElementById("cartTable").rows[0].css("background","pink");
+			$("#cartTable").rows[0].css("background","pink");
+			//console.log(document.getElementById("cartTable").rows[0].cell[3].text());
+			//table.rows[1].$("td:eq(0)").css("background","pink");
+			/* for(var i=1; i<tableRow; i++) {
+				 table.rows[i].$("td:eq(0)").css("background","pink");
+			}
+			tableRow.css("background","pink"); */
+		});
+					
 		/* 장바구니 비우기 버튼 클릭 시 이벤트 */
 		$("#allDelete").click(function() {
 			
@@ -56,9 +67,14 @@
 					}
 				});
 			}
+		});		
+		
+		$("#updateCount").click(function() {
+			
 		});
 	});
-
+	
+	
 </script>
 <body>
 	<div class="single-product-area">
@@ -67,7 +83,8 @@
                    <div class="product-content-right">
                        <div class="woocommerce">
                            <form method="post" action="#">
-                               <table cellspacing="0" class="shop_table cart">
+                           <label><label style="font-size:33px">${sessionScope.hyunaname}</label>님의 장바구니입니다</label>
+                               <table cellspacing="0" class="shop_table cart" id="cartTable">
                                    <thead>
                                        <tr>
                                            <th class="product-remove">
@@ -87,7 +104,7 @@
                                    <c:choose>
                                    		<c:when test="${not empty cartList}">
                                    			<c:forEach var="cart" items="${cartList}" varStatus="status">
-                                   				<tr class="cart_item">
+                                   				<tr class="cart_item" data-num="${cart.prd_d_no}">
                                            			<td><input type="checkbox" id="check" name="check"></td>
                                    					<td class="product-thumbnail"><span class="goDetail">${cart.img_1}</span></td>
                                    					<td class="product-name"><span class="goDetail">${cart.prd_name}</span>
@@ -95,8 +112,8 @@
                                    					<td class="product-price">￦${cart.prd_saleprice}</td>
                                    					<td class="product-quantity">
                                    						<div class="quantity buttons_added">
-                                                    		<input type="number" class="form-control" title="Qty" value="${cart.cart_quantity}" min="0">
-                                                			<button type="button" class="btn btn-default" style="margin-top: 0px">수정</button>
+                                                    		<input type="number" name="quantity" class="form-control" title="Qty" value="${cart.cart_quantity}" min="0">
+                                                			<button type="button" class="btn btn-default" style="margin-top: 0px" id="updateCount" name="updateCount">수정</button>
 		                                                </div>
                                    					</td>
                                    					<td class="product-deliveryCharge"><span class="amount">￦2,500</span></td>
@@ -121,7 +138,7 @@
 										<!-- </td>
 										<td> -->
 										   <div class="btn_group2">
-											   <button type="button" class="btn btn-primary" name="addCart" id="addCart">담기</button>
+											   <!-- <button type="button" class="btn btn-primary" name="addCart" id="addCart">담기</button> -->
 											   <button type="button" class="btn btn-primary" name="shopping" id="shopping">쇼핑계속하기</button>
 											   <button type="button" class="btn btn-primary" name="allOrder" id="allOrder">전체주문</button>
                                            </div>
@@ -147,6 +164,7 @@
                                           <td><span class="deliveryCharge">￦2,500</span></td>
                                        
                                            <th>최종 결제금액</th>
+                                           <%-- <td><strong><span class="amount">￦${cart.prd_saleprice+2500}</span></strong> </td> --%>
                                            <td><strong><span class="amount">￦${cart.prd_saleprice+2500}</span></strong> </td>
                                        </tr>
                                    </tbody>

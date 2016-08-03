@@ -358,22 +358,4 @@
         </div>
     </div> <!-- End product widget area -->
     	
-	<!-- Latest jQuery form server -->
-    <script src="https://code.jquery.com/jquery.min.js"></script>
-    
-    <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	
-	<!-- jQuery sticky menu -->
-    <script src="/include/js/owl.carousel.min.js"></script>
-    <script src="/include/js/jquery.sticky.js"></script>
-    
-    <!-- jQuery easing -->
-    <script src="/include/js/jquery.easing.1.3.min.js"></script>
-    
-    <!-- Main Script -->
-    <script src="/include/js/main.js"></script>
-    
-    <!-- Slider -->
-    <script type="text/javascript" src="/include/js/bxslider.min.js"></script>
-	<script type="text/javascript" src="/include/js/script.slider.js"></script>
