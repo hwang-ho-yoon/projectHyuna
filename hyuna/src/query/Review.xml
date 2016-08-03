@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyuna.dao.review.ReviewDao">
- 	<sql id="reviewCommon">
+ 		<sql id="reviewCommon">
 		select * from review natural join member natural join PRD_DETAIL
-		<trim prefix="where" prefixOverrides="and">이거안쓰고 그냥 where로 해도됨
+		<!-- <trim prefix="where" prefixOverrides="and"> --><!-- 이거안쓰고 그냥 where로 해도됨 -->
 		<where>
 			<if test="search=='review_title'">
-				<![CDATA[ review_title like '%' || #{keyword} || '%']]> 
+				<![CDATA[ qna_title like '%' || #{keyword} || '%']]> <!-- CDATA는 xml에서 문자그대로쓸수잇게<>이런거쓸수잇음 -->
 			</if>
 			<if test="search=='review_content'">
-				<![CDATA[ review_content like '%' || #{keyword} || '%']]>
+				<![CDATA[ qna_content like '%' || #{keyword} || '%']]>
 			</if>
 			<if test="search=='member_name'">
 				<![CDATA[ member_name like '%' || #{keyword} || '%']]>
 			</if>
 		</where>
-		</trim>
+		<!-- </trim> -->
 	</sql>
 
 	<!-- Qna 등록 -->
@@ -28,7 +28,7 @@
 	<!-- 게시물 전체 조회 -->
 	<select id="reviewList" parameterType="review" resultType="review">
 		/* qna qnaList */
-		select review_no, mem_name, review_title, review_category, review_hit, prd_d_no, to_char(review_writedate, 'YYYY-MM-DD HH24:MI:SS') as review_writedate from 
+		select review_no, mem_name, review_title, review_score, review_hit, prd_d_no, to_char(review_writedate, 'YYYY-MM-DD HH24:MI:SS') as review_writedate from 
 		(select list.*, rownum as rnum from (
 		<include refid="reviewCommon"></include>
 		<choose>

@@ -43,7 +43,7 @@ public class ReviewController {
 		logger.info("total ="+total);*/
 		
 		List<ReviewVO> reviewList = reviewService.reviewList(rvo);
-		model.addAttribute("qnaList", reviewList);
+		model.addAttribute("reviewList", reviewList);
 		//model.addAttribute("count", count);
 		//model.addAttribute("total", total);
 		model.addAttribute("data", rvo);

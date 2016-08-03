@@ -2,7 +2,9 @@ package com.hyuna.vo.board;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class ReviewVO {
+import com.hyuna.common.vo.CommonVO;
+
+public class ReviewVO extends CommonVO{
 	private int review_No = 0;
 	private String Review_writedate = "";
 	private String review_title = "";

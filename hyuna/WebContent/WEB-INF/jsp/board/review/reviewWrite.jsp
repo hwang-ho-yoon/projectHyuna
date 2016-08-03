@@ -5,11 +5,12 @@
 	 <%@ page trimDirectiveWhitespaces="true" %>
 <div id="wrapper">
 	<div class="bottom">
-		<form id="review_writeForm" name="review_writeForm"enctype="multipart/form-data">
+		<form id="review_writeForm" enctype="multipart/form-data">
 			<table class="table table table-bordered">
 				<tr>
 					<td width="10%"><label class="control-label">제목</label></td>
 					<td width="70%">
+					<input type="hidden" id="mem_no" name="mem_no" value="${sessionScope.hyunaMember }">
 						<input type="text" id="review_title" name="review_title" class="form-control">
 					</td>
 				</tr>
@@ -22,7 +23,7 @@
 						<label class="radio-inline"><input type="radio" id="review_score5" name="review_score" value="5">★★★★★</label>
 					</td>
 				<tr>
-					<td colspan="4"><textarea id="edit" name="text_area" class="form-control"></textarea>
+					<td colspan="4"><textarea id="review_content" rows="10" style='resize: none; 'name="review_content" class="form-control"></textarea>
 	             
 	            </td>
 	            </tr>
@@ -31,7 +32,7 @@
 	            		<label class="control-label">첨부 파일</label>
 	            	</td>
 	            	<td colspan="3">
-	            		<input type="file"  id="file" name="file" class="form-control"/>
+	            		<input type="file"  id="inputdefault" name="file" class="form-control"/>
 	            	</td>
 	            </tr>
 			</table>
@@ -47,19 +48,16 @@
 		</form>
 	</div>
 </div>
-<script src="/include/js/jquery-1.12.2.min.js"></script>
-<script src="/include/js/board.js"></script>
-<script>
+<script src="include/js/jquery-1.12.min.js"></script>
+<script type="text/javascript">
 	$(function(){
-		$("#review_write_btn").click(function(){
-			if (!chkSubmit($("#review_title"), "제목을")) {
-				return;
-			} else if (!chkSubmit($("#edit"), "내용을")) {
-				return;
-			} else {
+		$("#review_write_btn").click(function(){			
+			if(!cccc($("#review_title"),"제목을 "))return;
+			else if(!cccc($("#review_content"),"내용을 "))return;
+			else{
 				$("#review_writeForm").attr({
-					"method" : "post",
-					"action" : "/board/review/reviewInsert.do"
+					"method":"post",
+					"action":"/board/review/reviewInsert.do"
 				});
 				$("#review_writeForm").submit();
 			}
@@ -67,10 +65,23 @@
 		$("#review_list_btn").click(function(){
 			location.href = "/board/review/reviewList.do";
 		});
-		$("#review_reset_btn").click(function(){
-			$("#edit").val("");
-		})
+	
+		$("#btn_review_reset").click(function(){
+			$("#review_title").html("");
+			$("#review_content").html("");
+	});
 	})
+	
+	function cccc(v_item, v_name){
+		if(v_item.val().replace(/\s/g,"")==""){
+			alert(v_name+" 입력해 주세요");
+			v_item.val("");
+			v_item.focus();		
+			return false;
+		}else{
+			return true;
+		}
+	}	
 
 </script>
 
