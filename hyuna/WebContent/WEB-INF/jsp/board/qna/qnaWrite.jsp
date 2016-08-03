@@ -30,7 +30,7 @@
 		}
 	}	
 </script>	 
-<div id="wrapper">
+<div id="wrapper" style="margin-top: 50px">
 	<div class="bottom">
 		<form id="qna_write" enctype="multipart/form-data">
 			<table class="table table table-bordered" >			
@@ -39,9 +39,9 @@
 					<td width="15%">
 					<input type="hidden" id="mem_no" name="mem_no" value="${sessionScope.hyunaMember }">
 						<select class="form-control" id="qna_category" name="qna_category">
-						<option value="qq">상품문의</option>
-						<option value="dd">배송문의</option>
-						<option value="etc">기타문의</option>
+						<option value="상품문의">상품문의</option>
+						<option value="배송문의">배송문의</option>
+						<option value="기타문의">기타문의</option>
 						</select>
 					</td>
 					<td width="75%">

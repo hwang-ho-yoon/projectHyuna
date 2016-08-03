@@ -40,4 +40,20 @@ public class QnaServiceImpl implements QnaService{
 		qnaDao.qnaHit(qvo);
 	}
 
+	@Override
+	public int qnaUpdate(QnaVO qvo) {		
+		return qnaDao.qnaUpdate(qvo);
+	}
+
+	@Override
+	public void qnaDelete(QnaVO qvo) {
+		qnaDao.qnaDelete(qvo);
+		
+	}
+
+	@Override
+	public int qnaListCnt(QnaVO qvo) {		
+		return qnaDao.qnaListCnt(qvo);
+	}
+
 }

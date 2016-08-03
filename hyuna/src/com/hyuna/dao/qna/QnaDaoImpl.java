@@ -33,4 +33,20 @@ public class QnaDaoImpl implements QnaDao{
 		session.update("qnaHit");
 	}
 
+	@Override
+	public int qnaUpdate(QnaVO qvo) {		
+		return session.update("qnaUpdate");
+	}
+
+	@Override
+	public void qnaDelete(QnaVO qvo) {
+		session.delete("qnaDelete");
+		
+	}
+
+	@Override
+	public int qnaListCnt(QnaVO qvo) {		
+		return session.selectOne("qnaListCnt");
+	}
+
 }

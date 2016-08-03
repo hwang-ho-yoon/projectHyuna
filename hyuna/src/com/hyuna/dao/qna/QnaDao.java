@@ -14,4 +14,10 @@ public interface QnaDao {
 
 	public void qnaHit(QnaVO qvo);
 
+	public int qnaUpdate(QnaVO qvo);
+
+	public void qnaDelete(QnaVO qvo);
+
+	public int qnaListCnt(QnaVO qvo);
+
 }

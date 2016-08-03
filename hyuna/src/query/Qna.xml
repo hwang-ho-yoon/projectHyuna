@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyuna.dao.qna.QnaDao">
 	<sql id="qnaCommon">
-		select * from qna natural join member natural join PRD_DETAIL
+		select * from qna inner join member on qna.mem_no = member.mem_no
 		<!-- <trim prefix="where" prefixOverrides="and"> --><!-- 이거안쓰고 그냥 where로 해도됨 -->
 		<where>
 			<if test="search=='qna_title'">
@@ -21,14 +21,18 @@
 	<!-- Qna 등록 -->
 	<insert id="qnaInsert" parameterType="qna">
 		/* qnaInsert */
-		insert into qna (qna_no, qna_writedate, qna_title, qna_content, qna_category, qna_file1, qna_modifydate, mem_no, prd_d_no) values 
-		(qna_seq.nextval, sysdate, #{qna_title}, #{qna_content}, #{qna_category}, #{qna_file1}, sysdate, #{mem_no} ,#{prd_d_no})		
+		insert into qna (qna_no, qna_writedate, qna_title, qna_content, qna_category, 
+		<if test="qna_file1 !=null">qna_file1,</if>		 
+		qna_modifydate, mem_no) values 
+		(qna_seq.nextval, sysdate, #{qna_title}, #{qna_content}, #{qna_category}, 
+		<if test="qna_file1 !=null">#{qna_file1},</if> 
+		sysdate, #{mem_no} )		
 	</insert>
 	
 	<!-- 게시물 전체 조회 -->
 	<select id="qnaList" parameterType="qna" resultType="qna">
 		/* qna qnaList */
-		select qna_no, mem_name, qna_title, qna_category, qna_hit, prd_d_no, to_char(qna_writedate, 'YYYY-MM-DD HH24:MI:SS') as qna_writedate from 
+		select qna_no, mem_name, qna_title, qna_category, qna_hit, to_char(qna_writedate, 'YYYY-MM-DD HH24:MI:SS') as qna_writedate from 
 		(select list.*, rownum as rnum from (
 		<include refid="qnaCommon"></include>
 		<choose>
@@ -50,14 +54,14 @@
 		</where>
 	</select>
 	
-<!-- 	<select id="qnaListCnt" parameterType="qna" resultType="int">
-		/* Board boardListCnt */
+ 	<select id="qnaListCnt" parameterType="qna" resultType="int">
+		/* Board qnaListCnt */
 		select nvl(count(1), 0) from (select list.*, rownum as rnum from (
 		<include refid="qnaCommon"></include>
-		order by b_num desc
+		order by qna_no desc
 		) list
 		)
-	</select> -->
+	</select> 
 	
 	<!-- 조회수 -->
 	<update id="qnaHit" parameterType="qna">
@@ -65,4 +69,23 @@
 		update qna set qna_hit = qna_hit +1 where qna_no = #{qna_no}
 	</update>
 	
+	<!-- 디테일 -->
+	<select id="qnaDetail" parameterType="qna" resultType="qna">
+		/* qnaDetail */
+		select * from qna inner join member on qna.mem_no = member.mem_no left outer join prd_detail on qna.prd_d_no = prd_detail.prd_d_no left outer join prd_master on prd_detail.prd_no = prd_master.prd_no  where qna.qna_no = #{qna_no}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="qnaUpdate" parameterType="qna">
+		/* qnaUpdate */
+		update qna set qna_title = #{qna_title}, qna_content = #{qna_content}, qna_category = #{qna_category}, qna_modifydate = sysdate
+		<if test="qna_file1 !=''">,qna_file1 = #{qna_file1}</if>				
+		 where qna_no = #{qna_no}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="qnaDelete" parameterType="qna">
+		/* qnaDelete */
+		delete from qna where qna_no = #{qna_no}
+	</delete>
 </mapper>	
