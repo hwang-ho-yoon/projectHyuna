@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hyuna.common.util.FileUploadUtil;
 import com.hyuna.service.board.review.ReviewService;
-
+import com.hyuna.vo.MemberVO;
 import com.hyuna.vo.board.ReviewVO;
 
 @Controller
@@ -28,21 +28,21 @@ public class ReviewController {
 	
 	//리스트 호출
 	@RequestMapping("/reviewList")
-	public String listDepartment(@ModelAttribute ReviewVO rvo, Model model) {
+	public String listDepartment(@ModelAttribute ReviewVO rvo, Model model, HttpSession session) {
 		logger.info("리스트");
 		
 		//정렬에 대한 기본값 설정		
-/*		if(bvo.getOrder_by()==null) qvo.setOrder_by("b_num");		
-		if(bvo.getOrder_sc()==null) qvo.setOrder_sc("DESC");*/
+/*		if(rvo.getOrder_by()==null) rvo.setOrder_by("review_no");		
+		if(rvo.getOrder_sc()==null) rvo.setOrder_sc("DESC");*/
 
 		
 /*		//페이지 세팅
-		Paging.setPage(qvo);
+		Paging.setPage(rvo);
 		
 		//전체 레코드수 구현
-		int total = boardService.boardListCnt(bvo);
+		int total = reviewService.boardListCnt(rvo);
 		logger.info("total ="+total);*/
-		
+		//MemberVO memvo = getMem_name(((int)session.getAttribute("hyunaMember")));
 		List<ReviewVO> reviewList = reviewService.reviewList(rvo);
 		model.addAttribute("reviewList", reviewList);
 		//model.addAttribute("count", count);
@@ -51,6 +51,8 @@ public class ReviewController {
 		return "board/review/reviewList";
 	}
 	
+	
+
 	//글쓰기 폼이동
 	@RequestMapping("/reviewWrite")
 	public String reviewWrite(){
