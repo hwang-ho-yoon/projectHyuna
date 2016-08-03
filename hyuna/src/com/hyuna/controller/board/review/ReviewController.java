@@ -42,7 +42,7 @@ public class ReviewController {
 		//전체 레코드수 구현
 		int total = reviewService.boardListCnt(rvo);
 		logger.info("total ="+total);*/
-		//MemberVO memvo = getMem_name(((int)session.getAttribute("hyunaMember")));
+		//MemberVO memvo = getMem_name(((int)session.getAttribute("hyunaMember")));   
 		List<ReviewVO> reviewList = reviewService.reviewList(rvo);
 		model.addAttribute("reviewList", reviewList);
 		//model.addAttribute("count", count);
