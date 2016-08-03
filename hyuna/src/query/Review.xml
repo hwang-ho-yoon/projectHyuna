@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hyuna.dao.board.ReviewDao">
+<mapper namespace="com.hyuna.dao.review.ReviewDao">
 	
 	
 	<insert id="reviewInsert" parameterType="review">
-		insert into review(
-					review_no, review_writedate, review_content, review_title,review_score, review_hit,review_file1,mem_no, review_modifydate, prd_d_no) 
-		values(review_seq.nextval, sysdate, #{faq_content}, #{faq_title},#{review_score},0,null,#{mem_no}, sysdate,#{prd_d_no})
 		INSERT
 INTO REVIEW
   (
