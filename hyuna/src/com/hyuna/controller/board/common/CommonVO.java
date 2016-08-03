@@ -6,11 +6,11 @@ public class CommonVO {
 	private String start_row;
 	private String end_row;
 	
-	// ���ǰ˻��� ����� �Ӽ�
+	
 	private String search = "";
 	private String keyword = "";
 	
-	//���� Ŭ���� ������ ���� �Ӽ�
+	
 	private String order_by;
 	private String order_sc;
 	public String getPage() {
