@@ -8,13 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hyuna.dao.review.ReviewDao;
-import com.hyuna.service.qna.QnaServiceImpl;
 import com.hyuna.vo.board.ReviewVO;
 
 @Service
 @Transactional
 public class ReviewServiceimpl implements ReviewService{
-	Logger logger = Logger.getLogger(QnaServiceImpl.class);
+	Logger logger = Logger.getLogger(ReviewServiceimpl.class);
 	
 	@Autowired
 	private ReviewDao reviewdao;

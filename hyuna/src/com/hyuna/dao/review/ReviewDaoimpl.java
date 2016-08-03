@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hyuna.vo.board.ReviewVO;
-@Repository
+
 public class ReviewDaoimpl implements ReviewDao{
 	@Autowired
 	private SqlSession session;
