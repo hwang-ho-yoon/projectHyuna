@@ -1,14 +1,14 @@
 package com.hyuna.service.product;
 
+import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 import com.hyuna.dao.product.ProductDao;
+import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.ProductVO;
 
 @Service	
@@ -155,13 +155,12 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
-	
-	
-	
-
-
-
-	
-	
+	//product전체정보 ServiceImpl
+	@Override
+		public List<ProductAllVO> prdAllList(ProductAllVO pvo) {
+			List<ProductAllVO> prdAllList=null;
+			prdAllList=productDao.prdAllList(pvo);
+			return prdAllList;
+		}
 
 }

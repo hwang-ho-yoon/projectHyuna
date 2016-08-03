@@ -143,7 +143,7 @@
                                 <li><a href="#">옵티머스</a></li>
                             </ul>
 						</li>
-                        <li><a href="/order/orderWrite.do">주문조회</a></li>
+                        <li><a href="/orderAdmin/orderAdminList.do">주문조회</a></li>
                         <li><a href="/board/qna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>

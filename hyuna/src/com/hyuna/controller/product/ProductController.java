@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hyuna.common.util.FileUploadUtil;
 import com.hyuna.service.product.ProductService;
+import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.ProductVO;
 
 
@@ -244,5 +245,15 @@ public class ProductController {
 		return "product/prdSingleDetail";		
 	}	
 	
-	
+	//product전체정보
+		@RequestMapping(value="/prdAll.do")
+		public String prdAll(@ModelAttribute ProductAllVO pvo, Model model ){
+			logger.info("prdAll 호출성공");
+
+			List<ProductAllVO> prdAll = productService.prdAllList(pvo);
+			model.addAttribute("prdAll", prdAll);
+		
+			return "product/prdAllList";
+		}
+
 }
