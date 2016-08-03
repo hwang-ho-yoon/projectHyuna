@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="/include/css/elements/select2.min.css">
     <link rel="stylesheet" href="/include/css/elements/bootstrap-switch.min.css">
 
-	
+	 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<!-- 게시판 css-->
 	<style>
 	#list{
@@ -72,7 +72,14 @@
 		width:80px;
 		}
  	</style>
-  <script src="/include/js/jquery-1.12.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  <!-- Include Editor style. -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.3.4/css/froala_editor.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.3.4/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+<!-- Include JS file. -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.3.4/js/froala_editor.min.js"></script>
 
 <script>
 		$(function(){

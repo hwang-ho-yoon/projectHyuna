@@ -10,32 +10,6 @@
 			group_no = $(this).attr("data-num");
 			location.href = "/order/orderDetail.do?ogr_no="+group_no;
 		});
-		$(".ogr_cancel").click(function() {
-			group_no = $(this).parents("tr").children().eq(0).attr("data-num");
-			$("#cancel_desc").val("");
-			$('#cancelModal').modal('show');			
-		});
-		$(".ogr_recall").click(function() {
-			group_no = $(this).parents("tr").children().eq(0).attr("data-num");
-			$("#recall_desc").val("");
-			$('#recallModal').modal('show');			
-		});
-		$("#cancelBtn").click(function() {
-			$("#cancel_ogr_no").val(group_no);
-			$("#cancelFrm").attr({
-				"method" : "post",
-				"action" : "/order/orderCancel.do"
-			});
-			$("#cancelFrm").submit();
-		});
-		$("#recallBtn").click(function() {
-			$("#recall_ogr_no").val(group_no);
-			$("#recallFrm").attr({
-				"method" : "post",
-				"action" : "/order/orderRecall.do"
-			});
-			$("#recallFrm").submit();
-		});
 		$(".rncDetail").click(function() {
 			group_no = $(this).parents("tr").children().eq(0).attr("data-num");
 			var url = "/order/all/" + group_no + ".do";

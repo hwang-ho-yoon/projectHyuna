@@ -77,7 +77,6 @@ public class OrderController {
 		return "order/orderListRnc";
 	}
 	
-	/*댓글 글목록 구현하기*/
 	@RequestMapping(value = "/all/{group_no}.do")
 	@ResponseBody
 	public OrderRecallCancelVO orderRncDetail(@PathVariable("group_no") int group_no) {

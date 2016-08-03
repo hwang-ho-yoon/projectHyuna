@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hyuna.dao.order.OrderAdminDao;
 import com.hyuna.vo.OrderGroupVO;
 import com.hyuna.vo.OrderProductVO;
+import com.hyuna.vo.OrderRecallCancelVO;
 import com.hyuna.vo.OrderVO;
 
 @Service
@@ -36,6 +37,21 @@ public class OrderAdminServiceImpl implements OrderAdminService{
 	@Override
 	public int updateDelivery(OrderGroupVO orderGroupVO) {
 		return orderAdminDao.updateDelivery(orderGroupVO);
+	}
+
+	@Override
+	public OrderRecallCancelVO selectOrderRecallCancel(int group_no) {
+		return orderAdminDao.selectOrderRecallCancel(group_no);
+	}
+
+	@Override
+	public OrderGroupVO orderGroupDetail(String ogr_no) {
+		return orderAdminDao.orderGroupDetail(ogr_no);
+	}
+
+	@Override
+	public int orderGroupUpdate(OrderRecallCancelVO recallCancel) {
+		return orderAdminDao.orderGroupUpdate(recallCancel);
 	}
 
 }

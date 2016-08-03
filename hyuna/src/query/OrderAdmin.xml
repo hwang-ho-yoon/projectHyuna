@@ -22,4 +22,16 @@
 		select ord_no, ord_amount, ogr_no, prd_d_no from orderProduct where ogr_no = #{ogr_no} 
 	</select>
 
+	<select id="selectOrderRecallCancel" parameterType="int" resultType="orderRecallCancel">
+		select rnc_no, rnc_date, rnc_desc, rnc_gbn, ogr_no from recallcancel where ogr_no = #{ogr_no}
+	</select>
+	
+	<select id="orderGroupDetail" parameterType="int" resultType="orderGroup">
+		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where ogr_no = #{ogr_no}
+	</select>
+
+	<update id="orderGroupUpdate" parameterType="orderRecallCancel">
+		update orderGroup set ogr_state = #{rnc_gbn} where ogr_no = #{ogr_no}
+	</update>
+
 </mapper>

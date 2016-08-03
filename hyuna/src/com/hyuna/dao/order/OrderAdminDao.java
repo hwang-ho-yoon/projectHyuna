@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hyuna.vo.OrderGroupVO;
 import com.hyuna.vo.OrderProductVO;
+import com.hyuna.vo.OrderRecallCancelVO;
 import com.hyuna.vo.OrderVO;
 
 public interface OrderAdminDao {
@@ -15,5 +16,11 @@ public interface OrderAdminDao {
 	public List<OrderProductVO> selectOrderProducts(int ogr_no);
 
 	public int updateDelivery(OrderGroupVO orderGroupVO);
+
+	public OrderRecallCancelVO selectOrderRecallCancel(int group_no);
+
+	public OrderGroupVO orderGroupDetail(String ogr_no);
+
+	public int orderGroupUpdate(OrderRecallCancelVO recallCancel);
 
 }
