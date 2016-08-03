@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyuna.service.cart.CartService;
+import com.hyuna.service.product.ProductService;
 import com.hyuna.vo.CartVO;
+import com.hyuna.vo.ProductAllVO;
+import com.hyuna.vo.ProductVO;
 
 
 @Controller
@@ -30,11 +33,14 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	@Autowired
+	private ProductService productService;
+	
 	// 장바구니로 이동
 	@RequestMapping("/cart.do")
 	public String cart() {
 		logger.info("cart 호출성공");
-		return "cart/cartList";
+		return "redirect:/cart/cartList.do";
 	}
 	
 	// 장바구니 목록 구현
@@ -45,6 +51,21 @@ public class CartController {
 		
 		List<CartVO> cartList = cartService.cartList(cvo);
 		
+		for (int i = 0; i < cartList.size(); i++) {
+			CartVO cartVO = cartList.get(i);
+			
+			ProductAllVO productAllVO = new ProductAllVO();
+			productAllVO.setPrd_d_no(cartVO.getPrd_d_no());
+			List<ProductAllVO> productAllVOs = productService.prdAllList(productAllVO);
+			
+			cartVO.setColor_detail(productAllVOs.get(0).getColor_detail());
+			cartVO.setImg_1(productAllVOs.get(0).getImg_1());
+			cartVO.setModel_machine(productAllVOs.get(0).getModel_machine());
+			cartVO.setPrd_name(productAllVOs.get(0).getPrd_name());
+			cartVO.setPrd_saleprice(productAllVOs.get(0).getPrd_saleprice());
+				
+		}
+		
 		/*logger.info("cart : " + cartList.get(0).getPrd_name());*/
 		
 		model.addAttribute("cartList", cartList);
@@ -53,13 +74,13 @@ public class CartController {
 	}
 		
 	// 장바구니 등록
-	@RequestMapping(value="/cartInsert", method=RequestMethod.GET)
-	public String cartInsert(@ModelAttribute CartVO cvo, HttpSession session/*, HttpServletRequest request*/) throws IllegalStateException, IOException {
+	@RequestMapping(value="/cartInsert", method=RequestMethod.POST)
+	public String cartInsert(@ModelAttribute CartVO cvo, HttpSession session, HttpServletRequest request) throws IllegalStateException, IOException {
 		logger.info("cartInsert 호출 성공");
 		
 		/*CartVO cvo = new CartVO();
 		cvo.setCart_quantity(1);
-		cvo.setPrd_d_no(1);
+		cvo.setPrd_d_no(1);0
 		cvo.setMem_no(2222);*/
 		
 		/*cvo.setCart_quantity(3);
@@ -69,8 +90,9 @@ public class CartController {
 		int result = 0;
 		String url = "";
 		
-		int detailNo=cartService.optDetailNo(cvo);
-		cvo.setPrd_d_no(detailNo);
+		/*int detailNo=cartService.optDetailNo(cvo);
+		cvo.setPrd_d_no(detailNo);*/
+		
 		cvo.setMem_no((Integer)session.getAttribute("hyunaMember"));
 		result = cartService.cartInsert(cvo);
 		if(result == 1) {
@@ -101,7 +123,7 @@ public class CartController {
 	}
 	
 	// 선택삭제
-	/*@RequestMapping(value="{cart_no}.do", method=RequestMethod.DELETE)
+	@RequestMapping(value="{cart_no}.do")
 	public ResponseEntity<String> chkDelete(@PathVariable("cart_no") Integer cart_no) {
 		logger.info("chkDelte 호출 성공");
 		ResponseEntity<String> entity = null;
@@ -114,5 +136,21 @@ public class CartController {
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return entity;
+	}
+	
+	// 수량 수정
+	/*@RequestMapping(value="updateCount.do", method=RequestMethod.POST)
+	public String updateCount(@ModelAttribute CartVO cvo, HttpServletRequest request) throws IllegalStateException, IOException {
+		logger.info("수량 변경");
+		
+		int result = 0;
+		String url = "";
+		
+		if(result==1) {
+			url = "/cart/cartList.do?cart_no=" + cvo.getCart_no();
+		}
+		return "redirect:" + url;
 	}*/
+	
+	
 }

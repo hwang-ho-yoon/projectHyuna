@@ -7,7 +7,7 @@
 	<div id="wrapper">
 		<div class="board">
 		<form id="detailForm" name="detailForm">
-			<input type="hidden" name="review_no" id="review_no">
+			<input type="hidden" name="review_No" id="review_No">
 			<%-- <input type="hidden" name="page" value="${data.page }">
 			<input type="hidden" name="pageSize" value="${data.pageSize }"> --%>
 		</form>
@@ -28,8 +28,8 @@
 		     	<c:choose>
 						<c:when test="${not empty reviewList }">
 							<c:forEach var="review" items="${reviewList}" varStatus="status">
-							<tr data-num="${review.review_no }">
-								<td>${review.review_no }</td> <!-- 번호 -->
+							<tr data-num="${review.review_No }">
+								<td>${review.review_No }</td> <!-- 번호 -->
 								<td>
 									<c:choose>
 										<c:when test="${review.prd_d_no==0 }"></c:when>									
@@ -161,8 +161,8 @@
 		
 		//제목 클릭시 상세 페이지 이동을 위한 처리 이벤트
 		$(".goDetail").click(function(){
-			var review_no = $(this).parents("tr").attr("data-num");
-			$("#review_no").val(qna_no);
+			var review_No = $(this).parents("tr").attr("data-num");
+			$("#review_No").val(qna_no);
 			//상세 페이지로 이동하기 위해 form 추가
 			alert(qna_no);
 			$("#detailForm").attr({

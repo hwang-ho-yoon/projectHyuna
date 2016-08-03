@@ -4,14 +4,19 @@
 	
 	<!-- 장바구니 리스트 조회 -->
 	<select id="cartList" parameterType="cart" resultType="cart">
-		select img_1, prd_name, prd_saleprice, model_machine, color_detail, cart_quantity from cart c 
+		<!-- select img_1, prd_name, prd_saleprice, model_machine, color_detail, cart_quantity from cart c 
 			inner join prd_detail pd on c.prd_d_no=pd.prd_d_no
 			inner join model m on pd.model_no = m.model_no 
 			inner join color c on pd.color_no=c.color_no
 			inner join prd_master pm on pd.prd_no=pm.prd_no
 			inner join prd_img pi on pd.prd_no= pi.prd_no
 			inner join member m on m.mem_no=c.mem_no
-			where c.mem_no= #{mem_no}
+			where c.mem_no= #{mem_no} -->
+			
+		select cart_no, cart_quantity, mem_no, prd_d_no
+			from cart
+			where mem_no= #{mem_no}
+			
 			<!-- where c.mem_no= '2222' -->
 	</select>
 	
@@ -61,8 +66,8 @@
 	</delete>
 	
 	<!-- 장바구니 선택 삭제 -->
-	<!-- <delete id="chkDelete" parameterType="cart">
+	<delete id="chkDelete" parameterType="cart">
 		/* Cart - chkDelete */
-		delete 
-	</delete> -->
+		delete cart where mem_no = #{mem_no} and cart_no = #{cart_no}
+	</delete>
 </mapper>
