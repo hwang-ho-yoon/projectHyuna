@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +60,14 @@ public class ReviewController {
 	
 	//글쓰기 입력작업
 	@RequestMapping("/reviewInsert")
-	public String qnaInsert(@ModelAttribute ReviewVO rvo, HttpServletRequest request)throws IllegalStateException,IOException{
+	public String qnaInsert(@ModelAttribute ReviewVO rvo, HttpServletRequest request, HttpSession session)throws IllegalStateException,IOException{
 		logger.info("글씨기 입력");
 				
 		int result = 0;
 		String url = "";
 		System.out.println("file"+rvo.getFile());
+		System.out.println((int)session.getAttribute("hyunaMember"));
+		
 		if(rvo.getFile()==null){			
 			rvo.setReview_file1("");	
 		}else{

@@ -20,9 +20,9 @@
 
 	<!-- Qna 등록 -->
 	<insert id="reviewInsert" parameterType="review">
-		/* qnaInsert */
-		insert into review (review_no, review_writedate, review_title, review_content, review_score, review_file1, review_modifydate, mem_no, prd_d_no) values 
-		(review_seq.nextval, sysdate, #{review_title}, #{review_content}, #{review_score}, #{review_file1}, sysdate, #{mem_no} ,#{prd_d_no})		
+		
+		insert into review (review_no, review_writedate, review_title, review_content, review_score, review_file1, review_modifydate, mem_no, prd_d_no,review_hit) values 
+		(review_seq.nextval, sysdate, #{review_title}, #{review_content}, #{review_score}, #{review_file1}, sysdate, #{mem_no} ,#{prd_d_no},0)		
 	</insert>
 	
 	<!-- 게시물 전체 조회 -->

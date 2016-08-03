@@ -21,8 +21,7 @@
 	<select id="faqList" parameterType="faq" resultType="faq">
 		/* Board - boardList*/
 		SELECT faq_no, adm_id, faq_title, faq_hit, TO_Char(faq_writedate, 'YYYY-MM-DD HH24:MI:SS') as faq_writedate
-		
-		
+
 		FROM
 		( SELECT list.*, ROWNUM AS RNUM
 			FROM (
@@ -55,7 +54,7 @@
 	</select>
 	
 		<select id="faqListCnt" parameterType="faq" resultType="int">
-		/* Board - boardListCnt*/
+		
 		SELECT NVL(count(1), 0) FROM 
 		( select list.*, rownum as rnum
 		 from (
@@ -82,7 +81,7 @@
 	</update>
 	<!-- 조회수 -->
 	<update id="faqHit" parameterType="faq">
-		update faq set faq_hit = #{faq_hit}+1  where faq_no = #{faq_no}
+		update faq set faq_hit = faq_hit +1  where faq_no = #{faq_no}
 	</update>
 	<delete id="faqDelete" parameterType="faq">
 		/*Board - boardDelete*/
