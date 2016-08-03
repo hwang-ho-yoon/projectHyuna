@@ -1,36 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyuna.dao.review.ReviewDao">
-	
-	
+	<sql id="reviewCommon">
+		select * from review natural join member natural join PRD_DETAIL
+		<!-- <trim prefix="where" prefixOverrides="and"> --><!-- 이거안쓰고 그냥 where로 해도됨 -->
+		<where>
+			<if test="search=='review_title'">
+				<![CDATA[ review_title like '%' || #{keyword} || '%']]> <!-- CDATA는 xml에서 문자그대로쓸수잇게<>이런거쓸수잇음 -->
+			</if>
+			<if test="search=='review_content'">
+				<![CDATA[ review_content like '%' || #{keyword} || '%']]>
+			</if>
+			<if test="search=='member_name'">
+				<![CDATA[ member_name like '%' || #{keyword} || '%']]>
+			</if>
+		</where>
+		<!-- </trim> -->
+	</sql>
+
+	<!-- Qna 등록 -->
 	<insert id="reviewInsert" parameterType="review">
-		INSERT
-INTO REVIEW
-  (
-    REVIEW_NO,
-    REVIEW_WRITEDATE,
-    REVIEW_TITLE,
-    REVIEW_CONTENT,
-    REVIEW_HIT,
-    REVIEW_SCORE,
-    REVIEW_FILE1,
-    REVIEW_MODIFYDATE,
-    MEM_NO,
-    PRD_D_NO
-  )
-  VALUES
-  (
-    review_seq.nextval,
-    sysdate,
-    #{review_content},
-    #{review_title},
-    0,
-    #{review_score},
-    null,
-    sysdate,
-    null,
-    null
-  );
+		/* qnaInsert */
+		insert into review (review_no, review_writedate, review_title, review_content, review_score, review_file1, review_modifydate, mem_no, prd_d_no) values 
+		(review_seq.nextval, sysdate, #{review_title}, #{review_content}, #{review_score}, #{review_file1}, sysdate, #{mem_no} ,#{prd_d_no})		
 	</insert>
 	
-</mapper>
+	<!-- 게시물 전체 조회 -->
+	<select id="reviewList" parameterType="review" resultType="review">
+		/* qna qnaList */
+		select review_no, mem_name, review_title, review_category, review_hit, prd_d_no, to_char(review_writedate, 'YYYY-MM-DD HH24:MI:SS') as review_writedate from 
+		(select list.*, rownum as rnum from (
+		<include refid="reviewCommon"></include>
+		<choose>
+			<when test="order_by=='review_no'">order by review_no</when>
+			<when test="order_by=='review_writedate'">order by review_writedate</when>
+		</choose>
+		<choose>
+			<when test="order_sc=='ASC'">ASC</when>
+			<when test="order_sc=='DESC'">DESC</when>
+		</choose>
+		) list
+		)
+		<where>
+			<if test="start_row !=null and start_row != ''">
+				<if test="end_row !=null and end_row != ''">
+					rnum between #{start_row} and #{end_row}
+				</if> 
+			</if>
+		</where>
+	</select>
+	
+<!-- 	<select id="qnaListCnt" parameterType="qna" resultType="int">
+		/* Board boardListCnt */
+		select nvl(count(1), 0) from (select list.*, rownum as rnum from (
+		<include refid="qnaCommon"></include>
+		order by b_num desc
+		) list
+		)
+	</select> -->
+	
+	<!-- 조회수 -->
+	<update id="reviewHit" parameterType="review">
+		/* qnaHit */
+		update review set review_hit = review_hit +1 where review_no = #{review_no}
+	</update>
+	
+</mapper>	
