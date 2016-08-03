@@ -84,7 +84,7 @@ public class ReviewController {
 		logger.info("디테일 이동");
 		
 		//ReviewVO detail = reviewService.reviewDetail(rvo);
-		reviewService.reviewHit(rvo);
+		reviewService.reviewHit(rvo);    
 		return null;
 	}
 
