@@ -2,6 +2,7 @@ package com.hyuna.service.product;
 
 import java.util.List;
 
+import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.ProductVO;
 
 public interface ProductService {
@@ -18,5 +19,8 @@ public interface ProductService {
 	//소비자 사용부분
 	public List<ProductVO> prdMainList(ProductVO pvo);	
 	public ProductVO prdSingleDetail(ProductVO pvo);
+	
+	//product전체정보 Service
+	public List<ProductAllVO> prdAllList(ProductAllVO pvo);
 	
 }

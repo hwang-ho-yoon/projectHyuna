@@ -2,24 +2,26 @@ package com.hyuna.vo.board;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class ReviewVO {
-	int reviewNo = 0;
-	String Review_writedate = "";
-	String review_title = "";
-	String review_content = "";
-	int review_hit = 0;
-	int review_score = 0;	
-	MultipartFile file;
-	String file1 = "";
-	String review_modifydate = "";
-	int Mem_no = 0;
-	int Prd_d_no = 0;
+import com.hyuna.common.vo.CommonVO;
+
+public class ReviewVO extends CommonVO{
+	private int review_No = 0;
+	private String Review_writedate = "";
+	private String review_title = "";
+	private String review_content = "";
+	private int review_hit = 0;
+	private int review_score = 0;	
+	private MultipartFile file;
+	private String review_file1 = "";
+	private String review_modifydate = "";
+	private int Mem_no = 0;
+	private int Prd_d_no = 0;
 	
-	public int getReviewNo() {
-		return reviewNo;
+	public int getReview_No() {
+		return review_No;
 	}
-	public void setReviewNo(int reviewNo) {
-		this.reviewNo = reviewNo;
+	public void setReview_No(int review_No) {
+		this.review_No = review_No;
 	}
 	public String getReview_writedate() {
 		return Review_writedate;
@@ -57,12 +59,7 @@ public class ReviewVO {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	public String getFile1() {
-		return file1;
-	}
-	public void setFile1(String file1) {
-		this.file1 = file1;
-	}
+
 	public String getReview_modifydate() {
 		return review_modifydate;
 	}
@@ -80,6 +77,12 @@ public class ReviewVO {
 	}
 	public void setPrd_d_no(int prd_d_no) {
 		Prd_d_no = prd_d_no;
+	}
+	public String getReview_file1() {
+		return review_file1;
+	}
+	public void setReview_file1(String review_file1) {
+		this.review_file1 = review_file1;
 	}
 	
 	

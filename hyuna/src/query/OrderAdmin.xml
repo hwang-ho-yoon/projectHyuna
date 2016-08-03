@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyuna.dao.order.OrderAdminDao">
+
+	<!-- 주문 대기 상태 변경 -->
+	<update id="updateApproval" parameterType="orderGroup">
+		/* updateApproval */
+		update orderGroup set ogr_state = #{ogr_state} where ogr_no = #{ogr_no}
+	</update>
+	
+	<!-- 배송 신청 -->
+ 	<update id="updateDelivery" parameterType="orderGroup">
+		/* updateApproval */
+		update orderGroup set ogr_state = #{ogr_state}, ogr_delNo = #{ogr_delNo} where ogr_no = #{ogr_no}
+	</update>
+	
+	<select id="selectOrderGroups" parameterType="order" resultType="orderGroup">
+		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3}
+	</select>
+	
+	<select id="selectOrderProducts" parameterType="int" resultType="orderProduct">
+		select ord_no, ord_amount, ogr_no, prd_d_no from orderProduct where ogr_no = #{ogr_no} 
+	</select>
+
+</mapper>

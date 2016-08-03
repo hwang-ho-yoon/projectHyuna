@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.ProductVO;
 
 @Repository
@@ -79,7 +81,10 @@ public class ProductDaoImpl implements ProductDao {
 		return session.insert("optionInsert");
 	}
 	
-
+	@Override
+	public List<ProductAllVO> prdAllList(ProductAllVO pvo) {
+		// TODO Auto-generated method stub
+		return session.selectList("prdAllList");
+	}
 	
-
 }

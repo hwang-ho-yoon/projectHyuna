@@ -115,6 +115,7 @@ public class OrderController {
 		logger.info("주문등록 호출");
 		if (ogv.getOgr_payPlan().equals("mutongjang")) {
 			ogv.setOgr_state(OrderState.STANDBY_DEPOSIT);
+			ogv.setOgr_approvalNo("");
 		} else if (ogv.getOgr_payPlan().equals("card")) {
 			ogv.setOgr_state(OrderState.COMPLETE_DEPOSIT);
 			ogv.setOgr_approvalNo(ogv.getOgr_cardNo());

@@ -7,6 +7,13 @@
   <script src="/include/board/js/ckeditor/ckeditor.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script>
+	$(function(){
+		$("#write").click(function(){
+			location.href = "/board/faqwrite.do";
+		})
+	})
+</script>
   
   <!-- 게시판 전용
   게시판 전용
@@ -51,11 +58,4 @@
 			</form>
 		</div>
 	</div>
-<script>
-	$(function(){
-		$("#write").click(function(){
-			location.href = "/board/faqwrite.do";
-		})
-	})
-</script>
 

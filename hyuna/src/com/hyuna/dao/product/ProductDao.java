@@ -2,6 +2,7 @@ package com.hyuna.dao.product;
 
 import java.util.List;
 
+import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.ProductVO;
 
 public interface ProductDao {
@@ -30,4 +31,7 @@ public interface ProductDao {
 	public int prdImageUpdate(ProductVO pvo);
 
 	public int prdOptAdd(ProductVO pvo);
+	
+	//product전체정보 dao
+	public List<ProductAllVO> prdAllList(ProductAllVO pvo);
 }
