@@ -7,17 +7,22 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hyuna.common.util.FileUploadUtil;
 import com.hyuna.service.product.ProductService;
-import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.ProductVO;
+
 
 
 
@@ -114,8 +119,12 @@ public class ProductController {
 	
 	//관리자
 	@RequestMapping(value="/prdWriteForm.do",  method = RequestMethod.GET)
-	public String prdWriteForm(){
+	public String prdWriteForm(@ModelAttribute ProductVO pvo, Model model){
 		logger.info("prdWriteForm호출성공");
+		List<ProductVO> colorList = productService.colorList(pvo);
+		List<ProductVO> modelList = productService.modelList(pvo);
+		model.addAttribute("colorList",colorList);
+		model.addAttribute("modelList",modelList);
 		return "product/prdWriteForm";
 	}
 	//관리자
@@ -142,6 +151,11 @@ public class ProductController {
 			ProductVO prdMgrDetail=new ProductVO();
 			prdMgrDetail=productService.prdMgrDetail(pvo);
 			model.addAttribute("detail",prdMgrDetail);
+			
+			List<ProductVO> colorList = productService.colorList(pvo);
+			List<ProductVO> modelList = productService.modelList(pvo);
+			model.addAttribute("colorList",colorList);
+			model.addAttribute("modelList",modelList);
 			
 			//option
 			List<ProductVO> optList = productService.optList(pvo);
@@ -194,7 +208,11 @@ public class ProductController {
 			
 			result=productService.prdUpdate(pvo);
 			if(!img_1.equals("")||!img_2.equals("")||!img_3.equals("")){
+				
 			imgResult=productService.prdImageUpdate(pvo);
+				if(imgResult<1){
+					imgResult=productService.prdImageInsert(pvo);
+				}
 			}
 			if(result==1){
 				page="product/prdRgtList";
@@ -205,16 +223,67 @@ public class ProductController {
 			return page;
 		}
 		
+		//public String prdUpdateForm(@RequestBody ProductVO pvo){
 		@RequestMapping(value="/prdOptAdd.do",  method = RequestMethod.POST)
-		public String prdOptAdd(@ModelAttribute ProductVO pvo,HttpServletRequest request) throws IllegalStateException, IOException{
-			
+		public ResponseEntity<String> OptAddlist(@RequestBody ProductVO pvo){
 			logger.info("prdOptAdd호출 성공");
 			String url="";
-			int result=productService.prdOptAdd(pvo);
-			if(result==1){
-				url="/product/prdUpdateForm.do";//board
+			ResponseEntity<String> entity = null;
+			int result=0;
+			try{
+				result=productService.prdOptAdd(pvo);
+				if(result == 1){
+					entity=new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+				}
+				return entity;
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
-			return url;//movepage의 기능을 한다.  공백이 들어가면 안된다.		
+			
+			return entity;
+		}
+		
+		@RequestMapping(value="/prdOptDelete.do",  method = RequestMethod.POST)
+		public ResponseEntity<String> OptDeletelist(@RequestBody ProductVO pvo){
+			logger.info("prdOptAdd호출 성공");
+			String url="";
+			ResponseEntity<String> entity = null;
+			int result=0;
+			try{
+				result=productService.prdOptDelete(pvo);
+				if(result == 1){
+					entity=new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+				}
+				return entity;
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			return entity;
+		}
+	@RequestMapping(value="/prdOptUpdate.do",  method = RequestMethod.POST)
+	public ResponseEntity<String> prdOptUpdate(@RequestBody ProductVO pvo){
+			logger.info("prdOptUpdate호출 성공");
+			String url="";
+			ResponseEntity<String> entity = null;
+			int result=0;
+			try{
+				result=productService.prdOptUpdate(pvo);
+				if(result == 1){
+					entity=new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+				}
+				return entity;
+				
+			}catch(Exception e){
+				e.printStackTrace();
+				entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			
+			return entity;
 		}
 		
 	
@@ -222,6 +291,7 @@ public class ProductController {
 	@RequestMapping(value="/prdMainList.do",  method = RequestMethod.GET)
 	public String prdMainList(@ModelAttribute ProductVO pvo, Model model){
 		logger.info("prdMainList호출성공");
+		logger.info("model:"+pvo.getModel_machine());
 		List<ProductVO> prdMainList = productService.prdMainList(pvo);
 		logger.info("Img_1 : "+prdMainList.get(0).getImg_1());
 		
@@ -241,19 +311,62 @@ public class ProductController {
 		/*if(detail!=null && (!detail.equals(""))){
 			detail.setB_content(detail.getB_content().toString().replace("\n", "<br>"));
 		}*/
+		List<ProductVO> opt=productService.prdSingleOption(pvo);
+		opt=productService.prdSingleOption(pvo);
+		
 		model.addAttribute("detail",detail);
+		model.addAttribute("opt",opt);
 		return "product/prdSingleDetail";		
 	}	
 	
+	@RequestMapping(value="/prdList.do",  method = RequestMethod.GET)
+	public String prdList(@ModelAttribute ProductVO pvo, Model model){
+		logger.info("prdList호출성공");
+		List<ProductVO> prdListBest = productService.prdListBest(pvo);		
+		List<ProductVO> prdListLatest = productService.prdListLatest(pvo);		
+		model.addAttribute("prdListBest", prdListBest);
+		model.addAttribute("prdListLatest", prdListLatest);
+		return "product/prdList";
+	}
+	@RequestMapping(value="/prdDelete.do",  method = RequestMethod.POST)
+	public String prdDelete(@ModelAttribute ProductVO pvo, Model model){
+		logger.info("prdDelete 호출성공");
+		//int result=productService.detailPrdDelete(pvo);
+		int result=productService.masterPrdDelete(pvo);
+		return "redirect:/product/prdRgtList.do";
+	}
+	
+	
 	//product전체정보
-		@RequestMapping(value="/prdAll.do")
-		public String prdAll(@ModelAttribute ProductAllVO pvo, Model model ){
-			logger.info("prdAll 호출성공");
+	/*@RequestMapping(value="/prdAll.do")
+	public String prdAll(@ModelAttribute ProductAllVO pvo, Model model ){
+		logger.info("prdAll 호출성공");
 
-			List<ProductAllVO> prdAll = productService.prdAllList(pvo);
-			model.addAttribute("prdAll", prdAll);
-		
-			return "product/prdAllList";
+		List<ProductAllVO> prdAll = productService.prdAllList(pvo);
+		model.addAttribute("prdAll", prdAll);
+	
+		return "product/prdAllList";
+	}*/
+
+	//ResponseEntity<List<ProductVO>> list(@PathVariable("b_num") Integer b_num) {// list형태
+	//var url="/product/colorOptList.do?prd_no="+prd_no+"&model_no="+model_no+".do";
+	@ResponseBody
+	@RequestMapping(value="/colorOptList.do")
+	public ResponseEntity<List<ProductVO>> list(@ModelAttribute ProductVO pvo) {// list형태 String colorOptList(@ModelAttribute ProductVO pvo, Model model ){
+		logger.info("colorOptList 호출성공");
+		ResponseEntity<List<ProductVO>> entity=null;
+
+		try{
+			/*pvo.setPrd_no(prd_no);
+			pvo.setModel_no(model_no);*/
+			entity = new ResponseEntity<>(productService.colorOptList(pvo), HttpStatus.OK);			
+		}catch(Exception e){
+			e.printStackTrace();
+			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-
+		
+		return entity;
+	}
+	
 }
+

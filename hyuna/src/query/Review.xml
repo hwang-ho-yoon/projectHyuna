@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyuna.dao.review.ReviewDao">
  		<sql id="reviewCommon">
-		select * from review natural join member natural join PRD_DETAIL
+		select * from review inner join member on review.mem_no = member.mem_no
 		<!-- <trim prefix="where" prefixOverrides="and"> --><!-- 이거안쓰고 그냥 where로 해도됨 -->
 		<where>
 			<if test="search=='review_title'">
-				<![CDATA[ qna_title like '%' || #{keyword} || '%']]> <!-- CDATA는 xml에서 문자그대로쓸수잇게<>이런거쓸수잇음 -->
+				<![CDATA[ review_title like '%' || #{keyword} || '%']]> <!-- CDATA는 xml에서 문자그대로쓸수잇게<>이런거쓸수잇음 -->
 			</if>
 			<if test="search=='review_content'">
-				<![CDATA[ qna_content like '%' || #{keyword} || '%']]>
+				<![CDATA[ review_content like '%' || #{keyword} || '%']]>
 			</if>
 			<if test="search=='member_name'">
 				<![CDATA[ member_name like '%' || #{keyword} || '%']]>
@@ -18,17 +18,21 @@
 		<!-- </trim> -->
 	</sql>
 
-	<!-- Qna 등록 -->
+	<!-- review 등록 -->
 	<insert id="reviewInsert" parameterType="review">
-		
-		insert into review (review_no, review_writedate, review_title, review_content, review_score, review_file1, review_modifydate, mem_no, prd_d_no,review_hit) values 
-		(review_seq.nextval, sysdate, #{review_title}, #{review_content}, #{review_score}, #{review_file1}, sysdate, #{mem_no} ,#{prd_d_no},0)		
+		/* reviewInsert */
+		insert into review (review_no, review_writedate, review_title, review_content, review_score, 
+		<if test="review_file1 !=null">review_file1,</if>		 
+		review_modifydate, mem_no) values 
+		(review_seq.nextval, sysdate, #{review_title}, #{review_content}, #{review_score}, 
+		<if test="review_file1 !=null">#{review_file1},</if> 
+		sysdate, #{mem_no} )		
 	</insert>
 	
 	<!-- 게시물 전체 조회 -->
 	<select id="reviewList" parameterType="review" resultType="review">
-		/* qna qnaList */
-		select review_no, mem_name, review_title, review_score, review_hit, prd_d_no, to_char(review_writedate, 'YYYY-MM-DD HH24:MI:SS') as review_writedate from 
+		/* review reviewList */
+		select review_no, mem_name, review_title, review_score, to_char(review_writedate, 'YYYY-MM-DD HH24:MI:SS') as review_writedate from 
 		(select list.*, rownum as rnum from (
 		<include refid="reviewCommon"></include>
 		<choose>
@@ -50,19 +54,38 @@
 		</where>
 	</select>
 	
-<!-- 	<select id="qnaListCnt" parameterType="qna" resultType="int">
-		/* Board boardListCnt */
+ 	<select id="reviewListCnt" parameterType="review" resultType="int">
+		/* Board reviewListCnt */
 		select nvl(count(1), 0) from (select list.*, rownum as rnum from (
-		<include refid="qnaCommon"></include>
-		order by b_num desc
+		<include refid="reviewCommon"></include>
+		order by review_no desc
 		) list
 		)
-	</select> -->
+	</select> 
 	
 	<!-- 조회수 -->
 	<update id="reviewHit" parameterType="review">
-		/* qnaHit */
+		/* reviewHit */
 		update review set review_hit = review_hit +1 where review_no = #{review_no}
 	</update>
 	
+	<!-- 디테일 -->
+	<select id="reviewDetail" parameterType="review" resultType="review">
+		/* reviewDetail */
+		select * from review inner join member on review.mem_no = member.mem_no left outer join prd_detail on review.prd_d_no = prd_detail.prd_d_no left outer join prd_master on prd_detail.prd_no = prd_master.prd_no  where review.review_no = #{review_no}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="reviewUpdate" parameterType="review">
+		/* reviewUpdate */
+		update review set review_title = #{review_title}, review_content = #{review_content}, review_score = #{review_score}, review_modifydate = sysdate
+		<if test="review_file1 !=''">,review_file1 = #{review_file1}</if>				
+		 where review_no = #{review_no}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="reviewDelete" parameterType="review">
+		/* reviewDelete */
+		delete from review where review_no = #{review_no}
+	</delete>
 </mapper>	

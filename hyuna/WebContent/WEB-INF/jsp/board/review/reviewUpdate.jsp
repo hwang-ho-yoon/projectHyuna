@@ -10,29 +10,31 @@
   <script>
 	$(function(){
 	
-		var file = "<c:out value='${detail.qna_file1}'/>";
+		var file = "<c:out value='${detail.review_file1}'/>";
 		if(file!=""){
 			$("#fileImage").attr({
-				src:"/uploadStorage/${detail.qna_file1}",
+				src:"/uploadStorage/${detail.review_file1}",
 				width:"150px",
 				height:"100px"
 			});
 		}
 		
-		$("#qna_category").val("${detail.qna_category }");
+		$("#review_score").val("${detail.review_score }");
 		
 		//글수정
-		$("#updateBtn").click(function(){
-			if("${sessionScope.hyunaMember }"!="${detail.mem_no}"){
-			alert("본인이 작성한 글만 수정 가능 합니다.");
-			return;
+		$("#updateBtn").click(function(){					
+			if(!cccc($("#review_title"),"제목을 "))return;
+			else if(!cccc($("#review_content"),"내용을 "))return;
+			else if("${sessionScope.hyunaMember }"!="${detail.mem_no}"){
+				alert("본인이 작성한 글만 수정 가능 합니다.");
+				return;
 			}
 			else{
-				$("#qna_detail").attr({
+				$("#review_detail").attr({
 					"method":"post",
-					"action":"/board/qna/qnaUpdateForm.do"
+					"action":"/board/review/reviewUpdate.do"
 				});
-				$("#qna_detail").submit();
+				$("#review_detail").submit();
 			}
 		});
 		
@@ -44,11 +46,11 @@
 			}
 			else{
 				if(confirm("정말 삭제하시겠습니까?")){
-					$("#qna_detail").attr({
+					$("#review_detail").attr({
 						"method":"post",
-						"action":"/board/qna/qnaDelete.do"
+						"action":"/board/review/reviewDelete.do"
 					});
-					$("#qna_detail").submit();
+					$("#review_detail").submit();
 				}else{
 					return;
 				}
@@ -61,7 +63,17 @@
 			history.back();
 		})
 	});
-
+		
+	function cccc(v_item, v_name){
+	if(v_item.val().replace(/\s/g,"")==""){
+		alert(v_name+" 입력해 주세요");
+		v_item.val("");
+		v_item.focus();		
+		return false;
+	}else{
+		return true;
+	}
+}
 </script>
   
   <!-- 게시판 전용
@@ -74,35 +86,38 @@
    <body>
 	<div id="wrapper" style="margin-top: 50px">
 	<div class="bottom">
-		<form id="qna_detail" enctype="multipart/form-data">
+		<form id="review_detail" enctype="multipart/form-data">
 		<input type="hidden" id="mem_no" name="mem_no" value="${detail.mem_no}">
-		<input type="hidden" id="qna_no" name="qna_no" value="${detail.qna_no}">
+		<input type="hidden" id="review_no" name="review_no" value="${detail.review_no}">
 			<table class="table table table-bordered" >	
 				<tr>
 					<td width="10%" style="text-align: center; background: #F6F6F6"><label class="control-label">글번호</label></td>
-					<td width="20%">${detail.qna_no }</td>
+					<td width="20%">${detail.review_no }</td>
 					<td width="10%" style="text-align: center; background: #F6F6F6"><label class="control-label">작성일</label></td>
-					<td width="30%">${detail.qna_writedate }</td>
+					<td width="30%">${detail.review_writedate }</td>
 					<td width="10%" style="text-align: center; background: #F6F6F6"><label class="control-label">조회수</label></td>
-					<td width="20%">${detail.qna_hit }</td>
+					<td width="20%">${detail.review_hit }</td>
 				</tr>		
 				<tr>
 					<td width="10%" style="text-align: center; background: #F6F6F6"><label class="control-label">제목</label></td>
 					<td width="75%" colspan="4">
-						<input type="text"  class="form-control" id="qna_title" name="qna_title" value="${detail.qna_title }" readonly="readonly" style="background: white">
+						<input type="text"  class="form-control" id="review_title" name="review_title" value="${detail.review_title }">
 					</td>
 					<td width="15%">					
-						<select class="form-control" id="qna_category" name="qna_category" disabled="disabled" style="background: white">
-						<option value="상품문의">상품문의</option>
-						<option value="배송문의">배송문의</option>
-						<option value="기타문의">기타문의</option>
-						</select>
-					</td>
+						<label class="control-label" >평점</label>
+						<td>
+							<label class="radio-inline"><input type="radio" id="review_score1" name="review_score" value="1">★</label>
+							<label class="radio-inline"><input type="radio" id="review_score2" name="review_score" value="2">★★</label>
+							<label class="radio-inline"><input type="radio" id="review_score3" name="review_score" value="3">★★★</label>
+							<label class="radio-inline"><input type="radio" id="review_score4" name="review_score" value="4">★★★★</label>
+							<label class="radio-inline"><input type="radio" id="review_score5" name="review_score" value="5">★★★★★</label>
+					
+						</td>
 				</tr>
 				<tr>
 					<td width="10%" style="text-align: center; background: #F6F6F6"><label class="control-label">내용</label></td>
 					<td colspan="5">
-						<textarea class="form-control"  rows="10" style='resize: none; background: white ' id="qna_content" name="qna_content" readonly="readonly">${detail.qna_content }</textarea>		               
+						<textarea class="form-control"  rows="10" style='resize: none; ' id="review_content" name="review_content">${detail.review_content }</textarea>		               
 		            </td>
 	            </tr>
 				<tr>
@@ -111,8 +126,19 @@
 	            	</td>
 	            	<td colspan="5">
 	            		<img id="fileImage">
-	            	</td>	            	
+	            	</td>
+	            	
 	            </tr>
+	            <tr>
+	            	<td style="text-align: center; background: #F6F6F6">
+	            		<label class="control-label">첨부 파일</label>
+	            	</td>
+	            	<td colspan="5">
+	            		<input type="file" id="inputdefault" class="form-control" name="file"/>
+	            	</td>
+	            	
+	            </tr>
+
 			</table>
 			<div class="col-md-1 col-md-offset-0" >
 				<button class="btn btn-default" type="button" id="listBtn">목록</button>
@@ -123,8 +149,6 @@
 			<div class="col-md-1 col-md-offset-0">
 				<button class="btn btn-default" type="button" id="deleteBtn">삭제</button>
 			</div>
-			<!-- 상세 정보 보여주기 종료 -->
-		<jsp:include page="reply.jsp"></jsp:include>
 		</form>
 	</div>
 </div>

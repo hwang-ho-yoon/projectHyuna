@@ -13,7 +13,7 @@
 		 PRD_PRCPRICE, PRD_ORGPRICE, PRD_SALEPRICE, PRD_INPUTDATE, PRD_INPUTID,
 		 PRD_DESC)
 		 values 
-		(#{prd_no}, #{prd_name}, #{prd_manufacturer}, #{prd_origine}, #{prd_display},
+		(#{prd_no}, #{prd_name}, #{prd_manufacturer}, #{prd_origine}, 'Y',
 		 #{prd_prcprice}, #{prd_orgprice}, #{prd_saleprice}, sysdate, 'hyuna',
 		 #{prd_desc})		
 	</insert>	
@@ -29,8 +29,8 @@
 		(#{img_no}, #{img_1}, #{img_2}, #{img_3}, #{prd_no})		
 	</insert>	
 	
-	<insert id="optionInsert" parameterType="prd">
-		/* optionInsert */
+	<insert id="prdOptAdd" parameterType="prd">
+		/* prdOptAdd */
 		<selectKey keyProperty="prd_d_no" resultType="int" order="BEFORE">
 			select prd_detail_seq.nextval from dual
 		</selectKey>
@@ -42,14 +42,30 @@
 	
 	<select id="prdRgtList" resultType="prd" parameterType="prd">
 		select prd_no, prd_name, prd_desc, prd_display, prd_saleprice, to_char(prd_inputdate,'YYYY-MM-DD')prd_inputdate from prd_master 
-		where prd_display ='on' or prd_display ='Y' order by prd_no desc
+		where 1=1 
+		order by prd_no desc
 	</select>
 	
 	<select id="prdMainList" resultType="prd" parameterType="prd">
 		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
-         where prd_display ='on' or prd_display ='Y' order by prd_no desc
+		  <if test ="model_machine != ''">
+		   left join prd_detail d on m.prd_no = d.prd_no 
+		  </if>
+         where 1=1 
+          <if test ="model_machine != ''">
+		   and d.model_no in (
+           select model_no from model where model_machine like '%'||#{model_machine}||'%')
+		  </if>        
+         and prd_display ='on' or prd_display ='Y' order by prd_no desc
 	</select>
+	<!-- <select id="prdMainList" resultType="prd" parameterType="prd">
+		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		  left join prd_img img on m.prd_no = img.prd_no
+         where prd_display ='on' or prd_display ='Y' order by prd_no desc
+	</select> -->
+	
+	
 	<select id="prdSingleDetail" resultType="prd" parameterType="prd">
 		select m.prd_no, prd_name, prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1, nvl(img.img_3,'') as img_3 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
@@ -67,7 +83,7 @@
 	</select>
 	
 	<select id="optList" resultType="prd" parameterType="prd">
-		 select prd_d_no, prd_d_display, color_detail, model_brand, model_machine from prd_detail pd
+		 select prd_d_no, prd_d_display, color_detail, model_brand, model_machine, prd_d_stock from prd_detail pd
 		   left join color c on pd.color_no = c.color_no
 		   left join model m on pd.model_no = m.model_no
 		  where pd.prd_no= #{prd_no}
@@ -104,7 +120,56 @@
 			 </set>			 					
 		 where prd_no=#{prd_no}					
 	</update>
-	
+	<select id="prdListBest" resultType="prd" parameterType="prd">
+		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		  left join prd_img img on m.prd_no = img.prd_no
+         where 1=1 and prd_event = 'B' and (prd_display ='on' or prd_display ='Y') order by prd_no desc
+	</select>
+	<select id="prdListLatest" resultType="prd" parameterType="prd">
+		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		  left join prd_img img on m.prd_no = img.prd_no
+         where 1=1 and prd_event = 'L' and (prd_display ='on' or prd_display ='Y') order by prd_no desc
+	</select>
+	<delete id="prdOptDelete" parameterType="prd">
+	/* prdOptDelete */
+		update prd_detail set prd_d_display = 'N' where prd_no=#{prd_no} and prd_d_no=#{prd_d_no}		
+	</delete>
+	<update id="prdOptUpdate" parameterType="prd">
+		/* prdOptUpdate */
+		update prd_detail 
+		   <set> 
+			 <if test ="prd_d_stock != ''">
+			 PRD_D_STOCK=#{prd_d_stock},
+			 </if>
+			 <if test ="prd_d_stock != ''">
+			 PRD_D_DISPLAY=#{prd_d_display},
+			 </if>			 
+			</set>			 					
+		 where prd_no=#{prd_no}	and prd_d_no=#{prd_d_no}	
+	</update>
+	<update id="masterPrdDelete" parameterType="prd">
+	/* masterPrdDelete (display = N update)*/
+		update prd_master set prd_display = 'N' where prd_no = #{prd_no}
+	</update>
+	<delete id="detailPrdDelete" parameterType="prd">
+	/* detailPrdDelete */
+		delete from prd_detail where prd_no = #{prd_no}
+	</delete>
+	<select id="prdSingleOption" resultType="prd" parameterType="prd">
+		 select distinct m.model_no as model_no,
+     			m.model_machine as model_machine 
+     	  from prd_detail d
+          left join model m on m.model_no = d.model_no
+    	 where d.prd_no=#{prd_no} <![CDATA[and prd_d_stock <> 0 and prd_d_display <> 'N']]>
+		  
+	</select>	
+	<select id="colorOptList" resultType="prd" parameterType="prd">
+		  select c.color_no, c.color_detail  from prd_detail d
+		    left join color c on c.color_no= d.color_no 
+     	   where prd_no=#{prd_no} and model_no=#{model_no}
+     	   <![CDATA[and prd_d_stock <> 0 and prd_d_display <> 'N']]>
+           order by prd_no, model_no
+	</select>	
 	<!-- product전체정보 Xml -->
 	<select id="prdAllList" resultType="prdAll" parameterType="prdAll">
 		 select d.*, m.*, img.*, mo.*, co.* from prd_detail d
@@ -112,7 +177,24 @@
 	    	   left join prd_img img on img.prd_no = m.prd_no
 	           left join model mo on d.model_no=mo.model_no 
 	           left join color co on d.color_no=co.color_no 
-	   		  where d.prd_d_no = #{prd_d_no}
+	   		  where d.prd_d_no = #{prd_d_no};
 	</select>
-	
+	<select id="colorList" resultType="prd" parameterType="prd">
+		  select color_no, color_detail  from color		  
+     	   order by color_no
+	</select>	
+	<select id="modelList" resultType="prd" parameterType="prd">
+		  select model_no, model_machine  from model		  
+     	   order by model_no
+	</select>	
+	<insert id="optionInsert" parameterType="prd">
+		/* optionInsert */
+		<selectKey keyProperty="prd_d_no" resultType="int" order="BEFORE">
+			select prd_detail_seq.nextval from dual
+		</selectKey>
+		insert into prd_detail
+		(PRD_D_NO, PRD_NO, PRD_D_DISPLAY, PRD_D_STOCK, COLOR_NO, MODEL_NO)
+		 values 
+		(#{prd_d_no}, #{prd_no}, #{prd_d_display}, #{prd_d_stock}, #{color_no}, #{model_no})		
+	</insert>
 	</mapper>
