@@ -17,13 +17,24 @@ public class ReviewVO extends CommonVO{
 	private int Mem_no = 0;
 	private int Prd_d_no = 0;
 	private String Prd_name;
+	private String mem_name;
 	
+	
+	public String getMem_name() {
+		return mem_name;
+	}
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
 	public String getPrd_name() {
 		return Prd_name;
 	}
 	public void setPrd_name(String prd_name) {
 		Prd_name = prd_name;
 	}
+	
+	
+	
 	public int getReview_no() {
 		return review_no;
 	}

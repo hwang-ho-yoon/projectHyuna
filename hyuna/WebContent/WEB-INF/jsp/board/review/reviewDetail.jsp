@@ -93,7 +93,8 @@
 					</td>
 					<td width="15%">					
 						<td width="10%"><label class="control-label" >평점</label></td>
-					<td><label class="radio-inline"><input type="radio" id="review_score1" name="review_score" value="1">★</label>
+					<td>
+						<label class="radio-inline"><input type="radio" id="review_score1" name="review_score" value="1">★</label>
 						<label class="radio-inline"><input type="radio" id="review_score2" name="review_score" value="2">★★</label>
 						<label class="radio-inline"><input type="radio" id="review_score3" name="review_score" value="3">★★★</label>
 						<label class="radio-inline"><input type="radio" id="review_score4" name="review_score" value="4">★★★★</label>

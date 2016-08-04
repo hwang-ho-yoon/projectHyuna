@@ -104,8 +104,8 @@
 		      <tr>     
 		        <th width="10%" style="text-align: center; background: #F6F6F6">글번호</th>
 		        <th width="10%" style="text-align: center; background: #F6F6F6">상품정보</th>
-		        <th width="10%" style="text-align: center; background: #F6F6F6">제목</th>
-		        <th width="30%" style="text-align: center; background: #F6F6F6">작성자</th>
+		        <th width="30%" style="text-align: center; background: #F6F6F6">제목</th>
+		        <th width="10%" style="text-align: center; background: #F6F6F6">작성자</th>
 		        <th width="10%" style="text-align: center; background: #F6F6F6">평점</th>
 		        <th width="20%" style="text-align: center; background: #F6F6F6">작성일</th>
 		        <th width="10%" style="text-align: center; background: #F6F6F6">조회수</th>
