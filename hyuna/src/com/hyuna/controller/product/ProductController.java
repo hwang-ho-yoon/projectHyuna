@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -352,13 +353,16 @@ public class ProductController {
 	//var url="/product/colorOptList.do?prd_no="+prd_no+"&model_no="+model_no+".do";
 	@ResponseBody
 	@RequestMapping(value="/colorOptList.do")
-	public ResponseEntity<List<ProductVO>> list(@ModelAttribute ProductVO pvo) {// list형태 String colorOptList(@ModelAttribute ProductVO pvo, Model model ){
+	public ResponseEntity<List<ProductVO>> list(@RequestParam("prd_nol")int prd_no,@RequestParam("model_nol")int model_no   ) {// list형태 String colorOptList(@ModelAttribute ProductVO pvo, Model model ){
 		logger.info("colorOptList 호출성공");
 		ResponseEntity<List<ProductVO>> entity=null;
 
 		try{
-			/*pvo.setPrd_no(prd_no);
-			pvo.setModel_no(model_no);*/
+			
+			ProductVO pvo=new ProductVO();
+			pvo.setModel_no(model_no);
+			pvo.setPrd_no(prd_no);
+			System.out.println(pvo.getPrd_no()+" "+pvo.getModel_no());
 			entity = new ResponseEntity<>(productService.colorOptList(pvo), HttpStatus.OK);			
 		}catch(Exception e){
 			e.printStackTrace();
