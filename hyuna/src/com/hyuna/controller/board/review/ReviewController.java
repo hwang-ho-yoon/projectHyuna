@@ -42,8 +42,8 @@ public class ReviewController {
 		logger.info("리스트");
 		
 		//정렬에 대한 기본값 설정		
-		//if(bvo.getOrder_by()==null) qvo.setOrder_by("b_num");		
-		//if(bvo.getOrder_sc()==null) qvo.setOrder_sc("DESC");
+		if(rvo.getOrder_by()==null) rvo.setOrder_by("review_no");		
+		if(rvo.getOrder_sc()==null) rvo.setOrder_sc("DESC");
 
 		
 		//페이지 세팅
@@ -59,12 +59,13 @@ public class ReviewController {
 			ReviewVO reviewVO = reviewList.get(i);
 			ProductAllVO allVO = new ProductAllVO();
 			allVO.setPrd_d_no(reviewVO.getPrd_d_no());
-			
 			List<ProductAllVO> allVOs = productService.prdAllList(allVO);
-			
-			if(allVOs.size() != 0){
+			if(reviewVO.getPrd_d_no()==0){
+				reviewVO.setPrd_name("");
+			}else{
 				reviewVO.setPrd_name(allVOs.get(0).getPrd_name());
 			}
+			
 		}
 		
 		
