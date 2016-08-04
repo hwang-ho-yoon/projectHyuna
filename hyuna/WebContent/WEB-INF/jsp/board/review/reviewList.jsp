@@ -64,6 +64,8 @@
 		$(".goDetail").mouseover(function(){
 			$(this).css("text-decoration","underline");	
 		});
+		
+		
 	});
 	
 	/* 정렬 버튼 클릭시 처리함수 */
@@ -89,12 +91,16 @@
 		});
 		$("#f_search").submit();
 	}
+	
+
+
 </script>
 	<div id="wrapper" style="margin-top: 50px">
 		<div class="board">
 		<form id="detailForm" name="detailForm">
 			<input type="hidden" name="review_no" id="review_no">
 			<input type="hidden" name="mem_no" id="mem_no" value="${sessionScope.hyunaMember }">
+			
 			<input type="hidden" name="page" value="${data.page }">
 			<input type="hidden" name="pageSize" value="${data.pageSize }">
 		</form>
@@ -118,16 +124,31 @@
 							<tr data-num="${review.review_no }">
 								<td align="center">${review.review_no }</td> <!-- 번호 -->
 								<td align="center">
-									
-										${review.prd_name }									
-																	
+										${review.prd_name }																	
 									</td>
-								
 								<td>
 									<span class="goDetail" style="cursor: pointer;">${review.review_title }</span>
 								</td>
 								<td align="center">${review.mem_name}</td>
-								<td align="center">${review.review_score }</td>
+								<td align="center">
+									<c:choose>
+										<c:when test="${review.review_score == 5}">
+											<img src="/images/board/score5.gif"/>
+										</c:when>
+										<c:when test="${review.review_score == 4}">
+											<img src="/images/board/score4.gif"/>
+										</c:when>
+										<c:when test="${review.review_score == 3}">
+											<img src="/images/board/score3.gif"/>
+										</c:when>
+										<c:when test="${review.review_score == 2}">
+											<img src="/images/board/score2.gif"/>
+										</c:when>
+										<c:when test="${review.review_score == 1}">
+											<img src="/images/board/score1.gif"/>
+										</c:when>
+									</c:choose>
+								</td>
 								<td align="center">${review.review_writedate }</td>
 								<td align="center">${review.review_hit }</td>
 							</tr>
