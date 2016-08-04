@@ -17,4 +17,5 @@ public interface OrderService {
 	public int orderGroupUpdate(OrderRecallCancelVO recallCancel);
 	public OrderRecallCancelVO selectOrderRecallCancel(int group_no);
 	public int orderListCnt(OrderVO orderVO);
+	public List<OrderGroupVO> selectOrderGroupsNoPage(OrderVO orderVO);
 }

@@ -160,11 +160,10 @@
 								</td>
 								<td style="padding-top: 14px">
 									<c:forEach var="orderProduct" items="${orderGroup.orderProductVO}" varStatus="Productstatus">
-										<c:if test="${Productstatus.index eq 0}">
-											<c:set var= "sum" value="${sum + orderProduct.ord_amount * orderProduct.prd_saleprice}"/>
-										</c:if>
+										<c:set var= "sum" value="${sum + orderProduct.ord_amount * orderProduct.prd_saleprice}"/>
 									</c:forEach>
 										￦<c:out value="${sum}"/>
+										<c:set var="sum" value="${sum * 0}"/>
 								</td>
 								<td style="padding-top: 14px">
 									<c:choose>

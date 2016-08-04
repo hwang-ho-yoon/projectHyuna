@@ -113,10 +113,20 @@ public class OrderController {
 		orderVO.setOgr_state2(OrderState.COMPLETE_CANCEL);
 		orderVO.setOgr_state3(OrderState.STANDBY_RECALL);
 		orderVO.setOgr_state4(OrderState.COMPLETE_RECALL);
-		List<OrderGroupVO> orderGroupsVOs = orderService.selectOrderGroups(orderVO);
+		List<OrderGroupVO> orderGroupsVOs = orderService.selectOrderGroupsNoPage(orderVO);
 		for (int i = 0; i < orderGroupsVOs.size(); i++) {
 			OrderGroupVO orderGroupsVO = orderGroupsVOs.get(i);
-			orderGroupsVO.setOrderProductVO(orderService.selectOrderProducts(orderGroupsVO.getOgr_no()));
+			List<OrderProductVO> orderProductVOs = orderService.selectOrderProducts(orderGroupsVO.getOgr_no());
+			for (int j = 0; j < orderProductVOs.size(); j++) {
+				ProductAllVO productAllVO = new ProductAllVO();
+				productAllVO.setPrd_d_no(orderProductVOs.get(j).getPrd_d_no());
+				List<ProductAllVO> productAllVOs = productService.prdAllList(productAllVO);
+				orderProductVOs.get(j).setPrd_name(productAllVOs.get(0).getPrd_name());
+				orderProductVOs.get(j).setModel_machine(productAllVOs.get(0).getModel_machine());
+				orderProductVOs.get(j).setPrd_saleprice(productAllVOs.get(0).getPrd_saleprice());
+				orderProductVOs.get(j).setColor_detail(productAllVOs.get(0).getColor_detail());
+			}
+ 			orderGroupsVO.setOrderProductVO(orderProductVOs);
 		}
 		model.addAttribute("orderGroups", orderGroupsVOs);
 		model.addAttribute("data", orderVO);
@@ -133,6 +143,8 @@ public class OrderController {
 	@RequestMapping("/orderDetail.do")
 	public String orderDetail(@RequestParam("ogr_no") String ogr_no, Model model) {
 		OrderGroupVO ogv = orderService.orderGroupDetail(ogr_no);
+		List<OrderProductVO> orderProductVOs = orderService.selectOrderProducts(ogv.getOgr_no());
+		ogv.setOrderProductVO(orderProductVOs);
 		List<ProductAllVO> productAllVOs = new ArrayList<ProductAllVO>();
 		for (int i = 0; i < ogv.getOrderProductVO().size(); i++) {
 			ProductAllVO productAllVO = new ProductAllVO();
@@ -140,12 +152,36 @@ public class OrderController {
 			List<ProductAllVO> allVOs = productService.prdAllList(productAllVO);
 			if (allVOs.size() != 0) {
 				ProductAllVO allVO = allVOs.get(0);
+				allVO.setPrd_d_stock(String.valueOf(ogv.getOrderProductVO().get(i).getOrd_amount()));
 				productAllVOs.add(allVO);
 			}
 		}
+		
 		model.addAttribute("orderGroup", ogv);
 		model.addAttribute("productAllVO", productAllVOs);
 		return "order/orderDetail";
+	}
+	
+	@RequestMapping("/orderDetailRnc.do")
+	public String orderDetailRnc(@RequestParam("ogr_no") String ogr_no, Model model) {
+		OrderGroupVO ogv = orderService.orderGroupDetail(ogr_no);
+		List<OrderProductVO> orderProductVOs = orderService.selectOrderProducts(ogv.getOgr_no());
+		ogv.setOrderProductVO(orderProductVOs);
+		List<ProductAllVO> productAllVOs = new ArrayList<ProductAllVO>();
+		for (int i = 0; i < ogv.getOrderProductVO().size(); i++) {
+			ProductAllVO productAllVO = new ProductAllVO();
+			productAllVO.setPrd_d_no(ogv.getOrderProductVO().get(i).getPrd_d_no());
+			List<ProductAllVO> allVOs = productService.prdAllList(productAllVO);
+			if (allVOs.size() != 0) {
+				ProductAllVO allVO = allVOs.get(0);
+				allVO.setPrd_d_stock(String.valueOf(ogv.getOrderProductVO().get(i).getOrd_amount()));
+				productAllVOs.add(allVO);
+			}
+		}
+		
+		model.addAttribute("orderGroup", ogv);
+		model.addAttribute("productAllVO", productAllVOs);
+		return "order/orderDetailRnc";
 	}
 	
 	@RequestMapping("/orderCancel.do")

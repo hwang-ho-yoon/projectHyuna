@@ -25,9 +25,9 @@
 		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where ogr_no = #{ogr_no}
 	</select>
 	
-<!-- 	<select id="selectOrderGroups" parameterType="order" resultType="orderGroup">
+ 	<select id="selectOrderGroupsNoPage" parameterType="order" resultType="orderGroup">
 		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where mem_no = #{mem_no} and (ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3} or ogr_state = #{ogr_state4})
-	</select> -->
+	</select>
 	
 	<select id="selectOrderGroups" parameterType="order" resultType="orderGroup">
 		/* order - orderList*/

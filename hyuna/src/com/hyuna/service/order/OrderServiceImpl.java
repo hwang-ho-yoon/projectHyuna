@@ -71,4 +71,9 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.orderListCnt(orderVO);
 	}
 
+	@Override
+	public List<OrderGroupVO> selectOrderGroupsNoPage(OrderVO orderVO) {
+		return orderDao.selectOrderGroupsNoPage(orderVO);
+	}
+
 }

@@ -61,4 +61,9 @@ public class OrderDaoImpl implements OrderDao{
 		return session.selectOne("orderListCnt", orderVO);
 	}
 
+	@Override
+	public List<OrderGroupVO> selectOrderGroupsNoPage(OrderVO orderVO) {
+		return session.selectList("selectOrderGroupsNoPage", orderVO);
+	}
+
 }

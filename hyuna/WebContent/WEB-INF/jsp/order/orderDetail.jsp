@@ -18,8 +18,13 @@
 		</div>
 		<table class="table table-hover table-bordered">
 			<tr>
-				<th style="width: 30%">주문금액</th>
-				<td><c:out value="sum"></c:out></td>
+				<th style="width: 30%">주문금액(배송비)</th>
+				<td>
+					<c:forEach var="prdAll" items="${productAllVO }" varStatus="status">
+						<c:set var="total" value="${prdAll.prd_saleprice * prdAll.prd_d_stock}"/>
+						<c:set var="sum" value="${sum + total}"/>
+					</c:forEach>
+				<span class="amount">￦<c:out value="${sum+2500}"/></span></td>
 			</tr>
 			<tr>
 				<th>결제방법</th>
@@ -62,7 +67,6 @@
 							<td class="product-quantity"><input type="hidden" name="ord_amount" value="${prdAll.prd_d_stock }" />${prdAll.prd_d_stock }</td>
 							<td class="product-subtotal">${prdAll.prd_saleprice * prdAll.prd_d_stock}<c:set var="total" value="${prdAll.prd_saleprice * prdAll.prd_d_stock}"/></td>
 						</tr>
-						<c:set var="sum" value="${sum + total}"/>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
