@@ -6,39 +6,40 @@
 var new_select;
 	$(function() {
 		
-		// 담기버튼 클릭 시 이벤트 처리 */
-		$("#addCart").click(function() {
-			var model_no=$("#model option:selected").val();
-			var prd_no=$("#prd_no").val();
-			if(model_no!="non"||prd_no!="non"){
-				alert("상품 옵션을 선택해주세요");
-				return;
-			}
-			$("#cart_quantity").val($("#quantity").val());
-			$("#color_no").val($("#color_detail").val());
-			$("#model_no").val($("#model_machine").val());
-			console.log($("#quantity").val());
-			$("#addCartVal").attr({
-				"method" : "post",
-				"action" : "/cart/cartInsert.do"
-			});
-			
-			$("#addCartVal").submit();
-			
-		});		
+		$(document).on("click", "#addCart", function(){
+	         //$("#addCart").click(function() {
+	            $("#cart_quantity").val($("#quantity").val());
+	            $("#color_no").val($("#color").val());
+	            $("#model_no").val($("#machine").val());
+	            console.log($("#quantity").val());
+	            console.log($("#color").val());
+	            console.log($("#machine").val());
+	            console.log($("#cart_quantity").val());
+	            console.log($("#color_no").val());
+	            console.log($("#model_no").val());
+	            
+	            $("#addCartVal").attr({
+	               "method" : "post",
+	               "action" : "/cart/cartInsert.do"
+	            });	            
+	           // $("#addCartVal").submit();            
+	            
+	         });		
 		
-		$("#model").change(function(){
+		
+	         $("#model").change(function(){
 			var model_no=$("#model option:selected").val();
-			var prd_no=$("#prd_no").val();
+			var prd_no=$("#prd_nol").val();
 			if(model_no!="non"&&prd_no!="non"){
 				optListAll(prd_no,model_no);
 			}
-		});				
+		});	
+	         
 	});
 	
 	function optListAll(prd_no, model_no){
-		$("#model_no").val(model_no);
-		console.log($("#prd_no").val()+"	"+$("#model_no").val());
+		$("#model_nol").val(model_no);
+		console.log($("#prd_nol").val()+"	"+$("#model_nol").val());
 		$("#colorOpt").html("");
 		
 		new_select = $("<select>");
@@ -48,7 +49,7 @@ var new_select;
 		$.ajax({
 		url:"/product/colorOptList.do",
 		type : "POST",//전송시 method방식
-		data : $("#addCartVal").serialize(),//번호랑 비밀번호가 폼안에 있으므로 폼전체 데이터 전송
+		data : $("#colorSelect").serialize(),//번호랑 비밀번호가 폼안에 있으므로 폼전체 데이터 전송
 		dataType : "json",//응답문서의 형식
 		error : function() {//실행시 오류가 발생 하엿을 경우
 				alert('시스템오류 입니다. 관리자에게 문의하세요.');
@@ -79,10 +80,20 @@ var new_select;
 					<!-- <a href="">Home</a> <a href="">Category Name</a> <a href="">Sony
 						Smart TV - 2015</a> -->
 				</div>
-				<form id="addCartVal">
-					<input type="hidden" id="model_no" name="model_no" />
-					<input type="hidden" id="prd_no" name="prd_no" value="${detail.prd_no}"/>
+				<!-- color option가져오는부분 -->
+				<form id="colorSelect">
+					<input type="hidden" id="model_nol" name="model_nol" />
+					<input type="hidden" id="prd_nol" name="prd_nol" value="${detail.prd_no}"/>
 				</form>
+				
+				<form id="addCartVal">
+               <input type="hidden" id="cart_quantity" name="cart_quantity"/>
+               <input type="hidden" id="model_no" name="model_no"/>
+               <input type="hidden" id="color_no" name="color_no"/>
+               <input type="hidden" id="prd_no" name="prd_no" value="${param.prd_no}" />
+               <!-- <input type="hidden" id="mem_no" name="mem_no" /> -->
+            	</form>
+				
 				
 				<div class="row">
 					<div class="col-sm-6 ">
@@ -213,3 +224,4 @@ var new_select;
 		</div>
 	</div>
 </div>
+
