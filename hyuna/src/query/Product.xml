@@ -47,7 +47,7 @@
 	</select>
 	
 	<select id="prdMainList" resultType="prd" parameterType="prd">
-		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		select distinct m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
 		  <if test ="model_machine != ''">
 		   left join prd_detail d on m.prd_no = d.prd_no 
@@ -177,7 +177,7 @@
 	    	   left join prd_img img on img.prd_no = m.prd_no
 	           left join model mo on d.model_no=mo.model_no 
 	           left join color co on d.color_no=co.color_no 
-	   		  where d.prd_d_no = #{prd_d_no};
+	   		  where d.prd_d_no = #{prd_d_no}
 	</select>
 	<select id="colorList" resultType="prd" parameterType="prd">
 		  select color_no, color_detail  from color		  
