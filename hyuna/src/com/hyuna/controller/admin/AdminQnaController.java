@@ -53,9 +53,9 @@ public class AdminQnaController {
 		for (int i = 0; i < qnaList.size(); i++) {
 			QnaVO qnaVO = qnaList.get(i);
 			ProductAllVO allVO = new ProductAllVO();
-			allVO.setPrd_d_no(qnaVO.getPrd_d_no());
+			allVO.setPrd_d_no(qnaVO.getPrd_no());
 			List<ProductAllVO> allVOs = productService.prdAllList(allVO);
-			if(qnaVO.getPrd_d_no()==0){
+			if(qnaVO.getPrd_no()==0){
 				qnaVO.setPrd_name("");
 			}else{
 				qnaVO.setPrd_name(allVOs.get(0).getPrd_name());

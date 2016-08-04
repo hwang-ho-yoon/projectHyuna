@@ -52,21 +52,7 @@
 				}
 			});			
 		});
-		
-		//회원가입 버튼클릭
-		$("#memberBtn").click(function(){
-			location.href = "/member/memberjoin.do";
-		});
-		
-		//아이디찾기 버튼클릭
-		$("#idBtn").click(function(){
-			location.href = "/member/findid.do";
-		});
-		
-		//비밀번호찾기 버튼클릭
-		$("#pwBtn").click(function(){			
-			location.href = "/member/findpw.do";
-		});
+
 		
 		//엔터로 로그인
  		$("#enter").keydown(function(){		
@@ -121,7 +107,7 @@ body{
     	<div class="col-md-4 col-md-offset-4">
     		<div class="panel panel-default">
 			  	<div class="panel-heading">
-			    	<h3 class="panel-title">회원 로그인</h3>
+			    	<h3 class="panel-title">관리자 로그인</h3>
 			 	</div>
 			  	<div class="panel-body">
 			    	<form accept-charset="UTF-8" role="form" id="login_form">
@@ -139,10 +125,7 @@ body{
 			    	    </div>
 			    	    <div class="form-inline" align="center">
 			    		<input class="btn btn-lg btn-success btn-block" type="button" value="Login" id="loginBtn">
-			    		<hr>
-			    		<button type="button" class="btn btn-default" id="memberBtn">회원가입</button>
-			    		<button type="button" class="btn btn-default" id="idBtn">아이디찾기</button>
-			    		<button type="button" class="btn btn-default" id="pwBtn">비밀번호찾기</button>			    					    		
+			    		<hr>	    					    		
 			    		</div>	
 			    	</fieldset>
 			      	</form>

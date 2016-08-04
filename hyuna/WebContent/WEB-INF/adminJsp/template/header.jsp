@@ -111,7 +111,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/main.do">Home</a></li>
                         <li><a href="/orderAdmin/orderAdminList.do">주문조회</a></li>
-                        <li><a href="/board/qna/qnaList.do">Q&A</a></li>
+                        <li><a href="/adminQna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>
 						<li><a href="/admin/memberList.do">회원목록</a></li>

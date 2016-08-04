@@ -247,6 +247,14 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 
+		@Override
+		public List<ProductAllVO> prdAllList1(ProductAllVO pvo) {			
+			List<ProductAllVO> prdAllList1=null;
+			prdAllList1=productDao.prdAllList1(pvo);
+			return prdAllList1;
+		}
+
+
 	
 	
 

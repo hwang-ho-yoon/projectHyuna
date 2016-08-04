@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyuna.common.file.FileUploadUtil;
 
@@ -57,9 +59,9 @@ public class QnaController {
 		for (int i = 0; i < qnaList.size(); i++) {
 			QnaVO qnaVO = qnaList.get(i);
 			ProductAllVO allVO = new ProductAllVO();
-			allVO.setPrd_d_no(qnaVO.getPrd_d_no());
-			List<ProductAllVO> allVOs = productService.prdAllList(allVO);
-			if(qnaVO.getPrd_d_no()==0){
+			allVO.setPrd_d_no(qnaVO.getPrd_no());
+			List<ProductAllVO> allVOs = productService.prdAllList1(allVO);
+			if(qnaVO.getPrd_no()==0){
 				qnaVO.setPrd_name("");
 			}else{
 				qnaVO.setPrd_name(allVOs.get(0).getPrd_name());
@@ -74,11 +76,60 @@ public class QnaController {
 		return "board/qna/qnaList";
 	}
 	
+	//상품리스트 호출
+	@RequestMapping("/proqnaList")
+	@ResponseBody
+	public String proQnaList(@ModelAttribute QnaVO qvo, Model model) {
+		logger.info("리스트");		
+		System.out.println(qvo.getPrd_no());
+		//정렬에 대한 기본값 설정		
+		if(qvo.getOrder_by()==null) qvo.setOrder_by("qno_no");		
+		if(qvo.getOrder_sc()==null) qvo.setOrder_sc("DESC");
+		
+		
+		//페이지 세팅
+		com.hyuna.common.qnapage.Paging.setPage(qvo);
+		
+		//전체 레코드수 구현
+		int total = qnaService.qnaListCnt(qvo);
+		
+		
+		List<QnaVO> qnaList = qnaService.qnaList1(qvo);
+		
+		for (int i = 0; i < qnaList.size(); i++) {
+			QnaVO qnaVO = qnaList.get(i);
+			ProductAllVO allVO = new ProductAllVO();
+			allVO.setPrd_d_no(qnaVO.getPrd_no());
+			List<ProductAllVO> allVOs = productService.prdAllList1(allVO);
+			if(qnaVO.getPrd_no()==0){
+				qnaVO.setPrd_name("");
+			}else{
+				qnaVO.setPrd_name(allVOs.get(0).getPrd_name());
+			}
+			
+		}
+		
+		
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("total", total);
+		model.addAttribute("data", qvo);
+		return "prodect/qnaList";
+	}
+	
 	//글쓰기 폼이동
 	@RequestMapping("/qnaWrite")
 	public String qnaWrite(){
 		logger.info("글씨기");
 		return "board/qna/qnaWrite";
+	}
+	
+	//글쓰기 폼이동1
+	@RequestMapping("/qnaWrite1")
+	public String qnaWrite1(@RequestParam("pro_no") int pro_no, Model model){
+		logger.info("글씨기");
+		int a = pro_no;
+		model.addAttribute("prono", a);
+		return "product/proWrite";
 	}
 	
 	//글쓰기 입력작업
@@ -95,6 +146,24 @@ public class QnaController {
 		result = qnaService.qnaInsert(qvo);
 		if(result==1){
 			url = "/board/qna/qnaList.do";
+		}
+		return "redirect:"+url;
+	}
+	
+	//글쓰기 입력작업1
+	@RequestMapping("/qnaInsert1")	
+	public String qnaInsert1(@ModelAttribute QnaVO qvo, HttpServletRequest request)throws IllegalStateException,IOException{
+		logger.info("글씨기 입력");
+		System.out.println("DDD"+qvo.getPrd_no());
+		int result = 0;
+		String url = "";		
+		
+		String qna_file1 = FileUploadUtil.fileUpload(qvo.getFile(), request);
+		qvo.setQna_file1(qna_file1);
+		
+		result = qnaService.qnaInsert1(qvo);
+		if(result==1){
+			url = "/product/prdSingleDetail.do";
 		}
 		return "redirect:"+url;
 	}

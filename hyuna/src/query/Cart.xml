@@ -55,7 +55,8 @@
 			    #{cart_no},
 			    #{cart_quantity},
 			    #{mem_no},
-			    (select prd_d_no from prd_detail where color_no = #{color_no} and model_no = #{model_no})
+			    (select prd_d_no from prd_detail where color_no = #{color_no} and model_no = #{model_no} and prd_no=#{prd_no})
+			    
 			  )
 	</insert>
 	
