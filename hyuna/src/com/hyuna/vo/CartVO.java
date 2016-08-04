@@ -13,8 +13,18 @@ public class CartVO  {
 	private int prd_saleprice;
 	private String model_machine;
 	private String color_detail;
+	private int prd_no;
 	
-	//추가--pjs
+	
+	public int getPrd_no() {
+		return prd_no;
+	}
+
+	public void setPrd_no(int prd_no) {
+		this.prd_no = prd_no;
+	}
+
+		//추가--pjs
 		private int model_no;
 		private int color_no;
 		public int getModel_no() {
