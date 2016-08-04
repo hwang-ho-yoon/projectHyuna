@@ -19,7 +19,7 @@
 		<table class="table table-hover table-bordered">
 			<tr>
 				<th style="width: 30%">주문금액</th>
-				<td>90,000원</td>
+				<td><c:out value="sum"></c:out></td>
 			</tr>
 			<tr>
 				<th>결제방법</th>
@@ -39,28 +39,39 @@
 			<h3>주문 상품 정보</h3> 
 			<hr></hr>
 		</div>
-		<table class="table table-hover table-bordered">
-			<tr>
-				<th>번호</th>
-				<th>상품/옵션정보</th>
-				<th>수량</th>
-				<th>상품금액</th>
-				<th>주문상태</th>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>비비드망고 땡땡이 아크릴 패치</td>
-				<td>15,000원</td>
-				<td>2</td>
-				<td>구매완료</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>갤럭시 노트 3 케이스</td>
-				<td>19,000원</td>
-				<td>1</td>
-				<td>구매완료</td>
-			</tr>
+		<table class="shop_table" id="productTable" >
+			<thead>
+				<tr>
+					<th>이미지</th>
+					<th>상품명</th>
+					<th>옵션명</th>
+					<th>판매가</th>
+					<th>수량</th>
+					<th>합계</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty productAllVO }">
+					<c:forEach var="prdAll" items="${productAllVO }" varStatus="status">
+						<tr>
+							<td class="product-thumbnail"><input type="hidden" name="prd_d_no" value="${prdAll.prd_d_no }" /><img src="/main/${prdAll.img_1 }" alt="" class="center-block" style="height: auto;"></td>
+							<td class="product-name">${prdAll.prd_name }</td>
+							<td class="product-name">${prdAll.model_machine } - ${prdAll.color_detail }</td>
+							<td class="product-price">${prdAll.prd_saleprice }</td>
+							<td class="product-quantity"><input type="hidden" name="ord_amount" value="${prdAll.prd_d_stock }" />${prdAll.prd_d_stock }</td>
+							<td class="product-subtotal">${prdAll.prd_saleprice * prdAll.prd_d_stock}<c:set var="total" value="${prdAll.prd_saleprice * prdAll.prd_d_stock}"/></td>
+						</tr>
+						<c:set var="sum" value="${sum + total}"/>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="6">등록된 상품이 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			</tbody>
 		</table>
 		<div class="col-md-12" style="padding: 0"> 
 			<h3>배송지 정보</h3> 

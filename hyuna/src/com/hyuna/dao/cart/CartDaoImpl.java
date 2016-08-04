@@ -33,9 +33,9 @@ public class CartDaoImpl implements CartDao {
 	}
 
 	@Override
-	public int chkDelete(Integer cart_no) {
+	public int chkDelete(CartVO cvo) {
 		// TODO Auto-generated method stub
-		return session.delete("chkDelte");
+		return session.delete("chkDelete");
 	}
 
 	@Override

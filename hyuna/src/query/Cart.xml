@@ -69,6 +69,11 @@
 	<!-- 장바구니 선택 삭제 -->
 	<delete id="chkDelete" parameterType="cart">
 		/* Cart - chkDelete */
-		delete cart where mem_no = #{mem_no} and cart_no = #{cart_no}
+		delete from cart where mem_no = #{mem_no} and cart_no = #{cart_no}
 	</delete>
+	
+	<update id="updateCount" parameterType="cart">
+		/* Cart - updateCount */
+		update cart set cart_quantity = #{cart_quantity} where cart_no = #{cart_no}
+	</update>
 </mapper>

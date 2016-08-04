@@ -10,19 +10,13 @@ var new_select;
 	         //$("#addCart").click(function() {
 	            $("#cart_quantity").val($("#quantity").val());
 	            $("#color_no").val($("#color").val());
-	            $("#model_no").val($("#machine").val());
-	            console.log($("#quantity").val());
-	            console.log($("#color").val());
-	            console.log($("#machine").val());
-	            console.log($("#cart_quantity").val());
-	            console.log($("#color_no").val());
-	            console.log($("#model_no").val());
+	            $("#model_no").val($("#model").val());
 	            
 	            $("#addCartVal").attr({
 	               "method" : "post",
 	               "action" : "/cart/cartInsert.do"
 	            });	            
-	           // $("#addCartVal").submit();            
+	            $("#addCartVal").submit();            
 	            
 	         });		
 		

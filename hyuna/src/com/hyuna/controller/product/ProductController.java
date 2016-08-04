@@ -113,7 +113,7 @@ public class ProductController {
 		model.addAttribute("data", pvo);
 		logger.info("뒤");
 		
-		return "product/prdRgtList";
+		return "productAdmin/prdRgtList";
 //		return "product/NewFile";
 	}
 	
@@ -126,7 +126,7 @@ public class ProductController {
 		List<ProductVO> modelList = productService.modelList(pvo);
 		model.addAttribute("colorList",colorList);
 		model.addAttribute("modelList",modelList);
-		return "product/prdWriteForm";
+		return "productAdmin/prdWriteForm";
 	}
 	//관리자
 	@RequestMapping(value="/prdMgrDetail.do",  method = RequestMethod.GET)
@@ -142,7 +142,7 @@ public class ProductController {
 		model.addAttribute("optList", optList);
 		
 		
-		return "product/prdMgrDetail";
+		return "productAdmin/prdMgrDetail";
 	}
 	//관리자
 		@RequestMapping(value="/prdUpdateForm.do",  method = RequestMethod.POST)
@@ -163,7 +163,7 @@ public class ProductController {
 			model.addAttribute("optList", optList);
 			
 			
-			return "product/prdUpdateForm";
+			return "productAdmin/prdUpdateForm";
 		}
 		@RequestMapping(value="/prdUpdate.do",  method = RequestMethod.POST)
 		public String prdUpdate(@ModelAttribute ProductVO pvo, MultipartHttpServletRequest request, Model model) throws IllegalStateException, IOException{
@@ -216,10 +216,10 @@ public class ProductController {
 				}
 			}
 			if(result==1){
-				page="product/prdRgtList";
+				page="redirect:/product/prdRgtList.do";
 			}else{
 				model.addAttribute("detail",pvo);
-				page="product/prdUpdateForm";
+				page="productAdmin/prdUpdateForm";
 			}
 			return page;
 		}
@@ -272,6 +272,7 @@ public class ProductController {
 			String url="";
 			ResponseEntity<String> entity = null;
 			int result=0;
+			pvo.setPrd_d_display(pvo.getPrd_d_display().trim());
 			try{
 				result=productService.prdOptUpdate(pvo);
 				if(result == 1){

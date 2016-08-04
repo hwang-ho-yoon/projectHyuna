@@ -5,6 +5,10 @@ public class OrderProductVO {
     private int ord_amount;
     private int ogr_no;
     private int prd_d_no;
+    private String prd_name;
+    private String color_detail;
+    private String model_machine;
+    private int prd_saleprice;
 	
 	public int getOrd_no() {
 		return ord_no;
@@ -29,5 +33,29 @@ public class OrderProductVO {
 	}
 	public void setPrd_d_no(int prd_d_no) {
 		this.prd_d_no = prd_d_no;
+	}
+	public String getPrd_name() {
+		return prd_name;
+	}
+	public void setPrd_name(String prd_name) {
+		this.prd_name = prd_name;
+	}
+	public String getColor_detail() {
+		return color_detail;
+	}
+	public void setColor_detail(String color_detail) {
+		this.color_detail = color_detail;
+	}
+	public String getModel_machine() {
+		return model_machine;
+	}
+	public void setModel_machine(String model_machine) {
+		this.model_machine = model_machine;
+	}
+	public int getPrd_saleprice() {
+		return prd_saleprice;
+	}
+	public void setPrd_saleprice(int prd_saleprice) {
+		this.prd_saleprice = prd_saleprice;
 	}
 }

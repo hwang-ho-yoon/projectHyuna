@@ -64,6 +64,28 @@
 					
 			
 		}); 
+		
+		/* 선택주문 버튼 클릭 시 이벤트 */
+		$("#checkOrder").click(function() {
+			var selectPrd_d_no = [];
+			var selectQuantity = [];
+			
+			$(".check").each(function() {
+				if($(this).is(":checked")) {
+					selectPrd_d_no.push($(this).parents("tr").children().eq(2).attr("data-num"));
+					selectQuantity.push($(this).parents("tr").children().eq(5).find("input[type='number']").val());
+				}
+			});
+			$("#prd_d_no").val(selectPrd_d_no);
+			$("#quantity").val(selectQuantity);
+			$("#form2").attr({
+				"method":"post",
+				"action":"/order/orderWrite.do"
+			});
+			$("#form2").submit();
+					
+			
+		}); 
 					
 		/* 장바구니 비우기 버튼 클릭 시 이벤트 */
 		$("#allDelete").click(function() {
@@ -89,11 +111,11 @@
 		
 		// 수량변경
 		$(".updateCount").click(function() {
-			var text = $(this).parents("tr").attr("data-num");
-			$("#text").val(text);
-			console.log("변경수량 : " + cart_quantity);
-			
-			$("#form1").attr({
+			var cart_no = $(this).parents("tr").attr("data-num");
+			var cart_quantity = $(this).parents("tr").children().eq(5).find("input[type='number']").val();
+			$("#cart_no").val(cart_no);
+			$("#cart_quantity").val(cart_quantity);
+ 			$("#form1").attr({
 				"method":"POST",
 				"action":"/cart/updateCount.do"
 			});
@@ -152,7 +174,14 @@
                    <div class="product-content-right">
                        <div class="woocommerce">
                        <form id="selectForm"><input type="hidden" id="select" name="select"></form>
-                           <form id="form1" method="post" action="#">
+                           <form id="form1">
+                           	<input type="hidden" id="cart_no" name="cart_no" value="0">
+                           	<input type="hidden" id="cart_quantity" name="cart_quantity" value="0">
+                           </form>
+                           <form id="form2">
+                           	<input type="hidden" id="prd_d_no" name="prd_d_no" value="0">
+                           	<input type="hidden" id="quantity" name="quantity" value="0">
+                           </form>
                            <label><span style="font-size:33px">${sessionScope.hyunaname}</span>님의 장바구니입니다</label>
                                <table  class="shop_table cart" id="cartTable">
                                    <thead>
@@ -160,12 +189,11 @@
                                            <th class="product-remove">
                                            		<input type="checkbox" id="allCheck" name="allCheck">
                                            </th>
-                                           <th class="product-thumbnail">&nbsp;</th>
+                                           <th class="product-thumbnail">상품이미지</th>
                                            <th class="product-name">상품명</th>
                                            <th class="product-name">옵션명</th>
                                            <th class="product-price">판매가</th>
                                            <th class="product-quantity">수량</th>
-                                           <th class="product-deliveryCharge">배송비</th>
                                            <th class="product-subtotal">합계</th>
                                        </tr>
                                    </thead>
@@ -174,32 +202,32 @@
                                    <c:choose>
                                    		<c:when test="${not empty cartList}">
                                    			<c:forEach var="cart" items="${cartList}" varStatus="status">
-                                   				<tr class="cart_item" data-num="${cart.prd_d_no}">
+                                   				<tr class="cart_item" data-num="${cart.cart_no}">
                                            			<td><input type="checkbox" class="check" name="check" value="${cart.cart_no}" ></td>
-                                   					<td class="product-thumbnail"><span class="goDetail">${cart.img_1}</span></td>
-                                   					<td class="product-name"><span class="goDetail">${cart.prd_name}</span>
+                                   					<td class="product-thumbnail"><span class="goDetail"><img src="/main/${cart.img_1 }" style="height: auto;"> </span></td>
+                                   					<td class="product-name" data-num="${cart.prd_d_no}"><span class="goDetail">${cart.prd_name}</span>
                                    					<td class="product-name">${cart.model_machine} - ${cart.color_detail}</td>
                                    					<td class="product-price">￦${cart.prd_saleprice}</td>
                                    					<td class="product-quantity">
                                    						<div class="quantity buttons_added">
-                                                    		<input type="number" name="cart_quantity" id="cart_quantity" class="form-control" title="Qty" value="${cart.cart_quantity}" min="0">
+                                                    		<input type="number" name="cart_quantity" class="form-control cart_quantity" title="Qty" value="${cart.cart_quantity}" min="0">
                                                 			<button type="button" class="btn btn-default updateCount" style="margin-top: 0px" name="updateCount">수정</button>
 		                                                </div>
                                    					</td>
-                                   					<td class="product-deliveryCharge"><span class="amount">￦2,500</span></td>
-                                           			<td class="product-subtotal">￦${cart.prd_saleprice+2500}</td>
+                                           			<td class="product-subtotal">￦${cart.prd_saleprice*cart.cart_quantity}<c:set var="total" value="${cart.prd_saleprice*cart.cart_quantity}"/></td>
                                    				</tr>
+                                   				<c:set var="sum" value="${sum + total}"/>
                                    			</c:forEach>
                                    		</c:when>
                                    	<c:otherwise>
                                			<tr>
-                               				<td colspan="8" class="cart_item">장바구니가 비어 있습니다.</td>
+                               				<td colspan="7" class="cart_item">장바구니가 비어 있습니다.</td>
                                			</tr>
                                    	</c:otherwise>
                                    </c:choose>
                                                                           
                                        <tr>
-                                           <td class="actions" colspan="8">
+                                           <td class="actions" colspan="7">
                                                <div class="btn_group1">
 	                                               	<button type="button" class="btn btn-primary" name="checkDelete" id="checkDelete">선택삭제</button>
 	                                               	<button type="button" class="btn btn-primary" name="allDelete" id="allDelete">장바구니 비우기</button>
@@ -210,14 +238,13 @@
 										   <div class="btn_group2">
 											   <!-- <button type="button" class="btn btn-primary" name="addCart" id="addCart">담기</button> -->
 											   <button type="button" class="btn btn-primary" name="shopping" id="shopping">쇼핑계속하기</button>
-											   <button type="button" class="btn btn-primary" name="allOrder" id="allOrder">전체주문</button>
                                            </div>
                                          </td>
                                        </tr>                       
                                    </tbody>
                                    <!-- ========================= 장바구니에 담긴 상품 출력 종료 ========================== -->
                                </table>
-                           </form>
+                           
 
                            <div class="cart-collaterals">
 
@@ -228,14 +255,14 @@
                                    <tbody>
                                        <tr class="cart-subtotal">
                                            <th>총 주문금액</th>
-                                           <td><span class="amount">￦${cart.prd_saleprice}</span></td>
+                                           <td><span class="amount">￦<c:out value="${sum}"/></span></td>
                                       
                                           <th>배송비</th>
                                           <td><span class="deliveryCharge">￦2,500</span></td>
                                        
                                            <th>최종 결제금액</th>
                                            <%-- <td><strong><span class="amount">￦${cart.prd_saleprice+2500}</span></strong> </td> --%>
-                                           <td><strong><span class="amount">￦${cart.prd_saleprice+2500}</span></strong> </td>
+                                           <td><strong><span class="amount">￦<c:out value="${sum+2500}"/></span></strong> </td>
                                        </tr>
                                    </tbody>
                                </table>
