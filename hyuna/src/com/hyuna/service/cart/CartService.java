@@ -14,4 +14,8 @@ public interface CartService {
 	public int chkDelete(Integer cart_no);
 
 	public int optDetailNo(CartVO cvo);
+
+	public int updateCount(CartVO cvo);
+
+	public int cartAllOrder(CartVO cvo);
 }

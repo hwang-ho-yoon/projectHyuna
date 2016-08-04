@@ -44,8 +44,12 @@
 	 <definition name="orderAdmin/*" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/adminJsp/order/{1}.jsp"></put-attribute>
 	</definition>
-	
-	
+	<!-- <definition name="adminFaq/*" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/adminJsp/review/{1}.jsp"></put-attribute>
+	</definition> -->
+	<!-- <definition name="adminReview/*" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/adminJsp/faq/{1}.jsp"></put-attribute>
+	</definition> -->
 	 <definition name="adminQna/*" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/adminJsp/adminQna/{1}.jsp"></put-attribute>
 	</definition>

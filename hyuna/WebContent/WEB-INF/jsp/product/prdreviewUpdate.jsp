@@ -22,15 +22,17 @@
 		$("#review_score").val("${detail.review_score }");
 		
 		//글수정
-		$("#updateBtn").click(function(){
-				if("${sessionScope.hyunaMember }"!="${detail.mem_no}"){
+		$("#updateBtn").click(function(){					
+			if(!cccc($("#review_title"),"제목을 "))return;
+			else if(!cccc($("#review_content"),"내용을 "))return;
+			else if("${sessionScope.hyunaMember }"!="${detail.mem_no}"){
 				alert("본인이 작성한 글만 수정 가능 합니다.");
 				return;
 			}
 			else{
 				$("#review_detail").attr({
 					"method":"post",
-					"action":"/board/review/reviewUpdateForm.do"
+					"action":"/product/prdreviewUpdate.do"
 				});
 				$("#review_detail").submit();
 			}
@@ -46,7 +48,7 @@
 				if(confirm("정말 삭제하시겠습니까?")){
 					$("#review_detail").attr({
 						"method":"post",
-						"action":"/board/review/reviewDelete.do"
+						"action":"/product/prdreviewDelete.do"
 					});
 					$("#review_detail").submit();
 				}else{
@@ -61,7 +63,17 @@
 			history.back();
 		})
 	});
-
+		
+	function cccc(v_item, v_name){
+	if(v_item.val().replace(/\s/g,"")==""){
+		alert(v_name+" 입력해 주세요");
+		v_item.val("");
+		v_item.focus();		
+		return false;
+	}else{
+		return true;
+	}
+}
 </script>
   
   <!-- 게시판 전용
@@ -88,10 +100,9 @@
 				</tr>		
 				<tr>
 					<td width="10%" style="text-align: center; background: #F6F6F6"><label class="control-label">제목</label></td>
-					<td width="75%" colspan="5">
-						<input type="text"  class="form-control" id="review_title" name="review_title" value="${detail.review_title }" readonly="readonly" style="background: white">
+					<td width="75%" colspan="4">
+						<input type="text"  class="form-control" id="review_title" name="review_title" value="${detail.review_title }">
 					</td>
-				</tr>	
 				<tr>			
 					<td width="15%" style="text-align: center; background: #F6F6F6"><label class="control-label" >평점</label>
 					</td>
@@ -106,7 +117,7 @@
 				<tr>
 					<td width="10%" style="text-align: center; background: #F6F6F6"><label class="control-label">내용</label></td>
 					<td colspan="5">
-						<textarea class="form-control"  rows="10" style='resize: none; background: white ' id="review_content" name="review_content" readonly="readonly">${detail.review_content }</textarea>		               
+						<textarea class="form-control"  rows="10" style='resize: none; ' id="review_content" name="review_content">${detail.review_content }</textarea>		               
 		            </td>
 	            </tr>
 				<tr>
@@ -115,8 +126,19 @@
 	            	</td>
 	            	<td colspan="5">
 	            		<img id="fileImage">
-	            	</td>	            	
+	            	</td>
+	            	
 	            </tr>
+	            <tr>
+	            	<td style="text-align: center; background: #F6F6F6">
+	            		<label class="control-label">첨부 파일</label>
+	            	</td>
+	            	<td colspan="5">
+	            		<input type="file" id="inputdefault" class="form-control" name="file"/>
+	            	</td>
+	            	
+	            </tr>
+
 			</table>
 			<div class="col-md-1 col-md-offset-0" >
 				<button class="btn btn-default" type="button" id="listBtn">목록</button>

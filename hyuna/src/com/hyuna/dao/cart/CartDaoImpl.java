@@ -35,12 +35,26 @@ public class CartDaoImpl implements CartDao {
 	@Override
 	public int chkDelete(Integer cart_no) {
 		// TODO Auto-generated method stub
-		return 0;
+		return session.delete("chkDelte");
 	}
 
 	@Override
 	public int optDetailNo(CartVO cvo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("optDetailNo");
+	}
+
+	// 수량변경
+	@Override
+	public int updateCount(CartVO cvo) {
+		// TODO Auto-generated method stub
+		return session.update("updateCount");
+	}
+
+	// 전체주문
+	@Override
+	public int cartAllOrder(CartVO cvo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("cartAllOrder");
 	}	
 }

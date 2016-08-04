@@ -56,5 +56,21 @@ public class CartServiceImpl implements CartService {
 		// TODO Auto-generated method stub
 		return cartDao.optDetailNo(cvo);
 	}
+
+	// 수량변경
+	@Override
+	public int updateCount(CartVO cvo) {
+		int result = 0;
+		result = cartDao.updateCount(cvo);
+		return result;
+	}
+
+	// 전체 주문
+	@Override
+	public int cartAllOrder(CartVO cvo) {
+		int result = 0;
+		result = cartDao.cartAllOrder(cvo);
+		return result;
+	}
 	
 }
