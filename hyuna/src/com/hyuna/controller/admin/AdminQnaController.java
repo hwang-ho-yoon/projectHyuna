@@ -1,16 +1,14 @@
-package com.hyuna.controller.qna;
+package com.hyuna.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,15 +16,13 @@ import com.hyuna.common.file.FileUploadUtil;
 
 import com.hyuna.service.product.ProductService;
 import com.hyuna.service.qna.QnaService;
-
 import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.QnaVO;
 
-
 @Controller
-@RequestMapping(value="/board/qna")
-public class QnaController {
-	Logger logger = Logger.getLogger(QnaController.class);
+@RequestMapping(value="/adminQna")
+public class AdminQnaController {
+	Logger logger = Logger.getLogger(AdminQnaController.class);
 	
 	@Autowired
 	private QnaService qnaService;
@@ -36,7 +32,7 @@ public class QnaController {
 
 	
 	//리스트 호출
-	@RequestMapping("/qnaList")
+	@RequestMapping("/qnaList.do")
 	public String listDepartment(@ModelAttribute QnaVO qvo, Model model) {
 		logger.info("리스트");
 		
@@ -71,14 +67,14 @@ public class QnaController {
 		model.addAttribute("qnaList", qnaList);
 		model.addAttribute("total", total);
 		model.addAttribute("data", qvo);
-		return "board/qna/qnaList";
+		return "adminQna/qnaList";
 	}
 	
 	//글쓰기 폼이동
 	@RequestMapping("/qnaWrite")
 	public String qnaWrite(){
 		logger.info("글씨기");
-		return "board/qna/qnaWrite";
+		return "adminQna/qnaWrite";
 	}
 	
 	//글쓰기 입력작업
@@ -94,7 +90,7 @@ public class QnaController {
 				
 		result = qnaService.qnaInsert(qvo);
 		if(result==1){
-			url = "/board/qna/qnaList.do";
+			url = "/adminQna/qnaList.do";
 		}
 		return "redirect:"+url;
 	}
@@ -108,7 +104,7 @@ public class QnaController {
 		QnaVO detail = qnaService.qnaDetail(qvo);		
 
 		model.addAttribute("detail", detail);		
-		return "board/qna/qnaDetail";
+		return "adminQna/qnaDetail";
 	}
 	
 	//수정
@@ -128,7 +124,7 @@ public class QnaController {
 		int result = 0;		
 		result = qnaService.qnaUpdate(qvo);
 		if(result==1){
-			url = "/board/qna/qnaDetail.do?qna_no="+qvo.getQna_no()+"&page="+qvo.getPage()+"&pageSize="+qvo.getPageSize();
+			url = "/adminQna/qnaDetail.do?qna_no="+qvo.getQna_no()+"&page="+qvo.getPage()+"&pageSize="+qvo.getPageSize();
 			
 		}
 		return "redirect:"+url;
@@ -143,7 +139,7 @@ public class QnaController {
 		qnaService.qnaHit(qvo);
 
 		model.addAttribute("detail", detail);	
-		return "board/qna/qnaUpdate";
+		return "adminQna/qnaUpdate";
 	}
 	
 	//삭제
@@ -153,7 +149,7 @@ public class QnaController {
 		
 		qnaService.qnaDelete(qvo);
 		
-		return "redirect:/board/qna/qnaList.do";
+		return "redirect:/adminQna/qnaList.do";
 	}
 
 }
