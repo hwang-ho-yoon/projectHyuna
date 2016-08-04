@@ -143,4 +143,5 @@ function prdRgtList(){
 			</div>
 		</div>
 	</div>
+
 </div>
