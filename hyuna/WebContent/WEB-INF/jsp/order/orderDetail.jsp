@@ -3,6 +3,14 @@
     <%@ page trimDirectiveWhitespaces="true" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script type="text/javascript">
+	$(function() {
+		/*목록 버튼 클릭 시 처리 이벤트*/
+		$("#orderList").click(function() {
+			location.href="/order/orderList.do?page=${param.page}&pageSize=${param.pageSize}&keyword=${param.keyword}&keyword1=${param.keyword1 }";
+		});
+	});
+</script>
 	<div id="wrapper">
 		<div class="col-md-12" style="padding: 0"> 
 			<h3>결제정보</h3> 
@@ -24,8 +32,6 @@
 							무통장
 						</c:otherwise>
 					</c:choose>
-					
-					
 				</td>
 			</tr>
 		</table>
@@ -69,6 +75,11 @@
 					${orderGroup.ogr_reciTel}<br>
 					${orderGroup.ogr_message}
 				</td>
+			</tr>
+		</table>
+		<table class="table">
+			<tr>
+				<td align="right" style="padding-right: 0"><button type="button" class="btn btn-primary btn-sm" id="orderList">목록</button></td>
 			</tr>
 		</table>
 	</div>

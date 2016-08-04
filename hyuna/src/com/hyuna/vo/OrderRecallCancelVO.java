@@ -1,6 +1,8 @@
 package com.hyuna.vo;
 
-public class OrderRecallCancelVO {
+import com.hyuna.common.vo.CommonVO;
+
+public class OrderRecallCancelVO extends CommonVO{
 	private int rnc_no;
 	private String rnc_date;
 	private String rnc_desc;

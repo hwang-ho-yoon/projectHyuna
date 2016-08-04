@@ -23,4 +23,6 @@ public interface OrderAdminDao {
 
 	public int orderGroupUpdate(OrderRecallCancelVO recallCancel);
 
+	public int updateProduct(OrderProductVO orderProductVO);
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hyuna.common.page.Paging;
 import com.hyuna.service.member.MemberService;
 import com.hyuna.service.order.OrderService;
 import com.hyuna.util.OrderState;
@@ -42,20 +43,34 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/orderList.do")
-	public String orderList(Model model, HttpSession session) {
+	public String orderList(@ModelAttribute OrderVO orderVO, Model model, HttpSession session) {
 		int mem_no = (int)session.getAttribute("hyunaMember");
-		OrderVO orderVO = new OrderVO();
+		
+		/*정렬에 대한 기본값 설정*/
+		if(orderVO.getOrder_by() == null) {
+			orderVO.setOrder_by("ogr_no");
+		}
+		if(orderVO.getOrder_sc() == null) {
+			orderVO.setOrder_sc("DESC");
+		}
+		
+		Paging.setPage(orderVO);
+		//전체 레코드 수 구현
 		orderVO.setMem_no(mem_no);
 		orderVO.setOgr_state1(OrderState.STANDBY_DEPOSIT);
 		orderVO.setOgr_state2(OrderState.COMPLETE_DEPOSIT);
 		orderVO.setOgr_state3(OrderState.STANDBY_SHIPPING);
 		orderVO.setOgr_state4(OrderState.COMPLETE_SHIPPED);
+		int total = orderService.orderListCnt(orderVO);
+		
 		List<OrderGroupVO> orderGroupsVOs = orderService.selectOrderGroups(orderVO);
 		for (int i = 0; i < orderGroupsVOs.size(); i++) {
 			OrderGroupVO orderGroupsVO = orderGroupsVOs.get(i);
 			orderGroupsVO.setOrderProductVO(orderService.selectOrderProducts(orderGroupsVO.getOgr_no()));
 		}
 		model.addAttribute("orderGroups", orderGroupsVOs);
+		model.addAttribute("data", orderVO);
+		model.addAttribute("total", total);
 		return "order/orderList";
 	}
 	
@@ -63,6 +78,7 @@ public class OrderController {
 	public String orderListRnc(Model model, HttpSession session) {
 		int mem_no = (int)session.getAttribute("hyunaMember");
 		OrderVO orderVO = new OrderVO();
+		Paging.setPage(orderVO);
 		orderVO.setMem_no(mem_no);
 		orderVO.setOgr_state1(OrderState.STANDBY_CANCEL);
 		orderVO.setOgr_state2(OrderState.COMPLETE_CANCEL);
@@ -74,6 +90,7 @@ public class OrderController {
 			orderGroupsVO.setOrderProductVO(orderService.selectOrderProducts(orderGroupsVO.getOgr_no()));
 		}
 		model.addAttribute("orderGroups", orderGroupsVOs);
+		model.addAttribute("data", orderVO);
 		return "order/orderListRnc";
 	}
 	
@@ -97,7 +114,7 @@ public class OrderController {
 		recallCancel.setRnc_gbn(OrderState.STANDBY_CANCEL);
 		orderService.orderGroupUpdate(recallCancel);
 		orderService.orderCancelRecallInsert(recallCancel);
-		return "redirect:"+"/order/orderList.do";
+		return "redirect:"+"/order/orderList.do?ogr_no="+recallCancel.getOgr_no()+"&page="+recallCancel.getPage()+"&pageSize=" + recallCancel.getPageSize() +  "&keyword=" + recallCancel.getKeyword() + "&keyword1="+ recallCancel.getKeyword1();
 	}
 	
 	@RequestMapping("/orderRecall.do")
@@ -106,7 +123,7 @@ public class OrderController {
 		recallCancel.setRnc_gbn(OrderState.STANDBY_RECALL);
 		orderService.orderGroupUpdate(recallCancel);
 		orderService.orderCancelRecallInsert(recallCancel);
-		return "redirect:"+"/order/orderList.do";
+		return "redirect:"+"/order/orderList.do?ogr_no="+recallCancel.getOgr_no()+"&page="+recallCancel.getPage()+"&pageSize=" + recallCancel.getPageSize() +  "&keyword=" + recallCancel.getKeyword() + "&keyword1="+ recallCancel.getKeyword1();
 	}
 	
 	@RequestMapping("/orderInsert.do")
@@ -123,7 +140,7 @@ public class OrderController {
 		result = orderService.orderProductInsert(ogv);
 		String url = "";
 		if (result == 1) {
-			url = "/order/orderDetail.do?ogr_no="+ogv.getOgr_no();
+			url = "/order/orderDetail.do?ogr_no="+ogv.getOgr_no()+"&page=1&pageSize=5";
 		} else {
 			url = "/order/orderWrite.do";
 		}

@@ -56,4 +56,9 @@ public class OrderDaoImpl implements OrderDao{
 		return session.selectOne("selectOrderRecallCancel", group_no);
 	}
 
+	@Override
+	public int orderListCnt(OrderVO orderVO) {
+		return session.selectOne("orderListCnt", orderVO);
+	}
+
 }

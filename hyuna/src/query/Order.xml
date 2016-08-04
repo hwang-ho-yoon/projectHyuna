@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hyuna.dao.order.OrderDao">
+	<sql id="orderCommon">
+		SELECT ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from orderGroup
+		<!-- <trim prefix="WHERE" prefixOverrides="AND"> -->
+		<where>
+			mem_no = #{mem_no} and (ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3} or ogr_state = #{ogr_state4})
+			<if test="keyword != '' and keyword1 != ''">
+				<![CDATA[and to_char(ogr_date,'YYYY-MM-DD') between #{keyword} and #{keyword1} ]]>
+			</if>
+		</where>
+		<!-- </trim> -->
+	</sql>
+	
 	<insert id="orderGroupInsert" parameterType="orderGroup" useGeneratedKeys="true" keyProperty="ogr_no" keyColumn="ogr_no">
 		insert into orderGroup(ogr_no, ogr_reciName, ogr_reciTel, ogr_reciZipCode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no) values(orderGroupSeq.nextval, #{ogr_reciName}, #{ogr_reciTel}, #{ogr_reciZipCode}, #{ogr_reciAddr1}, #{ogr_reciAddr2}, #{ogr_payPlan}, #{ogr_accHold}, #{ogr_accHoldNo}, #{ogr_approvalNo}, #{ogr_message}, #{ogr_state}, #{mem_no})         
 	</insert>
@@ -13,9 +25,42 @@
 		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where ogr_no = #{ogr_no}
 	</select>
 	
+<!-- 	<select id="selectOrderGroups" parameterType="order" resultType="orderGroup">
+		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where mem_no = #{mem_no} and (ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3} or ogr_state = #{ogr_state4})
+	</select> -->
+	
 	<select id="selectOrderGroups" parameterType="order" resultType="orderGroup">
-		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where mem_no = #{mem_no} and (ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3})
+		/* order - orderList*/
+		SELECT ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no
+		FROM
+		( SELECT list.*, ROWNUM AS RNUM
+			FROM (
+				<include refid="orderCommon"></include>
+				<choose>
+					<when test="order_by == 'ogr_no'">
+						ORDER BY ogr_no
+					</when>
+				</choose>
+				<choose>
+					<when test="order_sc == 'ASC'">
+						ASC
+					</when>
+					<when test="order_sc == 'DESC'">
+						DESC
+					</when>
+				</choose>
+			) list
+		)
+		<where>
+			<if test="start_row != null and start_row != ''">
+				<if test="end_row != null and end_row != ''">
+					RNUM BETWEEN #{start_row} AND #{end_row}
+				</if>
+			</if>
+		</where>		
 	</select>
+	
+	
 	
 	<select id="selectOrderProducts" parameterType="int" resultType="orderProduct">
 		select ord_no, ord_amount, ogr_no, prd_d_no from orderProduct where ogr_no = #{ogr_no} 
@@ -31,5 +76,16 @@
 	
 	<select id="selectOrderRecallCancel" parameterType="int" resultType="orderRecallCancel">
 		select rnc_no, rnc_date, rnc_desc, rnc_gbn, ogr_no from recallcancel where ogr_no = #{ogr_no}
+	</select>
+	
+	<select id="orderListCnt" parameterType="order" resultType="int">
+		/* order - orderListCnt*/
+		SELECT NVL(count(1), 0) FROM 
+		( select list.*, rownum as rnum
+		 from (
+			<include refid="orderCommon"></include>
+			order by ogr_no desc 
+				) list
+			)
 	</select>
 </mapper>

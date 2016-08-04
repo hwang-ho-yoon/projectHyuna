@@ -15,7 +15,7 @@
 	</update>
 	
 	<select id="selectOrderGroups" parameterType="order" resultType="orderGroup">
-		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3}
+		select ogr_no, ogr_date, ogr_reciName, ogr_reciTel, ogr_reciZipcode, ogr_reciAddr1, ogr_reciAddr2, ogr_payPlan, ogr_accHold, ogr_accHoldNo, ogr_approvalNo, ogr_message, ogr_state, mem_no from ordergroup where ogr_state = #{ogr_state1} or ogr_state = #{ogr_state2} or ogr_state = #{ogr_state3} or ogr_state = #{ogr_state4}
 	</select>
 	
 	<select id="selectOrderProducts" parameterType="int" resultType="orderProduct">
@@ -32,6 +32,10 @@
 
 	<update id="orderGroupUpdate" parameterType="orderRecallCancel">
 		update orderGroup set ogr_state = #{rnc_gbn} where ogr_no = #{ogr_no}
+	</update>
+	
+	<update id="updateProduct" parameterType="orderProduct">
+		update prd_detail set prd_d_stock = #{ord_amount} where prd_d_no = #{prd_d_no}
 	</update>
 
 </mapper>

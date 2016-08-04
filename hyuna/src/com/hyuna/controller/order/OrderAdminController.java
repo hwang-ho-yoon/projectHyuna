@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hyuna.service.member.MemberService;
 import com.hyuna.service.order.OrderAdminService;
 import com.hyuna.util.OrderState;
 import com.hyuna.vo.OrderGroupVO;
@@ -27,6 +28,9 @@ public class OrderAdminController {
 	Logger logger = Logger.getLogger(OrderAdminController.class);
 	@Autowired
 	private OrderAdminService orderAdminService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping("/orderAdminListApproval.do")
 	public String orderAdminListApproval(@ModelAttribute OrderGroupVO orderGroupVO, HttpSession session) {
@@ -53,6 +57,7 @@ public class OrderAdminController {
 		for (int i = 0; i < orderGroupsVOs.size(); i++) {
 			OrderGroupVO orderGroupsVO = orderGroupsVOs.get(i);
 			orderGroupsVO.setOrderProductVO(orderAdminService.selectOrderProducts(orderGroupsVO.getOgr_no()));
+			orderGroupsVO.setMem_id((memberService.throwMember(orderGroupsVO.getMem_no())).getMem_id());
 		}
 		model.addAttribute("orderGroups", orderGroupsVOs);
 		return "orderAdmin/orderAdminList";
@@ -69,6 +74,7 @@ public class OrderAdminController {
 		for (int i = 0; i < orderGroupsVOs.size(); i++) {
 			OrderGroupVO orderGroupsVO = orderGroupsVOs.get(i);
 			orderGroupsVO.setOrderProductVO(orderAdminService.selectOrderProducts(orderGroupsVO.getOgr_no()));
+			orderGroupsVO.setMem_id((memberService.throwMember(orderGroupsVO.getMem_no())).getMem_id());
 		}
 		model.addAttribute("orderGroups", orderGroupsVOs);
 		return "orderAdmin/orderAdminListRnc";
@@ -93,7 +99,7 @@ public class OrderAdminController {
 		logger.info("주문취소 호출");
 		recallCancel.setRnc_gbn(OrderState.COMPLETE_CANCEL);
 		orderAdminService.orderGroupUpdate(recallCancel);
-		return "redirect:"+"/orderAdmin/orderAdminList.do";
+		return "redirect:"+"/orderAdmin/orderAdminListRnc.do";
 	}
 	
 	@RequestMapping("/orderAdminRecall.do")
@@ -102,9 +108,10 @@ public class OrderAdminController {
 		recallCancel.setRnc_gbn(OrderState.COMPLETE_RECALL);
 		orderAdminService.orderGroupUpdate(recallCancel);
 		OrderGroupVO ogv = orderAdminService.orderGroupDetail(String.valueOf(recallCancel.getOgr_no()));
-		System.out.println(ogv.getOgr_accHold());
-		System.out.println(ogv.getOgr_accHoldNo());
-		return "redirect:"+"/orderAdmin/orderAdminList.do";
+		for (int i = 0; i < ogv.getOrderProductVO().size(); i++) {
+			orderAdminService.updateProduct(ogv.getOrderProductVO().get(i));
+		}
+		return "redirect:"+"/orderAdmin/orderAdminListRnc.do";
 	}
 	
 	public String checkLogin(HttpSession session) {
