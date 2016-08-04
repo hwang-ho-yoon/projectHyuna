@@ -42,7 +42,7 @@
 		
 		/* 글쓰기 버튼 클릭 시 처리 이벤트 */
 		$("#review_write").click(function(){
-			location.href = "/board/review/reviewWrite.do";
+			location.href = "/board/prdreviewWrite.do";
 		})
 		
 		//제목 클릭시 상세 페이지 이동을 위한 처리 이벤트
@@ -53,7 +53,7 @@
 			
 			$("#detailForm").attr({
 				"method":"get",
-				"action":"/board/review/reviewDetail.do"
+				"action":"/product/prdreviewDetail.do"
 			});
 			$("#detailForm").submit();
 		});
@@ -87,7 +87,7 @@
 		$("#page").val(page);
 		$("#f_search").attr({
 			"method":"get",
-			"action":"/board/review/reviewList.do"
+			"action":"/product/prdreviewList.do"
 		});
 		$("#f_search").submit();
 	}
@@ -133,19 +133,19 @@
 								<td align="center">
 									<c:choose>
 										<c:when test="${review.review_score == 5}">
-											<img src="/images/board/score5.gif"/>
+											<img src="../images/board/score5.gif"/>
 										</c:when>
 										<c:when test="${review.review_score == 4}">
-											<img src="/images/board/score4.gif"/>
+											<img src="../images/board/score4.gif"/>
 										</c:when>
 										<c:when test="${review.review_score == 3}">
-											<img src="/images/board/score3.gif"/>
+											<img src="../images/board/score3.gif"/>
 										</c:when>
 										<c:when test="${review.review_score == 2}">
-											<img src="/images/board/score2.gif"/>
+											<img src="../images/board/score2.gif"/>
 										</c:when>
 										<c:when test="${review.review_score == 1}">
-											<img src="/images/board/score1.gif"/>
+											<img src="../images/board/score1.gif"/>
 										</c:when>
 									</c:choose>
 								</td>
@@ -181,17 +181,6 @@
 			<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}"/>
 		</div>
 		<div class="bottom">
-		<form class="form-inline" role="form">
-			<div class="col-md-5 col-md-offset-4 form-group" >
-				<select id="search" name="search" class="form-control input-sm" style="height: 30px; width: 80px">
-					<option>제목</option>
-					<option>작성자</option>
-				</select>
-				<button type="button" class="btn btn-default" id="searchBtn" >검색</button>
-				<input type="text" class="form-control" id="search" name="search" placeholder="검색">
-				
-			</div>
-		</form>
 		</div>
 		</div>
 

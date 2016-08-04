@@ -47,7 +47,7 @@
 	</select>
 	
 	<select id="prdMainList" resultType="prd" parameterType="prd">
-		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		select distinct m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
 		  <if test ="model_machine != ''">
 		   left join prd_detail d on m.prd_no = d.prd_no 

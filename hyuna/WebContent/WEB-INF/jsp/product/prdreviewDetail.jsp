@@ -30,7 +30,7 @@
 			else{
 				$("#review_detail").attr({
 					"method":"post",
-					"action":"/board/review/reviewUpdateForm.do"
+					"action":"/product/prdreviewUpdateForm.do"
 				});
 				$("#review_detail").submit();
 			}
@@ -46,7 +46,7 @@
 				if(confirm("정말 삭제하시겠습니까?")){
 					$("#review_detail").attr({
 						"method":"post",
-						"action":"/board/review/reviewDelete.do"
+						"action":"/product/prdreviewDelete.do"
 					});
 					$("#review_detail").submit();
 				}else{
