@@ -13,6 +13,7 @@
 		<typeAlias type="com.hyuna.vo.board.ReviewVO" alias="review" /> 
 		<typeAlias type="com.hyuna.vo.QnaVO" alias="qna" />
 		<typeAlias type="com.hyuna.vo.ProductAllVO" alias="prdAll" />
+		<typeAlias type="com.hyuna.vo.QnaReplyVO" alias="qreply" />
 	</typeAliases>
 	<!-- <mappers>
 		<mapper resource="query/Board.xml"/>

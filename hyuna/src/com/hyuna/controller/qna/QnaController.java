@@ -41,8 +41,8 @@ public class QnaController {
 		logger.info("리스트");
 		
 		//정렬에 대한 기본값 설정		
-		//if(bvo.getOrder_by()==null) qvo.setOrder_by("b_num");		
-		//if(bvo.getOrder_sc()==null) qvo.setOrder_sc("DESC");
+		if(qvo.getOrder_by()==null) qvo.setOrder_by("qno_no");		
+		if(qvo.getOrder_sc()==null) qvo.setOrder_sc("DESC");
 
 		
 		//페이지 세팅
@@ -59,8 +59,12 @@ public class QnaController {
 			ProductAllVO allVO = new ProductAllVO();
 			allVO.setPrd_d_no(qnaVO.getPrd_d_no());
 			List<ProductAllVO> allVOs = productService.prdAllList(allVO);
+			if(qnaVO.getPrd_d_no()==0){
+				qnaVO.setPrd_name("");
+			}else{
+				qnaVO.setPrd_name(allVOs.get(0).getPrd_name());
+			}
 			
-			qnaVO.setPrd_name(allVOs.get(0).getPrd_name());
 		}
 		
 		
@@ -100,8 +104,8 @@ public class QnaController {
 	public String qnaDetail(@ModelAttribute QnaVO qvo, Model model){
 		logger.info("디테일 이동");
 		
-		QnaVO detail = qnaService.qnaDetail(qvo);
 		qnaService.qnaHit(qvo);
+		QnaVO detail = qnaService.qnaDetail(qvo);		
 
 		model.addAttribute("detail", detail);		
 		return "board/qna/qnaDetail";
@@ -124,7 +128,7 @@ public class QnaController {
 		int result = 0;		
 		result = qnaService.qnaUpdate(qvo);
 		if(result==1){
-			url = "/board/qna/qnaDetail.do?qna_no="+qvo.getQna_no();
+			url = "/board/qna/qnaDetail.do?qna_no="+qvo.getQna_no()+"&page="+qvo.getPage()+"&pageSize="+qvo.getPageSize();
 			
 		}
 		return "redirect:"+url;

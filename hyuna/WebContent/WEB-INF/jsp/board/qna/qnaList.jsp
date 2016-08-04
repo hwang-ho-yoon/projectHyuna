@@ -28,10 +28,7 @@
 		});
 		
 		/* 검색 버튼 클릭시 처리 이벤트 */
-		$("#searchData").click(function(){
-			if($("#search").val()!="all"){
-				if(!chkSubmit($('#keyword'),"검색어를"))return;
-			}
+		$("#searchBtn").click(function(){			
 			goPage(1);
 		});
 			
@@ -90,11 +87,12 @@
 		$("#f_search").submit();
 	}
 </script>
-	<div id="wrapper" style="margin-top: 50px">
+	<div id="wrapper" style="margin-top: 50px;margin-bottom: 100px">
 		<div class="board">
+		<!-- 상세이동 -->
 		<form id="detailForm" name="detailForm">
 			<input type="hidden" name="qna_no" id="qna_no">
-			<input type="hidden" name="mem_no" id="mem_no" value="${sessionScope.hyunaMember }">
+			<%-- <input type="hidden" name="mem_no" id="mem_no" value="${sessionScope.hyunaMember }"> --%>
 			<input type="hidden" name="page" value="${data.page }">
 			<input type="hidden" name="pageSize" value="${data.pageSize }">
 		</form>
@@ -102,7 +100,11 @@
 			<table class="table table-bordered">
 		    <thead>
 		      <tr>     
-		        <th width="10%" style="text-align: center; background: #F6F6F6">글번호</th>
+		        <th width="10%" style="text-align: center; background: #F6F6F6">글번호
+	        		<c:choose>					
+						<c:when test="${data.order_by=='qno_no' and data.order_sc=='DESC' }"></c:when>						
+					</c:choose>
+		        </th>		        
 		        <th width="10%" style="text-align: center; background: #F6F6F6">상품정보</th>
 		        <th width="10%" style="text-align: center; background: #F6F6F6">카테고리</th>
 		        <th width="30%" style="text-align: center; background: #F6F6F6">제목</th>
@@ -141,37 +143,44 @@
 		    </tbody>
 		  </table>
 		</form>
+		
 		<!-- 검색밑 페이징 -->
-		<form>
-		한페이지에
+		
+		<form id="f_search">
+			<input type="hidden" id="page" name="page" value="${data.page }">
+			<input type="hidden" id="order_by" name="order_by" value="${data.order_by }">
+			<input type="hidden" id="order_sc" name="order_sc" value="${data.order_sc }">		
 			<select id="pageSize" name="pageSize">
-				<option value="10">10줄</option>
-				<option value="20">20줄</option>
-				<option value="30">30줄</option>
-				<option value="50">50줄</option>
-				<option value="70">70줄</option>
-				<option value="100">100줄</option>
+				<option value="10">10개씩보기</option>
+				<option value="20">20개씩보기</option>
+				<option value="30">30개씩보기</option>
+				<option value="50">50개씩보기</option>
+				<option value="70">70개씩보기</option>
+				<option value="100">100개씩보기</option>
 			</select>
 			<div class="col-md-1 col-md-offset-11">
 				<button type="button" class="btn btn-default" id="qna_write" >글쓰기</button>
 			</div>			
-		</form>
+		
 		<div id = "boardPage" align="center" style="margin-bottom: 20px">
 			<tag:paging page="${param.page}" total="${total}" list_size="${data.pageSize}"/>
 		</div>
-		<div class="bottom">
-		<form class="form-inline" role="form">
+		
+		
 			<div class="col-md-5 col-md-offset-4 form-group" >
-				<select id="search" name="search" class="form-control input-sm" style="height: 30px; width: 80px">
-					<option>제목</option>
-					<option>작성자</option>
+				<select id="search" name="search" class="input-sm" style="height: 30px; width: 80px">
+					<option value="all">전체</option>
+					<option value="qna_title">제목</option>
+					<option value="qna_content">내용</option>
+					<option value="mem_name">작성자</option>
 				</select>
-				<input type="text" class="form-control" id="search" name="search" placeholder="검색">
-				<button type="button" class="btn btn-default" id="searchBtn" >검색</button>
+				<input type="text"  id="keyword" name="keyword"  style="height: 30px; ">
+				<button type="button" class="btn btn-default" id="searchBtn" style="height: 30px; width: 50px; margin-top: -5px">검색</button>
 			</div>
 		</form>
 		</div>
 		</div>
 
-		</div>
+
+		
 

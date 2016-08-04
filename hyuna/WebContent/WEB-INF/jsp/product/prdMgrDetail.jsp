@@ -3,7 +3,6 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <script type="text/javascript">
 /* $(function(){
 	$("#updatePrd").click(function(){
@@ -47,9 +46,9 @@ function prdRgtList(){
 		<div class="row">
 			<h1>등록상품상세</h1>
 			<div style="float:right;margin-bottom:5px;">
-				<button type="button" id="updatePrd" name="updatePrd" onclick="prdUpdateForm(${detail.prd_no})">상품수정</button>
-				<button type="button" id="regPrd" name="regPrd" onclick="prdWriteFrom()">새상품등록</button>
-				<button type="button" id="PrdList" name="PrdList" onclick="prdRgtList()">상품목록</button>
+				<button type="button" class="btn btn-default" id="updatePrd" name="updatePrd" onclick="prdUpdateForm(${detail.prd_no})">상품수정</button>
+				<button type="button" class="btn btn-default" id="regPrd" name="regPrd" onclick="prdWriteFrom()">새상품등록</button>
+				<button type="button" class="btn btn-default" id="PrdList" name="PrdList" onclick="prdRgtList()">상품목록</button>
 			</div>
 			<table class="shop_table">
 				<tr>

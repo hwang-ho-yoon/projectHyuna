@@ -58,7 +58,11 @@ public class ProductDaoImpl implements ProductDao {
 		// TODO Auto-generated method stub
 		return session.update("prdImageUpdate");
 	}
-	
+	@Override
+	public int prdOptAdd(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.insert("prdOptAdd");
+	}
 	
 	
 	
@@ -76,9 +80,50 @@ public class ProductDaoImpl implements ProductDao {
 		return session.selectOne("prdSingleDetail");
 	}
 	@Override
-	public int prdOptAdd(ProductVO pvo) {
+	public List<ProductVO> prdListLatest(ProductVO pvo) {
 		// TODO Auto-generated method stub
-		return session.insert("optionInsert");
+		return session.selectList("prdListLatest");
+	}
+	@Override
+	public List<ProductVO> prdListBest(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.selectList("prdListBest");
+	}
+	
+	@Override
+	public int prdOptDelete(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.update("prdOptDelete");
+	}
+	@Override
+	public int prdOptUpdate(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.delete("prdOptUpdate");
+	}
+	@Override
+	public int masterPrdDelete(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		int result = session.delete("masterPrdDelete");
+		session.commit();
+		return result;
+	}
+	@Override
+	public int detailPrdDelete(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		int result = session.delete("detailPrdDelete");
+		session.commit();
+		return result;
+	}
+	@Override
+	public List<ProductVO> prdSingleOption(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.selectList("prdSingleOption");
+	}
+
+	@Override
+	public List<ProductVO> colorOptList(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.selectList("colorOptList");
 	}
 	
 	@Override
@@ -86,5 +131,15 @@ public class ProductDaoImpl implements ProductDao {
 		// TODO Auto-generated method stub
 		return session.selectList("prdAllList");
 	}
-	
+	@Override
+	public List<ProductVO> colorList(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.selectList("colorList");
+	}
+	@Override
+	public List<ProductVO> modelList(ProductVO pvo) {
+		// TODO Auto-generated method stub
+		return session.selectList("modelList");
+	}
+
 }

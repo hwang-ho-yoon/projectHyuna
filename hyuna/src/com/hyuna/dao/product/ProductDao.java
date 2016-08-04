@@ -31,7 +31,27 @@ public interface ProductDao {
 	public int prdImageUpdate(ProductVO pvo);
 
 	public int prdOptAdd(ProductVO pvo);
+
+	public List<ProductVO> prdListLatest(ProductVO pvo);
+
+	public List<ProductVO> prdListBest(ProductVO pvo);
+
+	public int prdOptDelete(ProductVO pvo);
+
+	public int prdOptUpdate(ProductVO pvo);
+
+	public int masterPrdDelete(ProductVO pvo);
 	
-	//product전체정보 dao
-	public List<ProductAllVO> prdAllList(ProductAllVO pvo);
+	public int detailPrdDelete(ProductVO pvo);
+
+	public List<ProductVO> prdSingleOption(ProductVO pvo);
+
+
+	public List<ProductVO> colorOptList(ProductVO pvo);
+	
+	//product�쟾泥댁젙蹂� dao
+		public List<ProductAllVO> prdAllList(ProductAllVO pvo);
+		public List<ProductVO> colorList(ProductVO pvo);
+
+		public List<ProductVO> modelList(ProductVO pvo);
 }

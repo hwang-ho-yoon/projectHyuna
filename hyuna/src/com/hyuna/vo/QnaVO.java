@@ -17,6 +17,7 @@ public class QnaVO extends CommonVO{
 	private int prd_d_no;
 	private MultipartFile file;
 	private String prd_name;
+	private String mem_name;
 
 	public String getPrd_name() {
 		return prd_name;
@@ -24,8 +25,7 @@ public class QnaVO extends CommonVO{
 	public void setPrd_name(String prd_name) {
 		this.prd_name = prd_name;
 	}
-	private String mem_name;
-	
+		
 	public String getMem_name() {
 		return mem_name;
 	}

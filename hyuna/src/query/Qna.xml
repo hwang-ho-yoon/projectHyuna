@@ -11,8 +11,8 @@
 			<if test="search=='qna_content'">
 				<![CDATA[ qna_content like '%' || #{keyword} || '%']]>
 			</if>
-			<if test="search=='member_name'">
-				<![CDATA[ member_name like '%' || #{keyword} || '%']]>
+			<if test="search=='mem_name'">
+				<![CDATA[ mem_name like '%' || #{keyword} || '%']]>
 			</if>
 		</where>
 		<!-- </trim> -->
@@ -34,15 +34,15 @@
 		/* qna qnaList */
 		select qna_no, mem_name, qna_title, qna_category, qna_hit, to_char(qna_writedate, 'YYYY-MM-DD HH24:MI:SS') as qna_writedate from 
 		(select list.*, rownum as rnum from (
-		<include refid="qnaCommon"></include>
-		<choose>
+		<include refid="qnaCommon"></include> order by qna_no desc
+<!-- 		<choose>
 			<when test="order_by=='qna_no'">order by qna_no</when>
 			<when test="order_by=='qna_writedate'">order by qna_writedate</when>
 		</choose>
 		<choose>
 			<when test="order_sc=='ASC'">ASC</when>
 			<when test="order_sc=='DESC'">DESC</when>
-		</choose>
+		</choose> -->
 		) list
 		)
 		<where>
@@ -88,4 +88,6 @@
 		/* qnaDelete */
 		delete from qna where qna_no = #{qna_no}
 	</delete>
+	
+	
 </mapper>	
