@@ -31,21 +31,39 @@
 
 		/* 선택삭제 버튼 클릭 시 이벤트 */
 		$("#checkDelete").click(function() {
+			var selectCarts = [];
+			
+			$(".check").each(function() {
+				if($(this).is(":checked")) {
+					selectCarts.push($(this).val());
+				}
+			});
+			$("#select").val(selectCarts);
+			$("#selectForm").attr({
+				"method":"post",
+				"action":"/cart/chkDelete.do"
+			});
+			$("#selectForm").submit();
+			
+			//go_delete();
+			
 			
 			//var arr = $('input[name=check]:checked').serializeArray().map(function(item) { return item.value });
-			var arr = $('input[name=check]:checked').parents("tr").attr("data-num");
+			/* var arr = $('input[name=check]:checked').parents("tr").attr("data-num");
 			console.log(arr);
 			var table = document.getElementById("cartTable");
 			var tableRow = table.rows.length;
 			document.getElementById("cartTable").rows[0].css("background","pink");
-			$("#cartTable").rows[0].css("background","pink");
+			$("#cartTable").rows[0].css("background","pink"); */
 			//console.log(document.getElementById("cartTable").rows[0].cell[3].text());
 			//table.rows[1].$("td:eq(0)").css("background","pink");
 			/* for(var i=1; i<tableRow; i++) {
 				 table.rows[i].$("td:eq(0)").css("background","pink");
 			}
 			tableRow.css("background","pink"); */
-		});
+					
+			
+		}); 
 					
 		/* 장바구니 비우기 버튼 클릭 시 이벤트 */
 		$("#allDelete").click(function() {
@@ -69,10 +87,61 @@
 			}
 		});		
 		
-		$("#updateCount").click(function() {
+		// 수량변경
+		$(".updateCount").click(function() {
+			var text = $(this).parents("tr").attr("data-num");
+			$("#text").val(text);
+			console.log("변경수량 : " + cart_quantity);
 			
+			$("#form1").attr({
+				"method":"POST",
+				"action":"/cart/updateCount.do"
+			});
+			$("#form1").submit();
+			//$("#cart_quantity").attr("href", "/cart/updateCount");
 		});
+		
+		/* 전체주문 버튼 클릭 시 이벤트 */
+		$("#allOrder").click(function() {
+			
+			if(confirm('상품을 전체 주문하시겠습니까?')) {
+				$.ajax({
+					type : 'POST',
+					url : "/order/orderWrite.do",
+					dataType : 'text',
+					error : function() {
+						alert('시스템 오류 입니다. 관리자에게 문의하세요.')
+					},
+					success : function(result) {
+						console.log("result : " + result);
+						if(result == 'SUCCESS') {
+							alert("주문시작");
+							location.href="/order/orderWrite.do";
+						}
+					}
+				});
+			}
+		});	
 	});
+	
+	function go_delete() {
+		if($(":checkbox[name='check']:checked").length==0) {
+			alert("삭제할 항목을 하나이상 체크해 주세요.");
+			return;
+		}
+	}
+	
+	function del() {
+		$(".wrap input:checked").each(function() {
+			var checked=$(this).attr("checked");
+			if(checked==true) {
+				$(this).next().remove();
+				$(this).remove();
+			}
+		});
+	}
+	
+	
 	
 	
 </script>
@@ -82,9 +151,10 @@
                <div id="wrapper">
                    <div class="product-content-right">
                        <div class="woocommerce">
-                           <form method="post" action="#">
-                           <label><label style="font-size:33px">${sessionScope.hyunaname}</label>님의 장바구니입니다</label>
-                               <table cellspacing="0" class="shop_table cart" id="cartTable">
+                       <form id="selectForm"><input type="hidden" id="select" name="select"></form>
+                           <form id="form1" method="post" action="#">
+                           <label><span style="font-size:33px">${sessionScope.hyunaname}</span>님의 장바구니입니다</label>
+                               <table  class="shop_table cart" id="cartTable">
                                    <thead>
                                        <tr>
                                            <th class="product-remove">
@@ -105,15 +175,15 @@
                                    		<c:when test="${not empty cartList}">
                                    			<c:forEach var="cart" items="${cartList}" varStatus="status">
                                    				<tr class="cart_item" data-num="${cart.prd_d_no}">
-                                           			<td><input type="checkbox" id="check" name="check"></td>
+                                           			<td><input type="checkbox" class="check" name="check" value="${cart.cart_no}" ></td>
                                    					<td class="product-thumbnail"><span class="goDetail">${cart.img_1}</span></td>
                                    					<td class="product-name"><span class="goDetail">${cart.prd_name}</span>
                                    					<td class="product-name">${cart.model_machine} - ${cart.color_detail}</td>
                                    					<td class="product-price">￦${cart.prd_saleprice}</td>
                                    					<td class="product-quantity">
                                    						<div class="quantity buttons_added">
-                                                    		<input type="number" name="quantity" class="form-control" title="Qty" value="${cart.cart_quantity}" min="0">
-                                                			<button type="button" class="btn btn-default" style="margin-top: 0px" id="updateCount" name="updateCount">수정</button>
+                                                    		<input type="number" name="cart_quantity" id="cart_quantity" class="form-control" title="Qty" value="${cart.cart_quantity}" min="0">
+                                                			<button type="button" class="btn btn-default updateCount" style="margin-top: 0px" name="updateCount">수정</button>
 		                                                </div>
                                    					</td>
                                    					<td class="product-deliveryCharge"><span class="amount">￦2,500</span></td>

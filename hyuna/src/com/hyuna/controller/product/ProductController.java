@@ -312,7 +312,7 @@ public class ProductController {
 			detail.setB_content(detail.getB_content().toString().replace("\n", "<br>"));
 		}*/
 		List<ProductVO> opt=productService.prdSingleOption(pvo);
-		opt=productService.prdSingleOption(pvo);
+		//opt=productService.prdSingleOption(pvo);
 		
 		model.addAttribute("detail",detail);
 		model.addAttribute("opt",opt);
