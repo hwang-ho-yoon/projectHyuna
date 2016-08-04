@@ -213,8 +213,8 @@
 				<td>
 				<div>
 					<div class="form-group" id="form-group4">						
-						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_answer" maxlength="50" style="width: 400px" id="mem_answer" name="mem_answer"  value="${detail.mem_answer }">
-						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c4"></span>												
+						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_answer" maxlength="25" style="width: 400px" name="mem_answer"  value="${detail.mem_answer }">
+						<span class="glyphicon form-control-feedback" aria-hidden="true" ></span>												
 					</div>
 				</div>			
 				</td>
@@ -232,13 +232,13 @@
 				</div>
 				<div>
 					<div class="form-group" id="form-group6">						
-						<input type="text" class="form-control postcodify_jibeon_address" aria-describedby="inputSuccess5Status" id="mem_address1" name="mem_address1" maxlength="100" style="width: 300px; margin-bottom: 10px" value="${detail.mem_address1 }">
+						<input type="text" class="form-control postcodify_jibeon_address" aria-describedby="inputSuccess5Status" id="mem_address1" name="mem_address1" maxlength="50" style="width: 300px; margin-bottom: 10px" value="${detail.mem_address1 }">
 						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c6"></span>																			
 					</div>									
 				</div>	
 				<div>
 					<div class="form-group" id="form-group7">						
-						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_address2" name="mem_address2" maxlength="100" style="width: 300px " value="${detail.mem_address2 }">
+						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_address2" name="mem_address2" maxlength="50" style="width: 300px " value="${detail.mem_address2 }">
 						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c7"></span>																			
 					</div>									
 				</div>	
@@ -304,7 +304,7 @@
 				<td>
 				<div>
 					<div class="form-group" id="form-group4">						
-						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_answer" maxlength="50" style="width: 400px" id="mem_answer" name="mem_answer"  value="${detail.mem_registdate }" readonly="readonly">
+						<input type="text" class="form-control" aria-describedby="inputSuccess5Status"  maxlength="50" style="width: 400px"  value="${detail.mem_registdate }" readonly="readonly">
 						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c4"></span>												
 					</div>
 				</div>			
@@ -315,7 +315,7 @@
 				<td>
 				<div>
 					<div class="form-group" id="form-group4">						
-						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_answer" maxlength="50" style="width: 400px" id="mem_answer" name="mem_answer"  value="${detail.mem_updatedate }" readonly="readonly">
+						<input type="text" class="form-control" aria-describedby="inputSuccess5Status"  maxlength="50" style="width: 400px"  value="${detail.mem_updatedate }" readonly="readonly">
 						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c4"></span>												
 					</div>
 				</div>			

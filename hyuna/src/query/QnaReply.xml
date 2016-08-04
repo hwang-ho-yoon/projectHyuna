@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyuna.dao.qna.QnaReplyDao">
+<!-- 리플목록 -->
+	<!-- 게시물 기본 조회 -->
+	<select id="replyList" parameterType="qreply" resultType="qreply">
+		select qna_reply_no, qna_no, qna_reply_writer, qna_reply_content,  to_char(qna_reply_date, 'YYYY-MM-DD HH24:MI:SS') as qna_reply_date, 
+		to_char(qna_reply_modifydate, 'YYYY-MM-DD HH24:MI:SS') as qna_reply_modifydate from qna_reply where qna_no = #{qna_no} order by qna_reply_no desc
+	</select>
+	
+	<!-- 댓글 입력 -->
+ 	<insert id="replyInsert" parameterType="qreply">
+		/* Reply - replyInsert */
+		insert into qna_reply (qna_reply_no, qna_no, qna_reply_writer, qna_reply_content, qna_reply_modifydate, qna_reply_date ) values (
+		qna_reply_seq.nextval, #{qna_no}, #{qna_reply_writer}, #{qna_reply_content}, sysdate, sysdate)
+	</insert>
+	
+	<!-- 수정 -->
+	<update id="replyUpdate" parameterType="qreply">
+		/* Reply - replyUpdate */
+		update qna_reply set qna_reply_content = #{qna_reply_content}, qna_reply_modifydate = sysdate where qna_reply_no = #{qna_reply_no}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="replyDelete" parameterType="qreply">
+		/* Reply - replyDelete */
+		delete from qna_reply where qna_reply_no = #{qna_reply_no}
+	</delete>
+
+</mapper>

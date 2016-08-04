@@ -419,7 +419,7 @@
 				<td>
 				<div>
 					<div class="form-group" id="form-group4">						
-						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_answer" maxlength="50" style="width: 400px" id="mem_answer" name="mem_answer">
+						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_answer" maxlength="25" style="width: 400px" id="mem_answer" name="mem_answer">
 						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c4"></span>												
 					</div>
 				</div>			
@@ -438,13 +438,13 @@
 				</div>
 				<div>
 					<div class="form-group" id="form-group6">						
-						<input type="text" class="form-control postcodify_jibeon_address" aria-describedby="inputSuccess5Status" id="mem_address1" name="mem_address1" maxlength="100" style="width: 300px; background: white; margin-bottom: 10px" readonly="readonly">
+						<input type="text" class="form-control postcodify_jibeon_address" aria-describedby="inputSuccess5Status" id="mem_address1" name="mem_address1" maxlength="50" style="width: 300px; background: white; margin-bottom: 10px" readonly="readonly">
 						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c6"></span>																									
 					</div>									
 				</div>	
 				<div>
 					<div class="form-group" id="form-group7">						
-						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_address2" name="mem_address2" maxlength="100" style="width: 300px; ">
+						<input type="text" class="form-control" aria-describedby="inputSuccess5Status" id="mem_address2" name="mem_address2" maxlength="50" style="width: 300px; ">
 						<span class="glyphicon form-control-feedback" aria-hidden="true" id="c7"></span>																			
 					</div>									
 				</div>	
@@ -514,7 +514,7 @@
 	<h4>${list0.ter_title}</h4>
 	<div style="border: 1px solid #ddd">	
 		<div style="margin-top: 15px; margin-bottom: 15px" class="col-md-12">
-			<textarea readonly="readonly" class="form-control" rows="10" cols="133" style="background: white">				
+			<textarea readonly="readonly" class="form-control" rows="10" cols="133" style="background: white; resize:none">				
 ${list0.ter_content }
 			</textarea>			
 		</div>
@@ -526,7 +526,7 @@ ${list0.ter_content }
  	<h4>${list1.ter_title}</h4>
 	<div style="border: 1px solid #ddd">	
 		<div style="margin-top: 15px; margin-bottom: 15px" class="col-md-12">
-			<textarea readonly="readonly" class="form-control" rows="10" cols="133" style="background: white">
+			<textarea readonly="readonly" class="form-control" rows="10" cols="133" style="background: white; resize:none">
 ${list1.ter_content }
 			</textarea>
 		</div>

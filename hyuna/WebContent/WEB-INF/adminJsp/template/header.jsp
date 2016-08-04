@@ -89,7 +89,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="/adminIndex.jsp"><img src="/include/image/hyun.png"></a></h1>
+                        <h1><a href="/adminIndex.jsp"><img src="/include/image/다솜.png"></a></h1>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                             </ul>
 						</li>
                         <li><a href="/orderAdmin/orderAdminList.do">주문조회</a></li>
-                        <li><a href="/board/qna/qnaList.do">Q&A</a></li>
+                        <li><a href="/adminQna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>
 						<li><a href="/admin/memberList.do">회원목록</a></li>
