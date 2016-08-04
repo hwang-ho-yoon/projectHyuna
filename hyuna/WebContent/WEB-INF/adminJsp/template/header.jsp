@@ -109,45 +109,13 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li class="dropdown dropdown-small">
-							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-	                            <span class="key">Samsung</span>
-	                            <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">갤럭시</a></li>
-                                <li><a href="#">노트</a></li>
-                                <li><a href="#">보급</a></li>
-                            </ul>
-						</li>
-                        <li class="dropdown dropdown-small">
-							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-	                            <span class="key">Apple</span>
-	                            <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">5S</a></li>
-                                <li><a href="#">6S</a></li>
-                                <li><a href="#">7S</a></li>
-                            </ul>
-						</li>
-                        <li class="dropdown dropdown-small">
-							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-	                            <span class="key">LG</span>
-	                            <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">G시리즈</a></li>
-                                <li><a href="#">G프로</a></li>
-                                <li><a href="#">옵티머스</a></li>
-                            </ul>
-						</li>
+                        <li><a href="/main.do">Home</a></li>
                         <li><a href="/orderAdmin/orderAdminList.do">주문조회</a></li>
-                        <li><a href="/adminQna/qnaList.do">Q&A</a></li>
+                        <li><a href="/board/qna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>
 						<li><a href="/admin/memberList.do">회원목록</a></li>
+						<li><a href="/product/prdRgtList.do">상품등록</a></li>
 						 
 <!-- 						 <button type="button" class="btn btn-info">PHP</button>
 						 <button type="button" class="btn btn-info">Blogger</button>

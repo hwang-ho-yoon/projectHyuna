@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
 			
 			//prdOpt.addAll(pvo.getPrd_no());
 			//prdOpt.add(opt);
-			logger.info("model : "+opt.getPrd_no());
+			logger.info("prd_no : "+opt.getPrd_no());
 			logger.info("model : "+opt.getModel_no());
 			logger.info("color : "+opt.getColor_no());
 			logger.info("stock : "+opt.getPrd_d_stock());
@@ -155,12 +155,99 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
-	//product전체정보 ServiceImpl
+
 	@Override
-		public List<ProductAllVO> prdAllList(ProductAllVO pvo) {
-			List<ProductAllVO> prdAllList=null;
-			prdAllList=productDao.prdAllList(pvo);
-			return prdAllList;
+	public List<ProductVO> prdListLatest(ProductVO pvo) {
+		List<ProductVO> prdListLatest=null;
+		prdListLatest=productDao.prdListLatest(pvo);
+		return prdListLatest;
+	}
+
+
+	@Override
+	public List<ProductVO> prdListBest(ProductVO pvo) {
+		List<ProductVO> prdListBest=null;
+		prdListBest=productDao.prdListBest(pvo);
+		return prdListBest;
+	}
+
+
+	@Override
+	public int prdImageInsert(ProductVO pvo) {
+		return productDao.productImageInsert(pvo);
+	}
+
+
+	@Override
+	public int prdOptDelete(ProductVO pvo) {
+		int result =productDao.prdOptDelete(pvo);
+		// TODO Auto-generated method stub
+		return result;
+	}
+
+
+	@Override
+	public int prdOptUpdate(ProductVO pvo) {
+		int result =productDao.prdOptUpdate(pvo);
+		// TODO Auto-generated method stub
+		return result;
+	}
+
+
+	@Override
+	public int detailPrdDelete(ProductVO pvo) {
+		int	d_result = productDao.detailPrdDelete(pvo);
+			System.out.println("d_result: "+d_result);
+		return d_result;
+	}
+	@Override
+	public int masterPrdDelete(ProductVO pvo) {
+		int m_result = productDao.masterPrdDelete(pvo);
+			System.out.println("m_result: "+m_result);
+		return m_result;
+	}
+
+
+	@Override
+	public List<ProductVO>  prdSingleOption(ProductVO pvo) {
+		List<ProductVO> prdSingleOption =productDao.prdSingleOption(pvo);
+		return prdSingleOption;
+	}
+
+	@Override
+	public List<ProductVO> colorOptList(ProductVO pvo) {
+		 List<ProductVO> colorOptList =null;
+		 colorOptList=productDao.colorOptList(pvo);
+		// TODO Auto-generated method stub
+		return colorOptList;
+	}
+
+	//product�쟾泥댁젙蹂� ServiceImpl
+		@Override
+			public List<ProductAllVO> prdAllList(ProductAllVO pvo) {
+				List<ProductAllVO> prdAllList=null;
+				prdAllList=productDao.prdAllList(pvo);
+				return prdAllList;
+			}
+	
+	
+		@Override
+		public List<ProductVO> colorList(ProductVO pvo) {
+			List<ProductVO> colorList =null;
+			colorList=productDao.colorList(pvo);
+			return colorList;
 		}
+
+
+		@Override
+		public List<ProductVO> modelList(ProductVO pvo) {
+			List<ProductVO> modelList =null;
+			modelList=productDao.modelList(pvo);
+			return modelList;
+		}
+
+
+	
+	
 
 }

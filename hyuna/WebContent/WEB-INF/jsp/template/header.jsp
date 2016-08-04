@@ -142,9 +142,8 @@
 	                            <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/product/prdMainList.do">갤럭시</a></li>
-                                <li><a href="#">노트</a></li>
-                                <li><a href="#">보급</a></li>
+                                <li><a href="/product/prdMainList.do?model_machine=갤럭시">갤럭시</a></li>
+                                <li><a href="/product/prdMainList.do?model_machine=노트">노트</a></li>
                             </ul>
 						</li>
                         <li class="dropdown dropdown-small">
@@ -153,12 +152,11 @@
 	                            <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/product/prdMainList.do">5S</a></li>
-                                <li><a href="#">6S</a></li>
-                                <li><a href="#">7S</a></li>
+                                <li><a href="/product/prdMainList.do?model_machine=4S">4S</a></li>
+                                <li><a href="/product/prdMainList.do?model_machine=5S">5S</a></li>
                             </ul>
 						</li>
-                        <li class="dropdown dropdown-small">
+                        <!-- <li class="dropdown dropdown-small">
 							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
 	                            <span class="key">LG</span>
 	                            <b class="caret"></b>
@@ -168,12 +166,12 @@
                                 <li><a href="#">G프로</a></li>
                                 <li><a href="#">옵티머스</a></li>
                             </ul>
-						</li>
+						</li> -->
                         <li><a href="/order/orderWrite.do">주문조회</a></li>
                         <li><a href="/board/qna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>
-						<li><a href="/product/prdRgtList.do">상품등록</a></li>
+						
 						 
 <!-- 						 <button type="button" class="btn btn-info">PHP</button>
 						 <button type="button" class="btn btn-info">Blogger</button>

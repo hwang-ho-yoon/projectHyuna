@@ -1,52 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
-<!-- <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<script type="text/javascript" src="/hyuna/include/js/board.js"></script>
-<script type="text/javascript" src="/hyuna/include/js/jquery-1.12.2.min.js"></script>
-<script type="text/javascript" src="/hyuna/include/js/search.js"></script> -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
+var new_select;
 	$(function() {
-		$(document).on("click", "#addCart", function(){
-			//$("#addCart").click(function() {
-				$("#cart_quantity").val($("#quantity").val());
-				$("#color_no").val($("#color").val());
-				$("#model_no").val($("#machine").val());
-				console.log($("#quantity").val());
-				console.log($("#color").val());
-				console.log($("#machine").val());
-				console.log($("#cart_quantity").val());
-				console.log($("#color_no").val());
-				console.log($("#model_no").val());
-				
-				$("#addCartVal").attr({
-					"method" : "post",
-					"action" : "/cart/cartInsert.do"
-				});
-				
-				$("#addCartVal").submit();
-				
-				
+		
+		// 담기버튼 클릭 시 이벤트 처리 */
+		$("#addCart").click(function() {
+			var model_no=$("#model option:selected").val();
+			var prd_no=$("#prd_no").val();
+			if(model_no!="non"||prd_no!="non"){
+				alert("상품 옵션을 선택해주세요");
+				return;
+			}
+			$("#cart_quantity").val($("#quantity").val());
+			$("#color_no").val($("#color_detail").val());
+			$("#model_no").val($("#model_machine").val());
+			console.log($("#quantity").val());
+			$("#addCartVal").attr({
+				"method" : "post",
+				"action" : "/cart/cartInsert.do"
 			});
-			//location.href="/cart/cartInsert.do";
+			
+			$("#addCartVal").submit();
+			
+		});		
+		
+		$("#model").change(function(){
+			var model_no=$("#model option:selected").val();
+			var prd_no=$("#prd_no").val();
+			if(model_no!="non"&&prd_no!="non"){
+				optListAll(prd_no,model_no);
+			}
+		});				
+	});
+	
+	function optListAll(prd_no, model_no){
+		$("#model_no").val(model_no);
+		console.log($("#prd_no").val()+"	"+$("#model_no").val());
+		$("#colorOpt").html("");
+		
+		new_select = $("<select>");
+		new_select.attr({"id":"color"});
+		new_select.css("width","150px");
+		$("#colorOpt").append(new_select);
+		$.ajax({
+		url:"/product/colorOptList.do",
+		type : "POST",//전송시 method방식
+		data : $("#addCartVal").serialize(),//번호랑 비밀번호가 폼안에 있으므로 폼전체 데이터 전송
+		dataType : "json",//응답문서의 형식
+		error : function() {//실행시 오류가 발생 하엿을 경우
+				alert('시스템오류 입니다. 관리자에게 문의하세요.');
+			}, 
+		success : function(data) {
+			$.each(data,function(index,value){
+				var color_no = value.color_no;
+				var color_detail = value.color_detail;
+				console.log(color_no+" "+color_detail);
+				addNewItem(color_no, color_detail);
+			});
+		}		
+			
+		
 		});
-	//});
+	}
+	
+	function addNewItem(color_no, color_detail){
+		new_select.append($('<option value="'+ color_no +'">' + color_detail + '</option>'));
+			
+	}
 </script>
 <div id="wrapper">
 	<div class="single-product-area">
 		<div class="container">
 			<div class="row">
 				<div class="product-breadcroumb">
-					<a href="">Home</a> <a href="">Category Name</a> <a href="">Sony
-						Smart TV - 20151234587979879</a>
+					<!-- <a href="">Home</a> <a href="">Category Name</a> <a href="">Sony
+						Smart TV - 2015</a> -->
 				</div>
-				
 				<form id="addCartVal">
-					<input type="hidden" id="cart_quantity" name="cart_quantity"/>
-					<input type="hidden" id="model_no" name="model_no"/>
-					<input type="hidden" id="color_no" name="color_no"/>
-					<!-- <input type="hidden" id="mem_no" name="mem_no" /> -->
+					<input type="hidden" id="model_no" name="model_no" />
+					<input type="hidden" id="prd_no" name="prd_no" value="${detail.prd_no}"/>
 				</form>
 				
 				<div class="row">
@@ -55,25 +90,25 @@
 							<!-- style="height: auto; width: 100%; border:1px solid gold;"   div 영역표시하기.-->
 							<div class="product-main-img"   >
 							<!-- <img src="/include/image/product-2.jpg" alt=""class="center-block">-->
-								<img src="/main/${detail.img_1 }" alt="" class="center-block" style="height: auto; width: 40%; ">
-								<img src="/main/${detail.img_1 }" alt="" class="center-block" style="height: auto; width: 40%; ">
-									
+								<img src="/main/${detail.img_1 }" alt="" class="center-block" style="height: auto; width: 40%; ">																
 							</div>
 						</div>
 					</div>
 					<div class="product-inner">
 						<h2 class="product-name">${detail.prd_name}</h2>
-						<div class="product-inner-price">
-							<ins>${detail.prd_saleprice}</ins>
-							<del>$100.00</del>
-						</div>
-						<form action="" class="cart">
-							<div class="quantity">
-								<input type="number" size="4" class="input-text qty text"
-									title="Qty" value="1" id="quantity" name="quantity" min="1" step="1">
+							<div class="product-inner-price">
+								<ins>${detail.prd_saleprice}</ins>
+								<del>$100.00</del>
 							</div>
-							<!-- <button class="add_to_cart_button" type="submit" id="addCart">Add to cart</button> -->
-						<button class="addCart" type="button" id="addCart">Add to cart</button>
+						<form action="" class="cart">
+							<div class="quantity" style="float:left;border:1px;">
+								<input type="number" size="4" class="input-text qty text"
+									title="Qty" value="1" name="quantity" min="1" step="1" id="quantity">
+							<button class="add_to_cart_button" type="button" id="addCart">Add to cart</button>
+							</div>
+						
+							
+						
 						<!-- <div class="product-inner-category">
 							<p>
 								Category: <a href="">Summer</a>. Tags: <a href="">awesome</a>, <a
@@ -81,23 +116,36 @@
 							</p>
 						</div> -->
 						<br>
-						<div>
-							<select id="machine" class="col-md-4">
-								<option value="1">아이폰6/6S</option>
-								<option value="2">아이폰6플러스</option>
-								<option value="3">아이폰SE/5/5S</option>
-								<option value="4">아이폰4/4S</option>
-							</select> <br>
-							<select id="color" class="col-md-4" value="color_no">
-								<option value="1">빨강</option>
-								<option value="2">노랑</option>
-								<option value="3">파랑</option>
-							</select>
+						<div class="col-md-5" style="padding-left:0px; margin-top:10px;">
+							<c:choose>
+								<c:when test="${not empty opt }">
+								<select id="model" style="width:150px;">
+									<option value="non">===선택===</option>
+									<c:forEach var="opt" items="${opt}" varStatus="status">
+										<option value="${opt.model_no }">${opt.model_machine }</option>
+									</c:forEach>
+								</select>
+								</c:when>						
+						<c:otherwise>등록된옵션이 없습니다.</c:otherwise> 
+						</c:choose>
 						
-						</div>
+							<span id="colorOpt">
+								<%-- <c:choose>
+									<c:when test="${not empty opt }">
+									<select id="color" style="width:150px;">
+										<c:forEach var="opt" items="${opt}" varStatus="status">
+										<option value="${opt.model_no }">${opt.model_machine }</option>
+										</c:forEach>
+									</select>
+									</c:when>						
+								<c:otherwise>등록된옵션이 없습니다.</c:otherwise> 
+								</c:choose> --%>
+							</span>
+						</div>		
 						</form>
+						</div>
 <br>
-						<div role="tabpanel">
+						<div role="tabpanel" style="margin-top:30px;">
 							<ul class="product-tab" role="tablist">
 								<li role="presentation" class="active"><a href="#home"
 									aria-controls="home" role="tab" data-toggle="tab">Description</a>
@@ -125,8 +173,7 @@
 										facilisis lobortis. In malesuada pulvinar neque a consectetur.
 										Nunc aliquam gravida purus, non malesuada sem accumsan in.
 										Morbi vel sodales libero.</p> -->
-										<img src="/detail/${detail.img_3 }" class="center-block"/>
-										<img src="/detail${detail.img_3 }" class="center-block"/>
+									<img src="/detail/${detail.img_3 }" class="center-block"/>
 								</div>
 								<!-- review 부분 -->
 								<div role="tabpanel" class="tab-pane fade" id="profile">

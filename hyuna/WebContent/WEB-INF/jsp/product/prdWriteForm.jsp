@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- <script type="text/javascript" src="jquery-1.11.0.min.js"></script> -->
 <script>
 	/* <tr id="tr_opt"><th>기종</th><th>color</th><th>재고</th><th>공개</th></tr> */
@@ -22,14 +23,18 @@
 			var table = document.getElementById("tb_option");
 			var tablerows = table.getElementsByTagName("tr").length;
 
+			if(add_no=="non"||color_no=="non"){
+				alert("옵션을 선택해 주세요");
+				return;
+			}
 			if (!tableChk(add, color, "이미 입력되어 있는 옵셥입니다."))
 				return;
 			else {
 				new_tr = "<tr class='opt_tr'><td><span>" + add
-						+ "</span><p >"+add_no+"</p></td>";
-				new_tr += "<td><span>" + color + "</span><p >"+color_no+"</p></td>";
+						+ "</span><p hidden>"+add_no+"</p></td>";
+				new_tr += "<td><span>" + color + "</span><p hidden>"+color_no+"</p></td>";
 				new_tr += "<td><input type='number' class='form-control col-xs-2 input-sm' id='prd_d_stock' value="+0+" step='5' min='0'></td>";
-				new_tr += "<td><input type='checkbox' id='prd_d_display' checked value='checked'></td>";
+				new_tr += "<td><select class='prd_d_display' ><option value='Y'> Y </option><option value='N'> N </option></select></td>";
 				new_tr += "<td><button type='button' id='minus' class='minus'>-</button></td></tr>";
 				$("#tb_option").append(new_tr);
 			}
@@ -148,7 +153,8 @@
 					if(j==2)
 					tddata=  $(".opt_tr:eq(" + (i-1) + ")").children('td:eq('+j+')').find("input[type='number']").val()+",";
 					else
-					tddata=	checkbox($(".opt_tr:eq(" + (i-1) + ")").children('td:eq('+j+')').find("input[type='checkbox']"));
+					//tddata=	checkbox($(".opt_tr:eq(" + (i-1) + ")").children('td:eq('+j+')').find("input[type='checkbox']"));
+						tddata=	$(".opt_tr:eq(" + (i-1) + ")").children('td:eq('+j+')').find(".prd_d_display").val();
 					
 					console.log(i+"/"+j+" : "+tddata);
 				}
@@ -176,7 +182,7 @@
 		<form id="basicInfo" name="basicInfo" enctype="multipart/form-data">
 			<h1>상품등록</h1>
 
-<input type="text" id="options" name="options"/>
+<input type="hidden" id="options" name="options"/>
 
 			<table class="shop_table">
 				<tr>
@@ -185,6 +191,7 @@
 					<td>* 상품명</td>
 					<td><input type="text" id="prd_name" name="prd_name"  value="prd_001"/></td>
 				</tr>
+				
 				<tr>
 					<td>제조사</td>
 					<td><input type="text" id="prd_manufacturer"
@@ -199,25 +206,27 @@
 					<td><input type="number" id="prd_orgprice" name="prd_orgprice" value="20500"/></td>
 				</tr>
 				<tr>
-					<td>* 판매가</td>
-					<td><input type="number" id="prd_saleprice" name="prd_saleprice" value="25000"/></td>
-					<td>전시상태</td>
-					<td><input type="checkbox" id="prd_display" name="prd_display" checked/></td>
+					<td >* 판매가</td>
+					<td colspan="3"><input type="number" id="prd_saleprice" name="prd_saleprice" value="25000"/></td>
+					<!-- <td></td>
+					<td><input type="checkbox" id="prd_display" name="prd_display" checked/></td> -->
 				</tr>
 				<tr>
 					<td colspan="4">상품설명</td>
 				</tr>
 				<tr>
 					<td colspan="4">
-					<textarea rows="5" cols="20" id="prd_desc" name="prd_desc"></textarea>
+					<textarea rows="8" cols="130" id="prd_desc" name="prd_desc" style="resize: none;"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td>옵션사용</td>
-					<td colspan="3"><label class="checkbox-inline"> <input
-							type="checkbox" id="option_color" name="option_color" checked/>Color
-					</label> <label class="checkbox-inline"> <input type="checkbox"
-							id="option_brand" name="option_brand" checked/>Brand
+					<td colspan="3">
+					<label class="checkbox-inline"> 
+					<input type="checkbox" id="option_color" name="option_color" checked/>Color
+					</label> 
+					<label class="checkbox-inline"> 
+					<input type="checkbox" id="option_brand" name="option_brand" checked/>Brand
 					</label></td>
 
 				</tr>
@@ -240,25 +249,30 @@
 		
 		<br>
 		<div id="optionbrand" class="optionbrand">
-			<select id="brand">
-				<option value="1">SAMSUNG</option>
-				<option value="2">LG</option>
-				<option value="3">APPLE</option>
-			</select> 
-			<select id="model">
-				<option value="1">아이폰6/6S</option>
-				<option value="2">아이폰6플러스</option>
-				<option value="3">아이폰SE/5/5S</option>
-				<option value="4">아이폰4/4S</option>
-				
-			</select>
+			<c:choose>
+				<c:when test="${not empty modelList }">
+					<select id="model" style="width:150px;">
+						<option value="non">===선택===</option>
+						<c:forEach var="modelList" items="${modelList}" varStatus="status">
+							<option value="${modelList.model_no }">${modelList.model_machine }</option>
+						</c:forEach>
+					</select>
+				</c:when>						
+			<c:otherwise>등록된옵션이 없습니다.</c:otherwise> 
+			</c:choose>
 			<!-- <div id="optioncolor" class="optioncolor" style = "display:block; border:1px solid black; width:200px; float:left;" > -->
 
-			<select id="color">
-				<option value="1">빨강</option>
-				<option value="2">노랑</option>
-				<option value="3">파랑</option>
-			</select>
+			<c:choose>
+				<c:when test="${not empty colorList }">
+					<select id="color" style="width:150px;">
+						<option value="non">===선택===</option>
+						<c:forEach var="colorList" items="${colorList}" varStatus="status">
+							<option value="${colorList.color_no }">${colorList.color_detail }</option>
+						</c:forEach>
+					</select>
+				</c:when>						
+			<c:otherwise>등록된옵션이 없습니다.</c:otherwise> 
+			</c:choose>
 			<!-- </div> -->
 
 			<button type="button" id="optionadd" name="optionadd" class="btn btn-default pull-right btn-xs">+</button>
@@ -284,8 +298,11 @@
 
 
 			</table>
-			<button type="button" id="regPrd" name="regPrd">상품등록</button>
-			<button type="button" id="PrdList" name="PrdList">상품목록</button>
+			<table style="align:right;">
+			<tr ><td ><button type="button" class="btn btn-default" id="regPrd" name="regPrd">상품등록</button><button type="button" class="btn btn-default" id="PrdList" name="PrdList">상품목록</button></td></tr>
+			
+			
+			</table>
 		</div>
 	</div>
 </body>
