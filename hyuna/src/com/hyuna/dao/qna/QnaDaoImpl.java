@@ -49,4 +49,14 @@ public class QnaDaoImpl implements QnaDao{
 		return session.selectOne("qnaListCnt");
 	}
 
+	@Override
+	public List<QnaVO> qnaList1(QnaVO qvo) {		
+		return session.selectList("qnaList1");
+	}
+
+	@Override
+	public int qnaInsert1(QnaVO qvo) {		
+		return session.insert("qnaInsert1");
+	}
+
 }

@@ -141,5 +141,10 @@ public class ProductDaoImpl implements ProductDao {
 		// TODO Auto-generated method stub
 		return session.selectList("modelList");
 	}
+	@Override
+	public List<ProductAllVO> prdAllList1(ProductAllVO pvo) {
+		
+		return session.selectList("prdAllList1");
+	}
 
 }

@@ -179,6 +179,10 @@
 	           left join color co on d.color_no=co.color_no 
 	   		  where d.prd_d_no = #{prd_d_no}
 	</select>
+	
+	<select id="prdAllList1" resultType="prdAll" parameterType="prdAll">
+		select * from prd_master inner join prd_img on prd_master.prd_no = prd_img.prd_no where prd_master.prd_no = #{prd_no}
+	</select>
 	<select id="colorList" resultType="prd" parameterType="prd">
 		  select color_no, color_detail  from color		  
      	   order by color_no

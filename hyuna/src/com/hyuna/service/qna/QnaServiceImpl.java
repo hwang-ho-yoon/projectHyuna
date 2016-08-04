@@ -56,4 +56,16 @@ public class QnaServiceImpl implements QnaService{
 		return qnaDao.qnaListCnt(qvo);
 	}
 
+	@Override
+	public List<QnaVO> qnaList1(QnaVO qvo) {
+		List<QnaVO> list = null;
+		list = qnaDao.qnaList1(qvo);
+		return list;
+	}
+
+	@Override
+	public int qnaInsert1(QnaVO qvo) {		
+		return qnaDao.qnaInsert1(qvo);
+	}
+
 }
