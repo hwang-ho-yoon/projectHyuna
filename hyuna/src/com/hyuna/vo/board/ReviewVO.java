@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.hyuna.common.vo.CommonVO;
 
 public class ReviewVO extends CommonVO{
-	private int review_No = 0;
+	private int review_no = 0;
 	private String Review_writedate = "";
 	private String review_title = "";
 	private String review_content = "";
@@ -16,12 +16,19 @@ public class ReviewVO extends CommonVO{
 	private String review_modifydate = "";
 	private int Mem_no = 0;
 	private int Prd_d_no = 0;
+	private String Prd_name;
 	
-	public int getReview_No() {
-		return review_No;
+	public String getPrd_name() {
+		return Prd_name;
 	}
-	public void setReview_No(int review_No) {
-		this.review_No = review_No;
+	public void setPrd_name(String prd_name) {
+		Prd_name = prd_name;
+	}
+	public int getReview_no() {
+		return review_no;
+	}
+	public void setReview_no(int review_no) {
+		this.review_no = review_no;
 	}
 	public String getReview_writedate() {
 		return Review_writedate;
