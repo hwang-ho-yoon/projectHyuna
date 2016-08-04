@@ -39,7 +39,7 @@
 		
 		/* 글쓰기 버튼 클릭 시 처리 이벤트 */
 		$("#qna_write").click(function(){
-			location.href = "/board/qna/qnaWrite.do";
+			location.href = "/adminQna/qnaWrite.do";
 		})
 		
 		//제목 클릭시 상세 페이지 이동을 위한 처리 이벤트
@@ -50,7 +50,7 @@
 			
 			$("#detailForm").attr({
 				"method":"get",
-				"action":"/board/qna/qnaDetail.do"
+				"action":"/adminQna/qnaDetail.do"
 			});
 			$("#detailForm").submit();
 		});
@@ -82,7 +82,7 @@
 		$("#page").val(page);
 		$("#f_search").attr({
 			"method":"get",
-			"action":"/board/qna/qnaList.do"
+			"action":"/adminQna/qnaList.do"
 		});
 		$("#f_search").submit();
 	}
@@ -91,8 +91,7 @@
 		<div class="board">
 		<!-- 상세이동 -->
 		<form id="detailForm" name="detailForm">
-			<input type="hidden" name="qna_no" id="qna_no">
-			<%-- <input type="hidden" name="mem_no" id="mem_no" value="${sessionScope.hyunaMember }"> --%>
+			<input type="hidden" name="qna_no" id="qna_no">			
 			<input type="hidden" name="page" value="${data.page }">
 			<input type="hidden" name="pageSize" value="${data.pageSize }">
 		</form>
