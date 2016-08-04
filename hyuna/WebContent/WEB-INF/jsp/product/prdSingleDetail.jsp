@@ -7,25 +7,27 @@ var new_select;
 	$(function() {
 		
 		// 담기버튼 클릭 시 이벤트 처리 */
-		$("#addCart").click(function() {
-			var model_no=$("#model option:selected").val();
-			var prd_no=$("#prd_no").val();
-			if(model_no!="non"||prd_no!="non"){
-				alert("상품 옵션을 선택해주세요");
-				return;
-			}
-			$("#cart_quantity").val($("#quantity").val());
-			$("#color_no").val($("#color_detail").val());
-			$("#model_no").val($("#model_machine").val());
-			console.log($("#quantity").val());
-			$("#addCartVal").attr({
-				"method" : "post",
-				"action" : "/cart/cartInsert.do"
+		$(document).on("click", "#addCart", function(){
+			//$("#addCart").click(function() {
+				$("#cart_quantity").val($("#quantity").val());
+				$("#color_no").val($("#color").val());
+				$("#model_no").val($("#machine").val());
+				console.log($("#quantity").val());
+				console.log($("#color").val());
+				console.log($("#machine").val());
+				console.log($("#cart_quantity").val());
+				console.log($("#color_no").val());
+				console.log($("#model_no").val());
+				
+				$("#addCartVal").attr({
+					"method" : "post",
+					"action" : "/cart/cartInsert.do"
+				});
+				
+				$("#addCartVal").submit();				
+				
 			});
-			
-			$("#addCartVal").submit();
-			
-		});		
+			//location.href="/cart/cartInsert.do";
 		
 		$("#model").change(function(){
 			var model_no=$("#model option:selected").val();
@@ -35,6 +37,8 @@ var new_select;
 			}
 		});				
 	});
+	
+	
 	
 	function optListAll(prd_no, model_no){
 		$("#model_no").val(model_no);
@@ -80,8 +84,11 @@ var new_select;
 						Smart TV - 2015</a> -->
 				</div>
 				<form id="addCartVal">
-					<input type="hidden" id="model_no" name="model_no" />
-					<input type="hidden" id="prd_no" name="prd_no" value="${detail.prd_no}"/>
+					<input type="hidden" id="cart_quantity" name="cart_quantity"/>
+					<input type="hidden" id="model_no" name="model_no"/>
+					<input type="hidden" id="color_no" name="color_no"/>
+					<input type="hidden" id="prd_no" name="prd_no" value="${param.prd_no}" />
+					<!-- <input type="hidden" id="mem_no" name="mem_no" /> -->
 				</form>
 				
 				<div class="row">
