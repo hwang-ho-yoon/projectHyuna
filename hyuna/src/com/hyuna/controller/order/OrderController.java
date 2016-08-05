@@ -214,6 +214,7 @@ public class OrderController {
 		}
 		int result = orderService.orderGroupInsert(ogv);
 		result = orderService.orderProductInsert(ogv);
+		result = orderService.orderInsertProductAmount(ogv);
 		String url = "";
 		if (result == 1) {
 			url = "/order/orderDetail.do?ogr_no="+ogv.getOgr_no()+"&page=1&pageSize=5";

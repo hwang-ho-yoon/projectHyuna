@@ -76,4 +76,15 @@ public class OrderServiceImpl implements OrderService{
 		return orderDao.selectOrderGroupsNoPage(orderVO);
 	}
 
+	@Override
+	public int orderInsertProductAmount(OrderGroupVO ogv) {
+		int result = 0;
+		for (int i = 0; i < ogv.getOrderProductVO().size(); i++) {
+			OrderProductVO productVO = ogv.getOrderProductVO().get(i);
+			productVO.setOgr_no(ogv.getOgr_no());
+			result = orderDao.orderInsertProductAmount(productVO);
+		}
+		return result;
+	}
+
 }

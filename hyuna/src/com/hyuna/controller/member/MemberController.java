@@ -158,14 +158,12 @@ public class MemberController {
 	public String memberPw(@ModelAttribute MemberVO mvo) {		
 		logger.info("비밀번호 메일발송 호출");
 		EmailMember em = new EmailMember();
-		MemberVO evo = memberService.selectEmail(mvo);		
-		
 		mvo.setMem_pwd(em.getRandomPassword(10));		
 				
 		int result = 0;		
 		result = memberService.memberPw(mvo);
 		if(result==1){
-			em.setPwdEmail(evo);			
+			em.setPwdEmail(mvo);			
 		}
 		return result+"";
 		

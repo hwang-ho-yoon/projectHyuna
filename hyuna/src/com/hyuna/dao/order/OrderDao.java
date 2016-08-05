@@ -29,4 +29,6 @@ public interface OrderDao {
 
 	public List<OrderGroupVO> selectOrderGroupsNoPage(OrderVO orderVO);
 
+	public int orderInsertProductAmount(OrderProductVO productVO);
+
 }
