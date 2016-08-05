@@ -27,4 +27,6 @@ public interface OrderDao {
 
 	public int orderListCnt(OrderVO orderVO);
 
+	public List<OrderGroupVO> selectOrderGroupsNoPage(OrderVO orderVO);
+
 }

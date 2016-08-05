@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page trimDirectiveWhitespaces="true" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
 	$(function() {
 		$("#postcodify_search_button").postcodifyPopUp();
@@ -46,10 +47,8 @@
 			   
 				$("#productTable tr").each(function () {
 					var index = $(this).index();
-					if (index != 0) {
-				        $(this).find("input[name=prd_d_no]").attr("name", "OrderProductVO[" + (index-1) + "].prd_d_no");
-				        $(this).find("input[name=ord_amount]").attr("name", "OrderProductVO[" + (index-1) + "].ord_amount");
-					}
+			        $(this).find("input[name=prd_d_no]").attr("name", "OrderProductVO[" + (index) + "].prd_d_no");
+			        $(this).find("input[name=ord_amount]").attr("name", "OrderProductVO[" + (index) + "].ord_amount");
 			    });
 			    
 			    $("#ord_frm").attr({
@@ -162,38 +161,59 @@
          	<input type="hidden" id="ogr_accHold" name="ogr_accHold" value="">
          	<input type="hidden" id="ogr_accHoldNo" name="ogr_accHoldNo" value="">
          	<input type="hidden" id="ogr_cardNo" name="ogr_cardNo" value="0">
-		<table class="table table-hover table-bordered" id="productTable" >
-			<tr>
-				<td>이미지</td>
-				<td>상품명</td>
-				<td>판매가</td>
-				<td>수량</td>
-				<td>합계</td>
-			</tr>
-			<tr>
-				<td><input type="hidden" name="prd_d_no" value="1" />이미지1</td>
-				<td>비비므망고 땡땡이 아크릴 패치</td>
-				<td>15,000원</td>
-				<td><input type="hidden" name="ord_amount" value="4" />2</td>
-				<td>30000원</td>
-			</tr>
-			<tr>
-				<td><input type="hidden" name="prd_d_no" value="2" />이미지1</td>
-				<td>갤럭시 s6</td>
-				<td>26,000원</td>
-				<td><input type="hidden" name="ord_amount" value="3" />2</td>
-				<td>70000원</td>
-			</tr>
+		
+		<table class="shop_table" id="productTable" >
+			<thead>
+				<tr>
+					<th>이미지</th>
+					<th>상품명</th>
+					<th>옵션명</th>
+					<th>판매가</th>
+					<th>수량</th>
+					<th>합계</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty productAllVO }">
+					<c:forEach var="prdAll" items="${productAllVO }" varStatus="status">
+						<tr>
+							<td class="product-thumbnail"><input type="hidden" name="prd_d_no" value="${prdAll.prd_d_no }" /><img src="/main/${prdAll.img_1 }" alt="" class="center-block" style="height: auto;"></td>
+							<td class="product-name">${prdAll.prd_name }</td>
+							<td class="product-name">${prdAll.model_machine } - ${prdAll.color_detail }</td>
+							<td class="product-price">${prdAll.prd_saleprice }</td>
+							<td class="product-quantity"><input type="hidden" name="ord_amount" value="${prdAll.prd_d_stock }" />${prdAll.prd_d_stock }</td>
+							<td class="product-subtotal">${prdAll.prd_saleprice * prdAll.prd_d_stock}<c:set var="total" value="${prdAll.prd_saleprice * prdAll.prd_d_stock}"/></td>
+						</tr>
+						<c:set var="sum" value="${sum + total}"/>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="6">등록된 상품이 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			</tbody>
 		</table>
 		
-		<div class="col-md-offset-8" align="right">
-			<table class="table table-hover table-bordered">
-				<tr>
-					<td>총 주문 금액</td>
-					<td>30000원</td>
-				</tr>
-			</table>
-		</div>
+         <div class="cart_totals ">
+             <table cellspacing="0">
+                 <tbody>
+                     <tr class="cart-subtotal">
+                         <th>총 주문금액</th>
+                         <td><span class="amount">￦<c:out value="${sum}"/></span></td>
+                    
+                        <th>배송비</th>
+                        <td><span class="deliveryCharge">￦2,500</span></td>
+                     
+                         <th>최종 결제금액</th>
+                         <%-- <td><strong><span class="amount">￦${cart.prd_saleprice+2500}</span></strong> </td> --%>
+                         <td><strong><span class="amount">￦<c:out value="${sum+2500}"/></span></strong> </td>
+                     </tr>
+                 </tbody>
+             </table>
+         </div>
 		</form>
 		
 		<div class="col-md-5" style="padding: 0">

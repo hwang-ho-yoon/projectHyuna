@@ -1,5 +1,6 @@
 package com.hyuna.controller.order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hyuna.service.member.MemberService;
 import com.hyuna.service.order.OrderAdminService;
+import com.hyuna.service.product.ProductService;
 import com.hyuna.util.OrderState;
 import com.hyuna.vo.OrderGroupVO;
+import com.hyuna.vo.OrderProductVO;
 import com.hyuna.vo.OrderRecallCancelVO;
 import com.hyuna.vo.OrderVO;
+import com.hyuna.vo.ProductAllVO;
 
 @Controller
 @RequestMapping(value="/orderAdmin")
@@ -31,6 +35,9 @@ public class OrderAdminController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private ProductService productService; 
 	
 	@RequestMapping("/orderAdminListApproval.do")
 	public String orderAdminListApproval(@ModelAttribute OrderGroupVO orderGroupVO, HttpSession session) {
@@ -54,11 +61,23 @@ public class OrderAdminController {
 		orderVO.setOgr_state3(OrderState.STANDBY_SHIPPING);
 		orderVO.setOgr_state4(OrderState.COMPLETE_SHIPPED);
 		List<OrderGroupVO> orderGroupsVOs = orderAdminService.selectOrderGroups(orderVO);
+		
 		for (int i = 0; i < orderGroupsVOs.size(); i++) {
 			OrderGroupVO orderGroupsVO = orderGroupsVOs.get(i);
-			orderGroupsVO.setOrderProductVO(orderAdminService.selectOrderProducts(orderGroupsVO.getOgr_no()));
 			orderGroupsVO.setMem_id((memberService.throwMember(orderGroupsVO.getMem_no())).getMem_id());
+			List<OrderProductVO> orderProductVOs = orderAdminService.selectOrderProducts(orderGroupsVO.getOgr_no());
+			for (int j = 0; j < orderProductVOs.size(); j++) {
+				ProductAllVO productAllVO = new ProductAllVO();
+				productAllVO.setPrd_d_no(orderProductVOs.get(j).getPrd_d_no());
+				List<ProductAllVO> productAllVOs = productService.prdAllList(productAllVO);
+				orderProductVOs.get(j).setPrd_name(productAllVOs.get(0).getPrd_name());
+				orderProductVOs.get(j).setModel_machine(productAllVOs.get(0).getModel_machine());
+				orderProductVOs.get(j).setPrd_saleprice(productAllVOs.get(0).getPrd_saleprice());
+				orderProductVOs.get(j).setColor_detail(productAllVOs.get(0).getColor_detail());
+			}
+ 			orderGroupsVO.setOrderProductVO(orderProductVOs);
 		}
+		
 		model.addAttribute("orderGroups", orderGroupsVOs);
 		return "orderAdmin/orderAdminList";
 	}
@@ -73,8 +92,18 @@ public class OrderAdminController {
 		List<OrderGroupVO> orderGroupsVOs = orderAdminService.selectOrderGroups(orderVO);
 		for (int i = 0; i < orderGroupsVOs.size(); i++) {
 			OrderGroupVO orderGroupsVO = orderGroupsVOs.get(i);
-			orderGroupsVO.setOrderProductVO(orderAdminService.selectOrderProducts(orderGroupsVO.getOgr_no()));
 			orderGroupsVO.setMem_id((memberService.throwMember(orderGroupsVO.getMem_no())).getMem_id());
+			List<OrderProductVO> orderProductVOs = orderAdminService.selectOrderProducts(orderGroupsVO.getOgr_no());
+			for (int j = 0; j < orderProductVOs.size(); j++) {
+				ProductAllVO productAllVO = new ProductAllVO();
+				productAllVO.setPrd_d_no(orderProductVOs.get(j).getPrd_d_no());
+				List<ProductAllVO> productAllVOs = productService.prdAllList(productAllVO);
+				orderProductVOs.get(j).setPrd_name(productAllVOs.get(0).getPrd_name());
+				orderProductVOs.get(j).setModel_machine(productAllVOs.get(0).getModel_machine());
+				orderProductVOs.get(j).setPrd_saleprice(productAllVOs.get(0).getPrd_saleprice());
+				orderProductVOs.get(j).setColor_detail(productAllVOs.get(0).getColor_detail());
+			}
+ 			orderGroupsVO.setOrderProductVO(orderProductVOs);
 		}
 		model.addAttribute("orderGroups", orderGroupsVOs);
 		return "orderAdmin/orderAdminListRnc";
@@ -90,7 +119,22 @@ public class OrderAdminController {
 	@RequestMapping("/orderAdminDetail.do")
 	public String orderAdminDetail(@RequestParam("ogr_no") String ogr_no, Model model) {
 		OrderGroupVO ogv = orderAdminService.orderGroupDetail(ogr_no);
+		List<OrderProductVO> orderProductVOs = orderAdminService.selectOrderProducts(ogv.getOgr_no());
+		ogv.setOrderProductVO(orderProductVOs);
+		List<ProductAllVO> productAllVOs = new ArrayList<ProductAllVO>();
+		for (int i = 0; i < ogv.getOrderProductVO().size(); i++) {
+			ProductAllVO productAllVO = new ProductAllVO();
+			productAllVO.setPrd_d_no(ogv.getOrderProductVO().get(i).getPrd_d_no());
+			List<ProductAllVO> allVOs = productService.prdAllList(productAllVO);
+			if (allVOs.size() != 0) {
+				ProductAllVO allVO = allVOs.get(0);
+				allVO.setPrd_d_stock(String.valueOf(ogv.getOrderProductVO().get(i).getOrd_amount()));
+				productAllVOs.add(allVO);
+			}
+		}
+		
 		model.addAttribute("orderGroup", ogv);
+		model.addAttribute("productAllVO", productAllVOs);;
 		return "orderAdmin/orderAdminDetail";
 	}
 	

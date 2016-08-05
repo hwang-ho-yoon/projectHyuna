@@ -76,7 +76,7 @@ $(function() {
 			//$("li:eq(2)")
 			
 			//var color = $(".opt_tr:eq(" + start + ")").children('td:eq(1)').find('span').css("background", "pink");;
-			var prd_d_display=  $(this).parents("tr").children('td:eq(4)').find('#openOpt option:selected').text();
+			var prd_d_display=  $(this).parents("tr").children('td:eq(4)').text();
 			//var prd_d_display=  $(this).children("td:eq(4)").find('#openOpt option:selected').val();
 			
 			

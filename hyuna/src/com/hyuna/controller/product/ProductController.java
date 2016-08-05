@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -112,7 +113,7 @@ public class ProductController {
 		model.addAttribute("data", pvo);
 		logger.info("뒤");
 		
-		return "product/prdRgtList";
+		return "productAdmin/prdRgtList";
 //		return "product/NewFile";
 	}
 	
@@ -125,7 +126,7 @@ public class ProductController {
 		List<ProductVO> modelList = productService.modelList(pvo);
 		model.addAttribute("colorList",colorList);
 		model.addAttribute("modelList",modelList);
-		return "product/prdWriteForm";
+		return "productAdmin/prdWriteForm";
 	}
 	//관리자
 	@RequestMapping(value="/prdMgrDetail.do",  method = RequestMethod.GET)
@@ -141,7 +142,7 @@ public class ProductController {
 		model.addAttribute("optList", optList);
 		
 		
-		return "product/prdMgrDetail";
+		return "productAdmin/prdMgrDetail";
 	}
 	//관리자
 		@RequestMapping(value="/prdUpdateForm.do",  method = RequestMethod.POST)
@@ -162,7 +163,7 @@ public class ProductController {
 			model.addAttribute("optList", optList);
 			
 			
-			return "product/prdUpdateForm";
+			return "productAdmin/prdUpdateForm";
 		}
 		@RequestMapping(value="/prdUpdate.do",  method = RequestMethod.POST)
 		public String prdUpdate(@ModelAttribute ProductVO pvo, MultipartHttpServletRequest request, Model model) throws IllegalStateException, IOException{
@@ -215,10 +216,10 @@ public class ProductController {
 				}
 			}
 			if(result==1){
-				page="product/prdRgtList";
+				page="redirect:/product/prdRgtList.do";
 			}else{
 				model.addAttribute("detail",pvo);
-				page="product/prdUpdateForm";
+				page="productAdmin/prdUpdateForm";
 			}
 			return page;
 		}
@@ -271,6 +272,7 @@ public class ProductController {
 			String url="";
 			ResponseEntity<String> entity = null;
 			int result=0;
+			pvo.setPrd_d_display(pvo.getPrd_d_display().trim());
 			try{
 				result=productService.prdOptUpdate(pvo);
 				if(result == 1){
@@ -312,7 +314,7 @@ public class ProductController {
 			detail.setB_content(detail.getB_content().toString().replace("\n", "<br>"));
 		}*/
 		List<ProductVO> opt=productService.prdSingleOption(pvo);
-		//opt=productService.prdSingleOption(pvo);
+		opt=productService.prdSingleOption(pvo);
 		
 		model.addAttribute("detail",detail);
 		model.addAttribute("opt",opt);
@@ -352,13 +354,16 @@ public class ProductController {
 	//var url="/product/colorOptList.do?prd_no="+prd_no+"&model_no="+model_no+".do";
 	@ResponseBody
 	@RequestMapping(value="/colorOptList.do")
-	public ResponseEntity<List<ProductVO>> list(@ModelAttribute ProductVO pvo) {// list형태 String colorOptList(@ModelAttribute ProductVO pvo, Model model ){
+	public ResponseEntity<List<ProductVO>> list(@RequestParam("prd_nol")int prd_no,@RequestParam("model_nol")int model_no   ) {// list형태 String colorOptList(@ModelAttribute ProductVO pvo, Model model ){
 		logger.info("colorOptList 호출성공");
 		ResponseEntity<List<ProductVO>> entity=null;
 
 		try{
-			/*pvo.setPrd_no(prd_no);
-			pvo.setModel_no(model_no);*/
+			
+			ProductVO pvo=new ProductVO();
+			pvo.setModel_no(model_no);
+			pvo.setPrd_no(prd_no);
+			System.out.println(pvo.getPrd_no()+" "+pvo.getModel_no());
 			entity = new ResponseEntity<>(productService.colorOptList(pvo), HttpStatus.OK);			
 		}catch(Exception e){
 			e.printStackTrace();

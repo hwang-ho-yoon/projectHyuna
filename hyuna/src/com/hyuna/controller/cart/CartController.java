@@ -76,16 +76,13 @@ public class CartController {
 	
 	//수량변경
 	@RequestMapping(value="/updateCount.do", method=RequestMethod.POST)
-	public String cartList2(@ModelAttribute CartVO cvo, Model model,HttpSession session) {
+	public String cartList2(@ModelAttribute CartVO cvo, HttpSession session) {
 		logger.info("updateCount 호출 성공");
-		
-		int result = 0;
+		cartService.updateCount(cvo);
+/*		int result = 0;
 		String url="";
 		
 		cvo.setMem_no((Integer)session.getAttribute("hyunaMember"));
-		
-		
-		logger.info("cart_quantity : " + cvo.getCart_quantity());
 		
 		List<CartVO> cartList = cartService.cartList(cvo);
 		
@@ -110,13 +107,13 @@ public class CartController {
 				url = "/cart/updateCount.do";
 				//url = "/cart/cartList.do?cart_no=" + cvo.getCart_quantity();
 			}
-		}
+		}*/
 		
 		/*logger.info("cart : " + cartList.get(0).getPrd_name());*/
 		
-		model.addAttribute("cartList", cartList);
+//		model.addAttribute("cartList", cartList);
 		
-		return "cart/cartList";
+		return "redirect:" + "/cart/cartList.do";
 	}
 		
 	// 장바구니 등록
@@ -161,37 +158,22 @@ public class CartController {
 		cvo.setMem_no((Integer)session.getAttribute("hyunaMember"));
 		logger.info("cvo.getMem_no() : "+cvo.getMem_no());
 		result = cartService.cartAllDelete(cvo);
-		logger.info("result : " + result);
+		logger.info("result :  " + result);
 		if(result > 0) {
 			printResult="SUCCESS";
 		}
 		return printResult;
 	}
 	
-	// 선택삭제
-	@RequestMapping(value="{cart_no}.do")
-	public ResponseEntity<String> chkDelete(@PathVariable("cart_no") Integer cart_no) {
-		logger.info("chkDelte 호출 성공");
-		ResponseEntity<String> entity = null;
-		
-		try {
-			cartService.chkDelete(cart_no);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-		} catch(Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
-	
 	@RequestMapping(value="/chkDelete.do")
-	public String chkDelete(@RequestParam("select") int[] cart_no) {
-		
-		System.out.println(cart_no.length);
-		String url = "/cart/cartList.do";
-	
-			
-	return "redirect:" + url;
+	public String chkDelete(@RequestParam("select") int[] cart_no, HttpSession session) {
+		for (int i = 0; i < cart_no.length; i++) {
+			CartVO cartVO = new CartVO();
+			cartVO.setMem_no((int)session.getAttribute("hyunaMember"));
+			cartVO.setCart_no(cart_no[i]);
+			cartService.chkDelete(cartVO);
+		}
+		return "redirect:" + "/cart/cartList.do";
 	}
 	
 	

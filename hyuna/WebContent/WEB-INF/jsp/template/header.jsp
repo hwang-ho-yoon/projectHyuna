@@ -135,7 +135,7 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="/index.jsp">Home</a></li>
                         <li class="dropdown dropdown-small">
 							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
 	                            <span class="key">Samsung</span>
@@ -167,7 +167,16 @@
                                 <li><a href="#">옵티머스</a></li>
                             </ul>
 						</li> -->
-                        <li><a href="/order/orderWrite.do">주문조회</a></li>
+                        <li class="dropdown dropdown-small">
+							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
+	                            <span class="key">주문</span>
+	                            <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/order/orderList.do">주문조회</a></li>
+                                <li><a href="/order/orderListRnc.do">주문(취소반품)조회</a></li>
+                            </ul>
+						</li>
                         <li><a href="/board/qna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>

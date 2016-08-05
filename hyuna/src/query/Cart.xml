@@ -55,7 +55,8 @@
 			    #{cart_no},
 			    #{cart_quantity},
 			    #{mem_no},
-			    (select prd_d_no from prd_detail where color_no = #{color_no} and model_no = #{model_no} and prd_no = #{prd_no})
+			    (select prd_d_no from prd_detail where color_no = #{color_no} and model_no = #{model_no} and prd_no=#{prd_no})
+			    
 			  )
 	</insert>
 	
@@ -68,20 +69,11 @@
 	<!-- 장바구니 선택 삭제 -->
 	<delete id="chkDelete" parameterType="cart">
 		/* Cart - chkDelete */
-		delete cart where mem_no = #{mem_no} and cart_no = #{cart_no}
+		delete from cart where mem_no = #{mem_no} and cart_no = #{cart_no}
 	</delete>
 	
-	<!-- 수량변경 -->
 	<update id="updateCount" parameterType="cart">
 		/* Cart - updateCount */
-		update cart
-			set cart_quantity = #{cart_quantity}
-		where cart_no = #{cart_no} and mem_no = #{mem_no}
+		update cart set cart_quantity = #{cart_quantity} where cart_no = #{cart_no}
 	</update>
-	
-	<!-- 장바구니 전체주문 -->
-	<select id="cartAllOrder" parameterType="cart">
-		select cart_no from cart
-			where mem_no = #{mem_no}
-	</select>
 </mapper>

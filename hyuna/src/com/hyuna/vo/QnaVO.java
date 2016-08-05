@@ -14,7 +14,7 @@ public class QnaVO extends CommonVO{
 	private String qna_file1;
 	private String qna_modifydate;
 	private int mem_no;
-	private int prd_d_no;
+	private int prd_no;
 	private MultipartFile file;
 	private String prd_name;
 	private String mem_name;
@@ -86,11 +86,11 @@ public class QnaVO extends CommonVO{
 	public void setMem_no(int mem_no) {
 		this.mem_no = mem_no;
 	}
-	public int getPrd_d_no() {
-		return prd_d_no;
+	public int getPrd_no() {
+		return prd_no;
 	}
-	public void setPrd_d_no(int prd_d_no) {
-		this.prd_d_no = prd_d_no;
+	public void setPrd_no(int prd_no) {
+		this.prd_no = prd_no;
 	}
 	public MultipartFile getFile() {
 		return file;

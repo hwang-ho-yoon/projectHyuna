@@ -35,8 +35,8 @@ function lookDetail(prd_no){
 								<c:forEach var="prd" items="${prdMainList }" varStatus="status">
 
 									<div class="single-product" style="float: left;">
-										<div class="product-f-image" style="width: 250px;">
-											<img id="fileImage" src="/main/${prd.img_1 }"  ><!-- max-width: 760px; -->
+										<div class="product-f-image" style="width: 250px; height: 250px;">
+											<img id="fileImage" src="/main/${prd.img_1 }" style="width: 100%; height: 100%"><!-- max-width: 760px; -->
 											<div class="product-hover">
 												<a href="#" class="add-to-cart-link"><i
 													class="fa fa-shopping-cart"></i> Add to cart</a> <a

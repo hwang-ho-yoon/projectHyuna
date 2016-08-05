@@ -20,6 +20,7 @@
 	<definition name="product/*" extends="main">
 		<put-attribute name="body" value="/WEB-INF/jsp/product/{1}.jsp"></put-attribute>
 	</definition>
+
 <!-- 	<definition name="replies/*" extends="board/*">
 		<put-attribute name="body" value="/board/{1}.jsp"></put-attribute>
 	</definition> -->
@@ -52,5 +53,8 @@
 	</definition> -->
 	 <definition name="adminQna/*" extends="admin">
 		<put-attribute name="body" value="/WEB-INF/adminJsp/adminQna/{1}.jsp"></put-attribute>
+	</definition>
+		<definition name="productAdmin/*" extends="admin">
+		<put-attribute name="body" value="/WEB-INF/jsp/product/{1}.jsp"></put-attribute>
 	</definition>
 </tiles-definitions>

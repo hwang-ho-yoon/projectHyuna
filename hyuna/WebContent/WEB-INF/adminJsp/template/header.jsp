@@ -109,9 +109,18 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/main.do">Home</a></li>
-                        <li><a href="/orderAdmin/orderAdminList.do">주문조회</a></li>
-                        <li><a href="/board/qna/qnaList.do">Q&A</a></li>
+                        <li><a href="/adminIndex.jsp">Home</a></li>
+                         <li class="dropdown dropdown-small">
+							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
+	                            <span class="key">주문</span>
+	                            <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/orderAdmin/orderAdminList.do">주문조회</a></li>
+                                <li><a href="/orderAdmin/orderAdminListRnc.do">주문(취소반품)조회</a></li>
+                            </ul>
+						</li>
+                        <li><a href="/adminQna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>
 						<li><a href="/admin/memberList.do">회원목록</a></li>

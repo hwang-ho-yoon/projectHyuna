@@ -36,6 +36,7 @@ public interface ProductService {
 		
 		public List<ProductVO> colorList(ProductVO pvo);
 		public List<ProductVO> modelList(ProductVO pvo);
+		public List<ProductAllVO> prdAllList1(ProductAllVO pvo);
 	
 
 	

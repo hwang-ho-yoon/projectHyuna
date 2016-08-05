@@ -8,7 +8,7 @@
 	$(function() {
 		$(".ogr_no").click(function(){
 			group_no = $(this).attr("data-num");
-			location.href = "/order/orderDetail.do?ogr_no="+group_no;
+			location.href = "/orderAdmin/orderAdminDetail.do?ogr_no="+group_no;
 		});
 		$("#delBtn").click(function() {
 			$("#ogr_no").val(group_no);
@@ -90,17 +90,16 @@
 								<td style="padding-top: 14px">
 									<c:forEach var="orderProduct" items="${orderGroup.orderProductVO}" varStatus="Productstatus">
 										<c:if test="${Productstatus.index eq 0}">
-											${orderProduct.prd_d_no} 외 ${fn:length(orderGroup.orderProductVO)}개
+											${orderProduct.prd_name} - ${orderProduct.model_machine} - ${orderProduct.color_detail} 외 ${fn:length(orderGroup.orderProductVO)}개
 										</c:if>
 									</c:forEach>
 								</td>
 								<td style="padding-top: 14px">
 									<c:forEach var="orderProduct" items="${orderGroup.orderProductVO}" varStatus="Productstatus">
-										<c:if test="${Productstatus.index eq 0}">
-										<%-- <c:set var= "sum" value="${sum + test.column_id}"/> --%>
-											${orderProduct.ord_amount}외 ${fn:length(orderGroup.orderProductVO)}개
-										</c:if>
+										<c:set var= "sum" value="${sum + orderProduct.ord_amount * orderProduct.prd_saleprice}"/>
 									</c:forEach>
+										￦<c:out value="${sum}"/>
+										<c:set var="sum" value="${sum * 0}"/>
 								</td>
 								<td style="padding-top: 14px">${orderGroup.mem_id}</td>
 								<td style="padding-top: 14px">

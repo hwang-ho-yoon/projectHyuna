@@ -7,7 +7,7 @@
 	$(function() {
 		/*목록 버튼 클릭 시 처리 이벤트*/
 		$("#orderList").click(function() {
-			location.href="/orderAdmin/orderAdminList.do";
+			location.href="/order/orderListRnc.do";
 		});
 	});
 </script>

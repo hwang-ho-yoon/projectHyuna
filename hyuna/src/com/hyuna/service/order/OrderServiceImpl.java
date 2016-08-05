@@ -30,10 +30,7 @@ public class OrderServiceImpl implements OrderService{
 		for (int i = 0; i < orderGroupVO.getOrderProductVO().size(); i++) {
 			OrderProductVO productVO = orderGroupVO.getOrderProductVO().get(i);
 			productVO.setOgr_no(orderGroupVO.getOgr_no());
-			productVO.setPrd_d_no(1);
-//			OrderProductVO productVO = orderGroupVO.getOrderProductVO().get(i);
-//			productVO.setOgr_no(orderGroupVO.getOgr_no());
-//			result = orderDao.orderProductInsert(productVO);
+//			productVO.setPrd_d_no(1);
 			result = orderDao.orderProductInsert(productVO);
 		}
 		return result;
@@ -72,6 +69,11 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public int orderListCnt(OrderVO orderVO) {
 		return orderDao.orderListCnt(orderVO);
+	}
+
+	@Override
+	public List<OrderGroupVO> selectOrderGroupsNoPage(OrderVO orderVO) {
+		return orderDao.selectOrderGroupsNoPage(orderVO);
 	}
 
 }
