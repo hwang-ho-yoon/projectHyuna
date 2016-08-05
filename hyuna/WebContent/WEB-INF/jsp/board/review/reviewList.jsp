@@ -48,7 +48,9 @@
 		//제목 클릭시 상세 페이지 이동을 위한 처리 이벤트
 		$(".goDetail").click(function(){
 			var review_no = $(this).parents("tr").attr("data-num");
+			var review_hit = $(this).parents("tr").children().eq(6).attr("data-num");
 			$("#review_no").val(review_no);
+			$("#review_hit").val(review_hit);
 			//상세 페이지로 이동하기 위해 form 추가
 			
 			$("#detailForm").attr({
@@ -100,7 +102,7 @@
 		<form id="detailForm" name="detailForm">
 			<input type="hidden" name="review_no" id="review_no">
 			<input type="hidden" name="mem_no" id="mem_no" value="${sessionScope.hyunaMember }">
-			
+			<input type="hidden" name="review_hit" id="review_hit">
 			<input type="hidden" name="page" value="${data.page }">
 			<input type="hidden" name="pageSize" value="${data.pageSize }">
 		</form>
@@ -150,7 +152,7 @@
 									</c:choose>
 								</td>
 								<td align="center">${review.review_writedate }</td>
-								<td align="center">${review.review_hit }</td>
+								<td align="center" data-num="${review.review_hit }">${review.review_hit }</td>
 							</tr>
 							</c:forEach>
 						</c:when>

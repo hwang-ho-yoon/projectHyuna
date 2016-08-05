@@ -117,6 +117,7 @@
 				      		return;
 				      	}
 				      	alert("탈퇴되었습니다.");
+				      	location.href = "/member/logout.do";
 				    }
 				}
 			});

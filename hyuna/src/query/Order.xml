@@ -88,4 +88,8 @@
 				) list
 			)
 	</select>
+	
+	<update id="orderInsertProductAmount" parameterType="orderProduct">
+		update prd_detail set prd_d_stock = prd_d_stock - #{ord_amount} where prd_d_no = #{prd_d_no}
+	</update>
 </mapper>

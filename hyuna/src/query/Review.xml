@@ -21,10 +21,10 @@
 	<!-- review 등록 -->
 	<insert id="reviewInsert" parameterType="review">
 		/* reviewInsert */
-		insert into review (review_no, review_writedate, review_title, review_content, review_score, 
+		insert into review (review_no, review_writedate, review_title, review_content, review_score, review_hit,
 		<if test="review_file1 !=null">review_file1,</if>		 
 		review_modifydate, mem_no) values 
-		(review_seq.nextval, sysdate, #{review_title}, #{review_content}, #{review_score}, 
+		(review_seq.nextval, sysdate, #{review_title}, #{review_content}, #{review_score}, #{review_hit}
 		<if test="review_file1 !=null">#{review_file1},</if> 
 		sysdate, #{mem_no} )		
 	</insert>

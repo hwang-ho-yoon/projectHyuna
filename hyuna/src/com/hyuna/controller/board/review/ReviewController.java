@@ -105,8 +105,8 @@ public class ReviewController {
 	public String reviewDetail(@ModelAttribute ReviewVO rvo, Model model){
 		logger.info("디테일 이동");
 		
-		ReviewVO detail = reviewService.reviewDetail(rvo);
 		reviewService.reviewHit(rvo);
+		ReviewVO detail = reviewService.reviewDetail(rvo);
 
 		model.addAttribute("detail", detail);		
 		return "board/review/reviewDetail";

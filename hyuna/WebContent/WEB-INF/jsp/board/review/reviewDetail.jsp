@@ -19,7 +19,11 @@
 			});
 		}
 		
-		$("#review_score").val("${detail.review_score }");
+		$(".review_score7").each(function() {
+			if($(this).val() == "${detail.review_score}") {
+				$(this).attr("checked", true);
+			}
+		});
 		
 		//글수정
 		$("#updateBtn").click(function(){
@@ -96,11 +100,11 @@
 					<td width="15%" style="text-align: center; background: #F6F6F6"><label class="control-label" >평점</label>
 					</td>
 					<td colspan="5">
-						<label class="radio-inline"><input type="radio" id="review_score1" name="review_score" value="1">★</label>
-						<label class="radio-inline"><input type="radio" id="review_score2" name="review_score" value="2">★★</label>
-						<label class="radio-inline"><input type="radio" id="review_score3" name="review_score" value="3">★★★</label>
-						<label class="radio-inline"><input type="radio" id="review_score4" name="review_score" value="4">★★★★</label>
-						<label class="radio-inline"><input type="radio" id="review_score5" name="review_score" value="5">★★★★★</label>
+						<label class="radio-inline"><input type="radio" id="review_score1" name="review_score" class="review_score7" value="1">★</label>
+						<label class="radio-inline"><input type="radio" id="review_score2" name="review_score" class="review_score7" value="2">★★</label>
+						<label class="radio-inline"><input type="radio" id="review_score3" name="review_score" class="review_score7" value="3">★★★</label>
+						<label class="radio-inline"><input type="radio" id="review_score4" name="review_score" class="review_score7" value="4">★★★★</label>
+						<label class="radio-inline"><input type="radio" id="review_score5" name="review_score" class="review_score7" value="5">★★★★★</label>
 					</td>
 				</tr>
 				<tr>
