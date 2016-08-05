@@ -67,7 +67,7 @@
 	
 	
 	<select id="prdSingleDetail" resultType="prd" parameterType="prd">
-		select m.prd_no, prd_name, prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1, nvl(img.img_3,'') as img_3 from prd_master m
+		select m.prd_no, prd_name, prd_desc, prd_saleprice, prd_orgprice, nvl(img.img_1,'') as img_1, nvl(img.img_3,'') as img_3 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
 		 where (m.prd_display ='on' or m.prd_display ='Y') and  m.prd_no = #{prd_no}
 	</select>

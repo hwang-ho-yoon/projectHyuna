@@ -103,7 +103,7 @@ var new_select;
 						<h2 class="product-name">${detail.prd_name}</h2>
 							<div class="product-inner-price">
 								<ins>${detail.prd_saleprice}</ins>
-								<del>$100.00</del>
+								<del>${detail.prd_orgprice}</del>
 							</div>
 						<form action="" class="cart">
 							<div class="quantity" style="float:left;border:1px;">
