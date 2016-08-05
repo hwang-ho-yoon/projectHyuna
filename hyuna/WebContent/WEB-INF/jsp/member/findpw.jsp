@@ -28,33 +28,8 @@
 			});							
 		});
 
-/*  		var pattern1 = /[0-9]/;
-		
-		var pattern2 = /[a-zA-Z]/;
-		
-		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;
-		
-		alert(pattern2);ran
- 		var ranNum = pattern1(Math.random()*10);
-		alert(ranNum);  */
-
 	}); 
-/*  	 function createCode(objArr, iLength) {
-         var arr = objArr;
-         var randomStr = "";
-         
-         for (var j=0; j<iLength; j++) {
-             randomStr += arr[Math.floor(Math.random()*arr.length)];
-         }
-         
-         return randomStr
-     }
-    function getRandomCode(iLength) {
-    	var arr="0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,~,`,!,@,#,$,%,^,&,*,(,),-,+,|,_,=,\,[,],{,},<,>,?,/,.,;".split(",");        
-    	var arr="0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z".split(",");        
-        var rnd = createCode(arr, iLength);        	
-        return rnd;
-    } */
+
 </script>
 <style type="text/css">
 body{

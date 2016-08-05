@@ -155,14 +155,12 @@ public class MemberController {
 	//비밀번호 찾기 로직
 	@RequestMapping("/memberPw")
 	@ResponseBody
-	public String memberPw(@ModelAttribute MemberVO mvo, @RequestParam("tel") String tel, @RequestParam("tel1") String tel1,
-			@RequestParam("tel2") String tel2) {		
+	public String memberPw(@ModelAttribute MemberVO mvo) {		
 		logger.info("비밀번호 메일발송 호출");
 		EmailMember em = new EmailMember();
 		MemberVO evo = memberService.selectEmail(mvo);		
 		
-		mvo.setMem_pwd(em.getRandomPassword(10));
-		mvo.setMem_tel(tel+"-"+tel1+"-"+tel2);
+		mvo.setMem_pwd(em.getRandomPassword(10));		
 				
 		int result = 0;		
 		result = memberService.memberPw(mvo);
@@ -171,17 +169,8 @@ public class MemberController {
 		}
 		return result+"";
 		
-	}
-	
-/*	//이메일중복체크
-	@RequestMapping("/mailcheck")
-	@ResponseBody
-	public String mailcheck(@ModelAttribute MemberVO mvo){
-		logger.info("메일체크 호출");
-		
-		int result = 0 ;
-		result = memberService.mailcheck(mvo);
-	}*/
+	}	
+
 	
 	//마이메뉴 클릭시
 	@RequestMapping("/membermenu")
