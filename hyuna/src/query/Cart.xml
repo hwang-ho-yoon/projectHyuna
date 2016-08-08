@@ -17,10 +17,7 @@
 			from cart
 			where mem_no= #{mem_no}
 			
-			<!-- where c.mem_no= '2222' -->
 	</select>
-	
-	
 	
 	<!-- 장바구니 등록 -->
 	<insert id="cartInsert" parameterType="cart">
@@ -72,8 +69,12 @@
 		delete from cart where mem_no = #{mem_no} and cart_no = #{cart_no}
 	</delete>
 	
+	<!-- 수량 변경 -->
 	<update id="updateCount" parameterType="cart">
 		/* Cart - updateCount */
 		update cart set cart_quantity = #{cart_quantity} where cart_no = #{cart_no}
 	</update>
+	
+	<!-- 장바구니 전체 주문 -->
+	
 </mapper>
