@@ -58,9 +58,17 @@
 			console.log("chk_status-color: "+checkbox($("input:checkbox[id='option_color']")))
 			console.log("chk_status-brand: "+checkbox($("input:checkbox[id='option_brand']")))
 //			$("input:checkbox[id='prd_display']").val(checkbox($("input:checkbox[id='prd_display']")));
-			tableToText();
-			$("#basicInfo").attr({"method":"post","action":"/product/productInsert.do"});
-  		    $("#basicInfo").submit();
+			var table = document.getElementById("tb_option");
+			var tablerows = table.getElementsByTagName("tr").length;
+			console.log("console: "+table+"/"+tablerows);
+				if(tablerows<2){
+					alert("옵션을 추가해주세요.");
+					return;
+				}else{
+					tableToText();
+					$("#basicInfo").attr({"method":"post","action":"/product/productInsert.do"});
+		  		    //$("#basicInfo").submit();
+				}
 			
 		});
 	});

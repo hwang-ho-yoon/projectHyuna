@@ -80,7 +80,7 @@ public class ProductController {
 	
 	//관리자
 	@RequestMapping(value="/prdRgtList.do",  method = RequestMethod.GET)
-	public String prdRgtList(@ModelAttribute ProductVO pvo, Model model ){
+	public String prdRgtList(@ModelAttribute ProductVO pvo, Model model){
 		logger.info("prdRgtList 호출성공");
 
 		
@@ -104,6 +104,8 @@ public class ProductController {
 		//int total=boardService.boardListCnt(bvo);
 		//logger.info("total = " + total);
 		//등록된 상품리스트를 조회한다.
+		
+		logger.info(pvo.getS_condition()+" "+pvo.getS_word());
 		List<ProductVO> prdRgtList = productService.prdRgtList(pvo);
 		logger.info("앞");
 		model.addAttribute("prdRgtList", prdRgtList);
@@ -295,7 +297,7 @@ public class ProductController {
 		logger.info("prdMainList호출성공");
 		logger.info("model:"+pvo.getModel_machine());
 		List<ProductVO> prdMainList = productService.prdMainList(pvo);
-		logger.info("Img_1 : "+prdMainList.get(0).getImg_1());
+		//logger.info("Img_1 : "+prdMainList.get(0).getImg_1());
 		
 		model.addAttribute("prdMainList", prdMainList);
 		model.addAttribute("data", pvo);

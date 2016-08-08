@@ -49,6 +49,9 @@ public class ProductVO{
 	private String model_brand;
 	private String model_machine;
 	
+	private String s_condition;
+	private String s_word;
+	
 	
 	
 	public int getPrd_no() {
@@ -245,6 +248,18 @@ public class ProductVO{
 	public void setModel_machine(String model_machine) {
 		this.model_machine = model_machine;
 	}
+	public String getS_condition() {
+		return s_condition;
+	}
+	public void setS_condition(String s_condition) {
+		this.s_condition = s_condition;
+	}
+	public String getS_word() {
+		return s_word;
+	}
+	public void setS_word(String s_word) {
+		this.s_word = s_word;
+	}	
 	@Override
 	public String toString() {
 		return "ProductVO [prd_no=" + prd_no + ", prd_name=" + prd_name + ", prd_manufacturer=" + prd_manufacturer
@@ -256,5 +271,6 @@ public class ProductVO{
 				+ model + ", model_no=" + model_no + ", color=" + color + ", color_no=" + color_no + ", prd_d_stock="
 				+ prd_d_stock + ", prd_d_display=" + prd_d_display + ", prd_d_no=" + prd_d_no + ", color_detail="
 				+ color_detail + ", model_brand=" + model_brand + ", model_machine=" + model_machine + "]";
-	}	
+	}
+	
 }

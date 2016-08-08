@@ -42,11 +42,20 @@
 	
 	<select id="prdRgtList" resultType="prd" parameterType="prd">
 		select prd_no, prd_name, prd_desc, prd_display, prd_saleprice, to_char(prd_inputdate,'YYYY-MM-DD')prd_inputdate from prd_master 
-		where 1=1 
+		<if test="s_condition != '' and s_word != ''">
+		<where>
+		1=1
+			<if test="s_condition == 'event'"> and prd_event=#{s_word}</if>
+			<if test="s_condition == 'expose'"> and prd_display=#{s_word}</if>
+			<if test="s_condition == 'code'">and prd_no=#{s_word}</if>
+			<if test="s_condition == 'name'">and prd_name=#{s_word}</if>
+			
+		</where>
+		</if>
 		order by prd_no desc
 	</select>
 	
-	<select id="prdMainList" resultType="prd" parameterType="prd">
+	<!--<select id="prdMainList" resultType="prd" parameterType="prd">
 		select distinct m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
 		  <if test ="model_machine != ''">
@@ -59,11 +68,27 @@
 		  </if>        
          and prd_display ='on' or prd_display ='Y' order by prd_no desc
 	</select>
-	<!-- <select id="prdMainList" resultType="prd" parameterType="prd">
+	 <select id="prdMainList" resultType="prd" parameterType="prd">
 		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
          where prd_display ='on' or prd_display ='Y' order by prd_no desc
 	</select> -->
+	<select id="prdMainList" resultType="prd" parameterType="prd">
+		select prd_no, prd_name, prd_desc, prd_saleprice, prd_orgprice, img_1, model_no from (
+		 select distinct m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, prd_orgprice, nvl(img.img_1,'') as img_1, d.model_no--, mm.model_machine--, mm.model_no
+		   from prd_master m 
+		   left join prd_img img on m.prd_no = img.prd_no 
+		   left join prd_detail d on m.prd_no = d.prd_no 
+		   where 1=1 
+		   and prd_display ='on' or prd_display ='Y' order by prd_no desc 
+		)
+		  
+         where 1=1 
+          <if test ="model_machine != ''">
+		   and model_no in (
+           select model_no from model where model_machine like '%'||#{model_machine}||'%')
+		  </if>
+	</select>
 	
 	
 	<select id="prdSingleDetail" resultType="prd" parameterType="prd">
@@ -121,12 +146,12 @@
 		 where prd_no=#{prd_no}					
 	</update>
 	<select id="prdListBest" resultType="prd" parameterType="prd">
-		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, prd_orgprice, nvl(img.img_1,'') as img_1 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
          where 1=1 and prd_event = 'B' and (prd_display ='on' or prd_display ='Y') order by prd_no desc
 	</select>
 	<select id="prdListLatest" resultType="prd" parameterType="prd">
-		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, nvl(img.img_1,'') as img_1 from prd_master m
+		select m.prd_no, prd_name, nvl(prd_desc,'') as prd_desc, prd_saleprice, prd_orgprice, nvl(img.img_1,'') as img_1 from prd_master m
 		  left join prd_img img on m.prd_no = img.prd_no
          where 1=1 and prd_event = 'L' and (prd_display ='on' or prd_display ='Y') order by prd_no desc
 	</select>

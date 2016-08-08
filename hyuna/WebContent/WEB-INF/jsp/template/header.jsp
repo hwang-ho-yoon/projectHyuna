@@ -154,19 +154,9 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/product/prdMainList.do?model_machine=4S">4S</a></li>
                                 <li><a href="/product/prdMainList.do?model_machine=5S">5S</a></li>
+                                <li><a href="/product/prdMainList.do?model_machine=6S">6S</a></li>
                             </ul>
 						</li>
-                        <!-- <li class="dropdown dropdown-small">
-							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
-	                            <span class="key">LG</span>
-	                            <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">G시리즈</a></li>
-                                <li><a href="#">G프로</a></li>
-                                <li><a href="#">옵티머스</a></li>
-                            </ul>
-						</li> -->
                         <li class="dropdown dropdown-small">
 							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
 	                            <span class="key">주문</span>
@@ -180,21 +170,6 @@
                         <li><a href="/board/qna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>
-						
-						 
-<!-- 						 <button type="button" class="btn btn-info">PHP</button>
-						 <button type="button" class="btn btn-info">Blogger</button>
-						 <div class="btn-group">
-							 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-							 	Android <span class="caret"></span>
-							 </button>
-						 
-							 <ul class="dropdown-menu" role="menu">
-								 <li><a href="#">Android Studio</a></li>
-								 <li><a href="#">Eclipse</a></li>
-								 <li><a href="#">Basics</a></li>
-							 </ul>
-						 </div> -->
                     </ul>
                 </div>  
             </div>

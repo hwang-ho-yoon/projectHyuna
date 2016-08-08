@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <script type="text/javascript">
 function lookDetail(prd_no){
@@ -38,8 +39,8 @@ function lookDetail(prd_no){
 										<div class="product-f-image" style="width: 250px; height: 250px;">
 											<img id="fileImage" src="/main/${prd.img_1 }" style="width: 100%; height: 100%"><!-- max-width: 760px; -->
 											<div class="product-hover">
-												<a href="#" class="add-to-cart-link"><i
-													class="fa fa-shopping-cart"></i> Add to cart</a> <a
+												<!-- <a href="#" class="add-to-cart-link"><i
+													class="fa fa-shopping-cart"></i> Add to cart</a> --> <a
 													href="javascript:lookDetail('${prd.prd_no }');" class="view-details-link" data-num="${prd.prd_no }"><i
 													class="fa fa-link"></i> See details</a>
 											</div>
@@ -52,8 +53,8 @@ function lookDetail(prd_no){
 										
 										
 										<div class="product-carousel-price">
-											<ins>${prd.prd_saleprice}</ins>
-											<del>$100.00</del>
+											<ins><fmt:formatNumber value="${prd.prd_saleprice}" type="currency" currencySymbol="￦"/></ins>
+											<del><fmt:formatNumber value="${prd.prd_orgprice}" type="currency" currencySymbol="￦" /></del>
 										</div>
 									</div>
 								</c:forEach>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
 var new_select;
 	$(function() {
@@ -102,8 +103,10 @@ var new_select;
 					<div class="product-inner">
 						<h2 class="product-name">${detail.prd_name}</h2>
 							<div class="product-inner-price">
-								<ins>${detail.prd_saleprice}</ins>
-								<del>${detail.prd_orgprice}</del>
+							
+							<ins><fmt:formatNumber value="${detail.prd_saleprice}" type="currency" currencySymbol="￦"/></ins>
+							<del><fmt:formatNumber value="${detail.prd_orgprice}" type="currency" currencySymbol="￦" /></del>
+							
 							</div>
 						<form action="" class="cart">
 							<div class="quantity" style="float:left;border:1px;">
