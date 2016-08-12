@@ -33,6 +33,7 @@ public class ProductVO{
 	private String img_3;
 	
 	private String options;
+	private int option_nos[];
 
 	private String model;
 	private int model_no;
@@ -260,6 +261,12 @@ public class ProductVO{
 	public void setS_word(String s_word) {
 		this.s_word = s_word;
 	}	
+	public int[] getOption_nos() {
+		return option_nos;
+	}
+	public void setOption_no(int option_nos[]) {
+		this.option_nos = option_nos;
+	}
 	@Override
 	public String toString() {
 		return "ProductVO [prd_no=" + prd_no + ", prd_name=" + prd_name + ", prd_manufacturer=" + prd_manufacturer

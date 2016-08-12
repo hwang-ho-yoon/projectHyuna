@@ -1,6 +1,8 @@
 package com.hyuna.controller.product;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hyuna.common.util.FileUploadUtil;
 import com.hyuna.service.product.ProductService;
+import com.hyuna.vo.ProductAllVO;
 import com.hyuna.vo.ProductVO;
 
 
@@ -374,6 +377,66 @@ public class ProductController {
 		
 		return entity;
 	}
+	
+	@RequestMapping(value="/prdOptList.do",  method = RequestMethod.GET)
+	public String prdOptList(@ModelAttribute ProductAllVO pvo, Model model){
+		//int result=productService.detailPrdDelete(pvo);
+		List<ProductAllVO> prdOptColorList = productService.prdOptColorList(pvo);		
+		List<ProductAllVO> prdOptMachineList = productService.prdOptMachineList(pvo);		
+		model.addAttribute("clrList", prdOptColorList);
+		model.addAttribute("brdList", prdOptMachineList);
+		return "product/prdOptList";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteOpt.do",  method = RequestMethod.POST)
+	public String depeteOpt(@RequestParam("dataList") String options){
+		logger.info("deleteOpt 호출성공");
+		options=options.substring(0, options.length()-1);
+		logger.info(options);
+		String[] opt=options.split(",");
+		int option_nos[]=new int[opt.length];
+		for(int ii=0;ii<opt.length; ii++){
+			option_nos[ii]=Integer.parseInt(opt[ii]);
+		}
+		
+		int result=productService.deleteOpt(option_nos);
+		return result+"";
+	}
+	
+	@RequestMapping(value = "/insertBrdOpt")//boardInsert와 비교.!!
+	public ResponseEntity<String> listBrd(@RequestBody ProductVO pvo) {// json형태의 값을 자동으로 mapping, json이 아니라면 modelAttribute
+		logger.info("insertBrdOpt 호출성공");
+		ResponseEntity<String> entity = null;
+		int result;
+		try {
+			result = productService.insertBrdOpt(pvo);
+			if (result == 1) {
+				entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	@RequestMapping(value = "/insertClrOpt")//boardInsert와 비교.!!
+	public ResponseEntity<String> listClr(@RequestBody ProductVO pvo) {// json형태의 값을 자동으로 mapping, json이 아니라면 modelAttribute
+		logger.info("insertClrOpt 호출성공");
+		ResponseEntity<String> entity = null;
+		int result;
+		try {
+			result = productService.insertClrOpt(pvo);
+			if (result == 1) {
+				entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
 	
 }
 

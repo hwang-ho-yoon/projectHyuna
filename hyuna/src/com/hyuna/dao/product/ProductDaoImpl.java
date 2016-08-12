@@ -1,5 +1,6 @@
 package com.hyuna.dao.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -145,6 +146,33 @@ public class ProductDaoImpl implements ProductDao {
 	public List<ProductAllVO> prdAllList1(ProductAllVO pvo) {
 		
 		return session.selectList("prdAllList1");
+	}
+	@Override
+	public List<ProductAllVO> prdOptColorList(ProductAllVO pvo) {
+		
+		return session.selectList("prdOptColorList");
+	}
+	@Override
+	public List<ProductAllVO> prdOptMachineList(ProductAllVO pvo) {
+		
+		return session.selectList("prdOptMachineList");
+	}
+	@Override
+	public int deleteOpt(int []option_nos) {
+		System.out.println(option_nos.toString());
+		int result = session.update("deleteOpt",option_nos);
+		return result;
+	}
+	@Override
+	public int insertBrdOpt(ProductVO pvo) {		
+		int result = session.insert("insertBrdOpt");
+		return result;
+	}
+	
+	@Override
+	public int insertClrOpt(ProductVO pvo) {		
+		int result = session.insert("insertClrOpt");
+		return result;
 	}
 
 }

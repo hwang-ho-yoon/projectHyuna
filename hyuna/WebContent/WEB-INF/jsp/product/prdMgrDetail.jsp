@@ -19,6 +19,57 @@
 		location.href="/product/prdRgtList.do";
 	});
 }); */
+$(function(){
+	
+	$("img").error(function() {
+		// 다른 이미지로 src속성을 변경
+		$(this).attr("src", "/images/common/CheckMarkX.jpg");
+	}).each(function() {
+		$(this).attr("src", $(this).attr("src"));
+	});
+	
+	var img1=$("<img>");//이미지객체를 만들겠다.
+	var img2=$("<img>");//이미지객체를 만들겠다.
+	var img3=$("<img>");//이미지객체를 만들겠다.
+	
+	$("#imgMainView").hover(function(){//영역안에 마우스를줬을때.
+		img1.attr({
+			src:"/main/${detail.img_1}",
+			width:"450px",
+			height:"200px"
+		});
+		img1.addClass("imgViewData");
+		$("#imgMainArea").append(img1);
+	}, function(){//영역안에서 벗어났을때
+		img1.remove();
+	});
+	
+	$("#imgThumbnailView").hover(function(){//영역안에 마우스를줬을때.
+		
+		img2.attr({
+			src:"/thumbnail/${detail.img_2}",
+			width:"450px",
+			height:"200px"
+		});
+		img2.addClass("imgViewData");
+		$("#imgThumbnailArea").append(img2);
+	}, function(){//영역안에서 벗어났을때
+		img2.remove();
+	});
+	
+	$("#imgDetailView").hover(function(){//영역안에 마우스를줬을때.
+		
+		img3.attr({
+			src:"/detail/${detail.img_3}",
+			width:"450px",
+			height:"200px"
+		});
+		img3.addClass("imgViewData");
+		$("#imgDetailArea").append(img3);
+	}, function(){//영역안에서 벗어났을때
+		img3.remove();
+	});	
+});
 function prdUpdateForm(prd_no){
 	$("#lookUpdate").attr({
 		"method" : "post",
@@ -50,7 +101,7 @@ function prdRgtList(){
 				<button type="button" class="btn btn-default" id="regPrd" name="regPrd" onclick="prdWriteFrom()">새상품등록</button>
 				<button type="button" class="btn btn-default" id="PrdList" name="PrdList" onclick="prdRgtList()">상품목록</button>
 			</div>
-			<table class="shop_table">
+			<table class="shop_table table-condensed">
 				<tr>
 					<td>제품코드</td>
 					<td>${detail.prd_no}</td>
@@ -92,14 +143,14 @@ function prdRgtList(){
 				</tr>
 				<tr>
 					<td>Main</td>
-					<td colspan="3">${detail.img_1 }</td>
+					<td colspan="3"><label id="imgMainView">${detail.img_1 }</label><span id="imgMainArea"></span></td>
 				<tr>
 					<td>Thumbnail</td>
-					<td colspan="3">${detail.img_2 }</td>
+					<td colspan="3"><label id="imgThumbnailView">${detail.img_2 }</label><span id="imgThumbnailArea"></span></td>
 				</tr>
 				<tr>
 					<td>Detail</td>
-					<td colspan="3">${detail.img_3 }</td>
+					<td colspan="3"><label id="imgDetailView">${detail.img_3 }</label><span id="imgDetailArea"></span></td>
 				</tr>
 			</table>
 			</form>
@@ -109,7 +160,7 @@ function prdRgtList(){
 			<div id="optiontable" class="optiontable">
 				<c:choose>
 					<c:when test="${not empty optList }">
-						<table id="tb_option" class="table">
+						<table id="tb_option" class="table table-condensed">
 							<colgroup>
 								<col width="20%" />
 								<col width="20%" />

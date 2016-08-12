@@ -5,6 +5,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <script type="text/javascript">
+$(function(){
+	$("img").error(function() {
+		// 다른 이미지로 src속성을 변경
+		$(this).attr("src", "/images/common/CheckMarkX.jpg");
+	}).each(function() {
+		$(this).attr("src", $(this).attr("src"));
+	});
+});
 function lookDetail(prd_no){
 	console.log("상품번호:" + prd_no);
 	$("#prd_no").val(prd_no);	

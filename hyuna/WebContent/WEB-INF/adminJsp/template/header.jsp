@@ -110,6 +110,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="/adminIndex.jsp">Home</a></li>
+                         
                          <li class="dropdown dropdown-small">
 							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
 	                            <span class="key">주문</span>
@@ -120,11 +121,22 @@
                                 <li><a href="/orderAdmin/orderAdminListRnc.do">주문(취소반품)조회</a></li>
                             </ul>
 						</li>
+						
                         <li><a href="/adminQna/qnaList.do">Q&A</a></li>
                         <li><a href="/board/faq/faqList.do">FAQ</a></li>
 						<li><a href="/board/review/reviewList.do">review</a></li>
 						<li><a href="/admin/memberList.do">회원목록</a></li>
-						<li><a href="/product/prdRgtList.do">상품등록</a></li>
+						
+						<li class="dropdown dropdoown-small">
+							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">
+	                            <span class="key">상품</span>
+	                            <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                            	<li><a href="/product/prdRgtList.do">상품등록</a></li>
+                            	<li><a href="/product/prdOptList.do">옵션등록</a></li>
+                            </ul>
+                         </li>
 						 
 <!-- 						 <button type="button" class="btn btn-info">PHP</button>
 						 <button type="button" class="btn btn-info">Blogger</button>

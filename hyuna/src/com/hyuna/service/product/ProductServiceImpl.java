@@ -1,5 +1,6 @@
 package com.hyuna.service.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -252,6 +253,47 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductAllVO> prdAllList1=null;
 			prdAllList1=productDao.prdAllList1(pvo);
 			return prdAllList1;
+		}
+
+
+		@Override
+		public List<ProductAllVO> prdOptColorList(ProductAllVO pvo) {
+			List<ProductAllVO> prdOptColorList=null;
+			prdOptColorList=productDao.prdOptColorList(pvo);
+			return prdOptColorList;
+		}
+
+
+		@Override
+		public List<ProductAllVO> prdOptMachineList(ProductAllVO pvo) {
+			List<ProductAllVO> prdOptMachineList=null;
+			prdOptMachineList=productDao.prdOptMachineList(pvo);
+			return prdOptMachineList;
+		}
+
+
+		@Override
+		public int deleteOpt(int[]option_nos) {
+			System.out.println("data: "+option_nos.toString());
+			int result=productDao.deleteOpt(option_nos);
+			return result;
+		}
+
+
+		@Override
+		public int insertBrdOpt(ProductVO pvo) {
+			int result;
+			// TODO Auto-generated method stub
+			result = productDao.insertBrdOpt(pvo);
+			return result;
+		}
+		
+		@Override
+		public int insertClrOpt(ProductVO pvo) {
+			int result;
+			// TODO Auto-generated method stub
+			result = productDao.insertClrOpt(pvo);
+			return result;
 		}
 
 

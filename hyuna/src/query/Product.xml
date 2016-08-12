@@ -110,7 +110,7 @@
 	<select id="optList" resultType="prd" parameterType="prd">
 		 select prd_d_no, prd_d_display, color_detail, model_brand, model_machine, prd_d_stock from prd_detail pd
 		   left join color c on pd.color_no = c.color_no
-		   left join model m on pd.model_no = m.model_no
+		   left join model m on pd.model_no = m.model_no and m.model_stop!='Y'
 		  where pd.prd_no= #{prd_no}
 	</select>
 	
@@ -226,4 +226,41 @@
 		 values 
 		(#{prd_d_no}, #{prd_no}, #{prd_d_display}, #{prd_d_stock}, #{color_no}, #{model_no})		
 	</insert>
+	<select id="prdOptColorList" resultType="prdAll" parameterType="prdAll">
+		  select color_no, color_name, color_detail  from color		  
+     	   order by color_no
+	</select>	
+	<select id="prdOptMachineList" resultType="prdAll" parameterType="prdAll">
+		  select model_no, model_brand, model_machine  from model	
+		   where  model_stop!='Y'	  
+     	   order by model_no
+	</select>	
+	<update id="deleteOpt" parameterType="prd" >
+		update model set model_stop = 'Y' where model_no in 
+		<foreach collection="array" item="option_nos" index="index" separator="," open="(" close=")">
+    	#{option_nos}
+		</foreach>
+
+	</update>
+	<insert id="insertBrdOpt" parameterType="prd">
+		<selectKey keyProperty="model_no" resultType="int" order="BEFORE">
+			select model_seq.nextval from dual
+		</selectKey>
+		/* insertOpt */
+		insert into model
+		(model_no, model_brand, model_machine, model_stop)
+		 values 
+		(#{model_no}, #{model_brand}, #{model_machine}, 'N')		
+	</insert>
+	<insert id="insertClrOpt" parameterType="prd">
+		<selectKey keyProperty="color_no" resultType="int" order="BEFORE">
+			select color_seq.nextval from dual
+		</selectKey>
+		/* insertOpt */
+		insert into color
+		(color_no, color_name, color_detail)
+		 values 
+		(#{color_no}, #{color}, #{color_detail})		
+	</insert>
+	
 	</mapper>

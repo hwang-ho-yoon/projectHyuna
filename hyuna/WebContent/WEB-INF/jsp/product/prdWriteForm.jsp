@@ -9,7 +9,7 @@
 		
 		$("#PrdList").click(function() {
 			location.href="/product/prdRgtList.do";
-		});
+		});		
 		
 		$("#optionadd").click(function() {
 			var add = $("#model option:selected").text();
@@ -52,12 +52,70 @@
 		});
 		//상품등록버튼
 		$("#regPrd").click(function() {
+			if(!chkSubmit($("#prd_name"),"상품이름을")){
+				$("#prd_name").focus();
+				return;
+			}
+			if(!chkSubmit($("#prd_manufacturer"),"제조사를")){
+				$("#prd_manufacturer").focus();
+				return;
+			}
+			if(!chkSubmit($("#prd_origine"),"원산지를")){
+				$("#prd_origine").focus();
+				return;
+			}
+			if(!chkSubmit($("#prd_desc"),"상품설명을")){
+				$("#prd_desc").focus();
+				return;
+			}
+			if(!chkSubmit($("#file1"),"상품이미지를")){
+				$("#file1").focus();
+				return;
+			}
+			if(!chkSubmit($("#file2"),"상품이미지를")){
+				$("#file2").focus();
+				return;
+			}
+			if(!chkSubmit($("#file3"),"상품이미지를")){
+				$("#file3").focus();
+				return;
+			}
+			
+			console.log("file1val"+$('#file1').val());
+			console.log("file2val"+$('#file2').val());
+			console.log("file3val"+$('#file3').val());
+			
+			
+			if($('#file1').val()!=""){
+				if(!chkfile($('#file1'))){
+					$('#file1').focus();
+					return;	
+				}
+			}
+			if($('#file2').val()!=""){
+				if(!chkfile($('#file2'))){
+					$('#file2').focus();
+					return;
+				}
+			}
+			if($('#file3').val()!=""){
+				if(!chkfile($('#file3'))){
+					$('#file3').focus();
+					return;
+				}
+			}				
+			
 			console.log("abcd");
 //			$("input:checkbox").is(":checked")?'Y':'N';
 			console.log("chk_status-display: "+checkbox($("input:checkbox[id='prd_display']")))
 			console.log("chk_status-color: "+checkbox($("input:checkbox[id='option_color']")))
 			console.log("chk_status-brand: "+checkbox($("input:checkbox[id='option_brand']")))
-//			$("input:checkbox[id='prd_display']").val(checkbox($("input:checkbox[id='prd_display']")));
+			
+			$("input:checkbox[id='prd_display']").val(checkbox($("input:checkbox[id='prd_display']")));
+			$("input:checkbox[id='option_color']").val(checkbox($("input:checkbox[id='option_color']")));
+			$("input:checkbox[id='option_brand']").val(checkbox($("input:checkbox[id='option_brand']")));
+			
+			console.log($("input:checkbox[id='prd_display']").val()+"/"+$("input:checkbox[id='option_color']").val()+"/"+$("input:checkbox[id='option_brand']").val())
 			var table = document.getElementById("tb_option");
 			var tablerows = table.getElementsByTagName("tr").length;
 			console.log("console: "+table+"/"+tablerows);
@@ -115,6 +173,16 @@
 		}
 	}
 	
+	function chkfile(file){
+		var tf=true;
+		var ext =file.val().split('.').pop().toLowerCase();//pop()==>마지막원소값.
+		if(jQuery.inArray(ext,['gif','png','jpg','jpeg'])== -1){
+			alert('gif,png,jpg,jpeg 파일만 업로드 할 수 있습니다.');
+			tf=false;
+			
+		}
+		return tf;		
+	}
 /* 	function tableToJson(table) { // 변환 함수
 	    var data = [];
 	    var headers = [];
@@ -192,39 +260,38 @@
 
 <input type="hidden" id="options" name="options"/>
 
-			<table class="shop_table">
+			<table class="shop_table table-condense">
 				<tr>
 					<td>제품코드</td>
-					<td><input type="text" id="prd_no" name="prd_no" value="001"/></td>
+					<td><input type="text" id="prd_no" name="prd_no" class="form-control col-xs-3 input-sm" readonly/></td>
 					<td>* 상품명</td>
-					<td><input type="text" id="prd_name" name="prd_name"  value="prd_001"/></td>
+					<td><input type="text" id="prd_name" name="prd_name"  class="form-control col-xs-3 input-sm" maxlength="100"/></td>
 				</tr>
 				
 				<tr>
 					<td>제조사</td>
 					<td><input type="text" id="prd_manufacturer"
-						name="prd_manufacturer" value="(주)가리봉"/></td>
+						name="prd_manufacturer" value="" maxlength="100" class="form-control col-xs-3 input-sm"/></td>
 					<td>원산지</td>
-					<td><input type="text" id="prd_origine" name="prd_origine" value="Corea"/></td>
+					<td><input type="text" id="prd_origine" name="prd_origine" maxlength="30" class="form-control col-xs-3 input-sm" /></td>
 				</tr>
 				<tr>
 					<td>매입가</td>
-					<td><input type="number" id="prd_prcprice" name="prd_prcprice" value="20150"/></td>
+					<td><input type="number" id="prd_prcprice" name="prd_prcprice" class="form-control col-xs-3 input-sm" min="0"/></td>
 					<td>정상가</td>
-					<td><input type="number" id="prd_orgprice" name="prd_orgprice" value="20500"/></td>
+					<td><input type="number" id="prd_orgprice" name="prd_orgprice" class="form-control col-xs-3 input-sm" min="0"/></td>
 				</tr>
 				<tr>
 					<td >* 판매가</td>
-					<td colspan="3"><input type="number" id="prd_saleprice" name="prd_saleprice" value="25000"/></td>
-					<!-- <td></td>
-					<td><input type="checkbox" id="prd_display" name="prd_display" checked/></td> -->
+					<td><input type="number" id="prd_saleprice" name="prd_saleprice" class="form-control col-xs-3 input-sm" min="0"/></td>
+					<td colspan="2"></td>
 				</tr>
 				<tr>
 					<td colspan="4">상품설명</td>
 				</tr>
 				<tr>
 					<td colspan="4">
-					<textarea rows="8" cols="130" id="prd_desc" name="prd_desc" style="resize: none;"></textarea>
+					<textarea rows="8" cols="130" id="prd_desc" name="prd_desc" maxlength="1000" class="form-control" style="resize: none;"></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -243,23 +310,23 @@
 				</tr>
 				<tr>
 					<td>Main</td>
-					<td colspan="3"><input type="file" name="file1" id="file1"></td>
+					<td colspan="3"><input type="file" name="file1" id="file1" class="form-control input-sm"></td>
 				<tr>
 					<td>Thumbnail</td>
-					<td colspan="3"><input type="file" name="file2" id="file2"></td>
+					<td colspan="3"><input type="file" name="file2" id="file2" class="form-control input-sm"></td>
 				</tr>
 				<tr>
 					<td>Detail</td>
-					<td colspan="3"><input type="file" name="file3" id="file3"></td>
+					<td colspan="3"><input type="file" name="file3" id="file3" class="form-control input-sm"></td>
 				</tr>
 			</table>
 		</form>
 		
 		<br>
-		<div id="optionbrand" class="optionbrand">
+		<div id="optionbrand" class="optionbrand" class="row">
 			<c:choose>
 				<c:when test="${not empty modelList }">
-					<select id="model" style="width:150px;">
+					<select id="model" style="width:150px;" class="form-control col-sm-2 input-sm">
 						<option value="non">===선택===</option>
 						<c:forEach var="modelList" items="${modelList}" varStatus="status">
 							<option value="${modelList.model_no }">${modelList.model_machine }</option>
@@ -272,7 +339,7 @@
 
 			<c:choose>
 				<c:when test="${not empty colorList }">
-					<select id="color" style="width:150px;">
+					<select id="color" style="width:150px;" class="form-control col-sm-2 input-sm">
 						<option value="non">===선택===</option>
 						<c:forEach var="colorList" items="${colorList}" varStatus="status">
 							<option value="${colorList.color_no }">${colorList.color_detail }</option>

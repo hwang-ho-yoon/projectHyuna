@@ -250,29 +250,29 @@ function tableChk(add1, add2, str) {
 				<button type="button" class="btn btn-default" id="PrdList" name="PrdList">상품목록</button>
 			</div>
 			<form id="prd_update" name="prd_update" enctype="multipart/form-data">
-			<table class="shop_table">
+			<table class="shop_table table-condensed">
 				<tr>
 					<td>제품코드</td>
-					<td><input type="text" id="prd_no" name="prd_no"  value="${detail.prd_no}" readonly/></td>
+					<td><input type="text" id="prd_no" name="prd_no"  value="${detail.prd_no}" class="form-control col-xs-3 input-sm" readonly/></td>
 					<td>* 상품명</td>
-					<td><input type="text" id="prd_name" name="prd_name"  value="${detail.prd_name}"></td>
+					<td><input type="text" id="prd_name" name="prd_name"  value="${detail.prd_name}" class="form-control col-xs-3 input-sm" maxlength="100"></td>
 				</tr>
 				<tr>
 					<td>제조사</td>
 					<td><input type="text" id="prd_manufacturer"
-						name="prd_manufacturer" value="${detail.prd_manufacturer}"/></td>
+						name="prd_manufacturer" value="${detail.prd_manufacturer}"class="form-control col-xs-3 input-sm"  maxlength="100"/></td>
 					<td>원산지</td>
-					<td><input type="text" id="prd_origine" name="prd_origine" value="${detail.prd_origine}"/></td>
+					<td><input type="text" id="prd_origine" name="prd_origine" value="${detail.prd_origine}" class="form-control col-xs-3 input-sm"  maxlength="30"/></td>
 				</tr>
 				<tr>
 					<td>매입가</td>
-					<td><input type="number" id="prd_prcprice" name="prd_prcprice" value="${detail.prd_prcprice}"/></td>
+					<td><input type="number" id="prd_prcprice" name="prd_prcprice" value="${detail.prd_prcprice}" class="form-control col-xs-3 input-sm" min='0' /></td>
 					<td>정상가</td>
-					<td><input type="number" id="prd_orgprice" name="prd_orgprice" value="${detail.prd_orgprice}"/></td>
+					<td><input type="number" id="prd_orgprice" name="prd_orgprice" value="${detail.prd_orgprice}" class="form-control col-xs-3 input-sm" min='0' /></td>
 				</tr>
 				<tr>
 					<td>* 판매가</td>
-					<td><input type="number" id="prd_saleprice" name="prd_saleprice" value="${detail.prd_saleprice}"/></td>
+					<td><input type="number" id="prd_saleprice" name="prd_saleprice" value="${detail.prd_saleprice}" min='0' class="form-control col-xs-3 input-sm" /></td>
 					<td>전시상태</td>
 					<%-- <td><input type="checkbox" id="prd_display" name="checkbox" /> ${detail.prd_display}</td> --%>
 					<td><select id="prd_display" name="prd_display"><option value='Y'>Y</option><option value='N'>N</option></select>${detail.prd_display}</td>
@@ -281,7 +281,7 @@ function tableChk(add1, add2, str) {
 					<td colspan="4">상품설명</td>
 				</tr>
 				<tr>
-					<td colspan="4"><textarea rows="8" cols="130" id="prd_desc" name="prd_desc" class="prd_desc form-control"  style="resize: none;">${detail.prd_desc}</textarea></td>
+					<td colspan="4"><textarea rows="8" cols="130" id="prd_desc" name="prd_desc" class="prd_desc form-control" maxlength="1000" style="resize: none;">${detail.prd_desc}</textarea></td>
 				</tr>
 				<%-- <tr>
 					<td>옵션사용</td>
@@ -294,14 +294,14 @@ function tableChk(add1, add2, str) {
 				</tr>
 				<tr>
 					<td>Main</td>
-					<td colspan="3"><input type="file" name="file1" id="file1"><span>${detail.img_1 }</span>
+					<td colspan="3"><input type="file" name="file1" id="file1" class="form-control col-xs-3 input-sm"><span>${detail.img_1 } </span>
 				<tr>
 					<td>Thumbnail</td>
-					<td colspan="3"><input type="file" name="file2" id="file2"><span>${detail.img_2 }</span>
+					<td colspan="3"><input type="file" name="file2" id="file2" class="form-control col-xs-3 input-sm"><span>${detail.img_2 }</span>
 				</tr>
 				<tr>
 					<td>Detail</td>
-					<td colspan="3"><input type="file" name="file3" id="file3"><span>${detail.img_3 }</span>
+					<td colspan="3"><input type="file" name="file3" id="file3" class="form-control col-xs-3 input-sm"><span>${detail.img_3 }</span>
 					</td>
 				</tr>
 			</table>
@@ -311,7 +311,7 @@ function tableChk(add1, add2, str) {
 		<div class="row">
 		<div id="optionAddDiv" class="optionAddDiv">
 		<form id="optAdd">
-			<table id="tb_optionAdd" class="table">
+			<table id="tb_optionAdd" class="table table-condensed">
 				<colgroup>
 					<col width="20%" />
 					<col width="20%" />
@@ -332,7 +332,7 @@ function tableChk(add1, add2, str) {
 					
 					<c:choose>
 				<c:when test="${not empty modelList }">
-					<select id="model" style="width:150px;">
+					<select id="model" style="width:150px;" class="form-control col-xs-3 input-sm">
 						<option value="non">===선택===</option>
 						<c:forEach var="modelList" items="${modelList}" varStatus="status">
 							<option value="${modelList.model_no }">${modelList.model_machine }</option>
@@ -347,7 +347,7 @@ function tableChk(add1, add2, str) {
 					
 					<c:choose>
 				<c:when test="${not empty colorList }">
-					<select id="color" style="width:150px;">
+					<select id="color" style="width:150px;" class="form-control col-xs-3 input-sm">
 						<option value="non">===선택===</option>
 						<c:forEach var="colorList" items="${colorList}" varStatus="status">
 							<option value="${colorList.color_no }">${colorList.color_detail }</option>
@@ -365,7 +365,7 @@ function tableChk(add1, add2, str) {
 						<option value="N">N</option>
 					</select>
 					</td>
-					<td><button type='button' id='optionadd' class='optionadd'>+</button></td>
+					<td><button type='button' id='optionadd' class='optionadd btn btn-primary btn-md"'>+</button></td>
 				</tr>
 			</table>
 		</form>	
@@ -374,7 +374,7 @@ function tableChk(add1, add2, str) {
 			<div id="optiontable" class="optiontable">
 				<c:choose>
 					<c:when test="${not empty optList }">
-						<table id="tb_option" class="table">
+						<table id="tb_option" class="table table-condensed">
 							<colgroup>
 								<col width="10%" />
 								<col width="20%" />
@@ -406,9 +406,9 @@ function tableChk(add1, add2, str) {
 									<td>
 										${opt.prd_d_display }
 									</td>
-									<td><input type="number" id="prd_d_stock" name="prd_d_stock" value="${opt.prd_d_stock }"></td>
-									<td><input type="button" id="displayConfirm" name="displayConfirm" value="확인"/></td>
-									<td><input type="button" id="optDelete" name="optDelete" value="삭제"/></td>
+									<td><input type="number" id="prd_d_stock" name="prd_d_stock" value="${opt.prd_d_stock }" class="form-control col-xs-2 input-sm"></td>
+									<td><input type="button" id="displayConfirm" name="displayConfirm" value="확인" class="btn btn-primary btn-xs"/></td>
+									<td><input type="button" id="optDelete" name="optDelete" value="삭제" class="btn btn-primary btn-xs"/></td>
 								</tr>
 								</c:if>
 							</c:forEach>

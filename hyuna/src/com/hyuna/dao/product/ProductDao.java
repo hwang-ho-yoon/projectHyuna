@@ -1,5 +1,6 @@
 package com.hyuna.dao.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hyuna.vo.ProductAllVO;
@@ -56,4 +57,14 @@ public interface ProductDao {
 		public List<ProductVO> modelList(ProductVO pvo);
 
 		public List<ProductAllVO> prdAllList1(ProductAllVO pvo);
+
+		public List<ProductAllVO> prdOptColorList(ProductAllVO pvo);
+
+		public List<ProductAllVO> prdOptMachineList(ProductAllVO pvo);
+
+		public int deleteOpt(int[] option_nos);
+
+		public int insertBrdOpt(ProductVO pvo);
+		
+		public int insertClrOpt(ProductVO pvo);
 }
