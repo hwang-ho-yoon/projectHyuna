@@ -44,49 +44,9 @@
 				"action":"/cart/chkDelete.do"
 			});
 			$("#selectForm").submit();
-			
-			//go_delete();
-			
-			
-			//var arr = $('input[name=check]:checked').serializeArray().map(function(item) { return item.value });
-			/* var arr = $('input[name=check]:checked').parents("tr").attr("data-num");
-			console.log(arr);
-			var table = document.getElementById("cartTable");
-			var tableRow = table.rows.length;
-			document.getElementById("cartTable").rows[0].css("background","pink");
-			$("#cartTable").rows[0].css("background","pink"); */
-			//console.log(document.getElementById("cartTable").rows[0].cell[3].text());
-			//table.rows[1].$("td:eq(0)").css("background","pink");
-			/* for(var i=1; i<tableRow; i++) {
-				 table.rows[i].$("td:eq(0)").css("background","pink");
-			}
-			tableRow.css("background","pink"); */
-					
-			
+				
 		}); 
-		
-		/* 선택주문 버튼 클릭 시 이벤트 */
-		$("#checkOrder").click(function() {
-			var selectPrd_d_no = [];
-			var selectQuantity = [];
-			
-			$(".check").each(function() {
-				if($(this).is(":checked")) {
-					selectPrd_d_no.push($(this).parents("tr").children().eq(2).attr("data-num"));
-					selectQuantity.push($(this).parents("tr").children().eq(5).find("input[type='number']").val());
-				}
-			});
-			$("#prd_d_no").val(selectPrd_d_no);
-			$("#quantity").val(selectQuantity);
-			$("#form2").attr({
-				"method":"post",
-				"action":"/order/orderWrite.do"
-			});
-			$("#form2").submit();
-					
-			
-		}); 
-					
+							
 		/* 장바구니 비우기 버튼 클릭 시 이벤트 */
 		$("#allDelete").click(function() {
 			
@@ -123,6 +83,27 @@
 			//$("#cart_quantity").attr("href", "/cart/updateCount");
 		});
 		
+
+		/* 선택주문 버튼 클릭 시 이벤트 */
+		$("#checkOrder").click(function() {
+			var selectPrd_d_no = [];
+			var selectQuantity = [];
+			
+			$(".check").each(function() {
+				if($(this).is(":checked")) {
+					selectPrd_d_no.push($(this).parents("tr").children().eq(2).attr("data-num"));
+					selectQuantity.push($(this).parents("tr").children().eq(5).find("input[type='number']").val());
+				}
+			});
+			$("#prd_d_no").val(selectPrd_d_no);
+			$("#quantity").val(selectQuantity);
+			$("#form2").attr({
+				"method":"post",
+				"action":"/order/orderWrite.do"
+			});
+			$("#form2").submit();
+		});
+		
 		/* 전체주문 버튼 클릭 시 이벤트 */
 		$("#allOrder").click(function() {
 			
@@ -145,27 +126,7 @@
 			}
 		});	
 	});
-	
-	function go_delete() {
-		if($(":checkbox[name='check']:checked").length==0) {
-			alert("삭제할 항목을 하나이상 체크해 주세요.");
-			return;
-		}
-	}
-	
-	function del() {
-		$(".wrap input:checked").each(function() {
-			var checked=$(this).attr("checked");
-			if(checked==true) {
-				$(this).next().remove();
-				$(this).remove();
-			}
-		});
-	}
-	
-	
-	
-	
+		
 </script>
 <body>
 	<div class="single-product-area">
@@ -237,6 +198,7 @@
 										<td> -->
 										   <div class="btn_group2">
 											   <!-- <button type="button" class="btn btn-primary" name="addCart" id="addCart">담기</button> -->
+											   <button type="button" class="btn btn-primary" name="allOrder" id="allOrder">전체주문</button>
 											   <button type="button" class="btn btn-primary" name="shopping" id="shopping">쇼핑계속하기</button>
                                            </div>
                                          </td>
